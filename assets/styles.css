@@ -1,0 +1,228 @@
+/* ============================================
+   CV & AI Knowledge Lab — Master Theme
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --grad-primary: linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #F59E0B 100%);
+  --grad-cool: linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #7C3AED 100%);
+  --grad-card: linear-gradient(160deg, rgba(124, 58, 237, 0.12) 0%, rgba(236, 72, 153, 0.06) 100%);
+  --bg-card: rgba(21, 21, 30, 0.7);
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(124, 58, 237, 0.4);
+  --text-dim: #9CA3AF;
+  --shadow-glow: 0 0 40px rgba(124, 58, 237, 0.15);
+}
+
+html, body, [class*="css"] {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+code, pre, .stCode {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ----- Hero / Headings ----- */
+h1 {
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.1 !important;
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 0.5rem;
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--text-dim);
+  font-weight: 400;
+  max-width: 720px;
+  line-height: 1.6;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #A78BFA;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: rgba(124, 58, 237, 0.08);
+  margin-bottom: 1rem;
+}
+
+/* ----- Cards ----- */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+  height: 100%;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.card-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #F3F4F6;
+  margin-bottom: 0.4rem;
+}
+
+.card-desc {
+  font-size: 0.875rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.card-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: rgba(124, 58, 237, 0.15);
+  color: #C4B5FD;
+  margin-right: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.card-tag.green { background: rgba(16, 185, 129, 0.15); color: #6EE7B7; }
+.card-tag.amber { background: rgba(245, 158, 11, 0.15); color: #FCD34D; }
+.card-tag.pink  { background: rgba(236, 72, 153, 0.15); color: #F9A8D4; }
+.card-tag.blue  { background: rgba(59, 130, 246, 0.15); color: #93C5FD; }
+
+/* ----- Stat Tiles ----- */
+.stat-tile {
+  background: var(--grad-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+}
+.stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.4rem;
+}
+
+/* ----- Section Divider ----- */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+  margin: 2.5rem 0;
+}
+
+/* ----- Sidebar polish ----- */
+section[data-testid="stSidebar"] {
+  background: linear-gradient(180deg, #0B0B0F 0%, #15151E 100%);
+  border-right: 1px solid var(--border-soft);
+}
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ----- Expander ----- */
+.streamlit-expanderHeader {
+  background: var(--bg-card) !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--border-soft) !important;
+  font-weight: 500 !important;
+}
+
+/* ----- Tabs ----- */
+.stTabs [data-baseweb="tab-list"] {
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+.stTabs [data-baseweb="tab"] {
+  font-weight: 500;
+  padding: 0.6rem 1rem;
+}
+
+/* ----- Buttons ----- */
+.stButton > button {
+  border-radius: 10px;
+  font-weight: 600;
+  border: 1px solid var(--border-soft);
+  transition: all 0.2s ease;
+}
+.stButton > button:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+/* ----- Code blocks polish ----- */
+.stCodeBlock {
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+}
+
+/* ----- Subtle scrollbar ----- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(124, 58, 237, 0.5); }
+
+/* ----- Hide Streamlit branding ----- */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+header[data-testid="stHeader"] { background: transparent; }
+
+/* ----- Roadmap pills ----- */
+.phase-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid var(--border-strong);
+  color: #C4B5FD;
+  margin: 0.25rem;
+}
