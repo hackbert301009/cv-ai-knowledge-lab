@@ -226,3 +226,117 @@ header[data-testid="stHeader"] { background: transparent; }
   color: #C4B5FD;
   margin: 0.25rem;
 }
+
+/* ----- Video Embed ----- */
+.video-wrap {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  margin: 1.25rem 0 0.5rem 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.video-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
+  border-radius: 14px;
+}
+.video-caption {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.02em;
+}
+
+/* ----- Interactive Lab ----- */
+.lab-header {
+  background: linear-gradient(135deg, rgba(6,182,212,0.08) 0%, rgba(124,58,237,0.08) 100%);
+  border: 1px solid rgba(6,182,212,0.25);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0 1rem 0;
+}
+.lab-pill {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(6,182,212,0.15);
+  border: 1px solid rgba(6,182,212,0.4);
+  color: #67E8F9;
+  margin-bottom: 0.4rem;
+}
+
+/* ----- Key Concept ----- */
+.key-concept {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: rgba(124,58,237,0.06);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin: 0.5rem 0;
+}
+.key-emoji { font-size: 1.5rem; flex-shrink: 0; }
+.key-term  { font-weight: 700; font-size: 0.95rem; color: #E5E7EB; margin-bottom: 0.2rem; }
+.key-exp   { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
+
+/* ----- Step List ----- */
+.step-list { display: flex; flex-direction: column; gap: 0.75rem; margin: 1rem 0; }
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  background: var(--grad-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem; color: #fff;
+}
+.step-title { font-weight: 600; font-size: 0.9rem; color: #F3F4F6; margin-bottom: 0.2rem; }
+.step-desc  { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; }
+
+/* ----- Math Box ----- */
+.math-box {
+  background: rgba(124,58,237,0.05);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 0.5rem 1rem 0 1rem;
+  margin: 0.75rem 0 0 0;
+}
+.math-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #A78BFA;
+  margin-bottom: 0.25rem;
+}
+
+/* ----- Highlight Badge (für Architekturnamen etc.) ----- */
+.badge-sota {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(236,72,153,0.15);
+  color: #F9A8D4;
+  margin: 0 0.2rem;
+}

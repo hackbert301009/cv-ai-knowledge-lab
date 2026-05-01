@@ -1,6 +1,6 @@
 """
 Modul-Registry — zentrale Konfiguration aller Lernmodule.
-Alle 22 Module mit Metadaten für Navigation, Kategorisierung und Rendering.
+Alle 27 Module mit Metadaten für Navigation, Kategorisierung und Rendering.
 """
 
 from dataclasses import dataclass, field
@@ -34,7 +34,7 @@ CATEGORIES = {
 
 
 # --------------------------------------------------------------------
-# Alle Module (22 Stück)
+# Alle Module (27 Stück)
 # --------------------------------------------------------------------
 MODULES: List[Module] = [
     # --- Übersicht ---

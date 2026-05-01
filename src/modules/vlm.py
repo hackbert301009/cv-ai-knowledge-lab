@@ -1,6 +1,9 @@
 """Vision-Language Models — CLIP, BLIP-2, LLaVA, Flamingo."""
 import streamlit as st
-from src.components import hero, section_header, divider, info_box, card, render_card_grid
+from src.components import (
+    hero, section_header, divider, info_box, card, render_card_grid,
+    video_embed, lab_header, key_concept, step_list,
+)
 
 
 def render():
@@ -11,7 +14,7 @@ def render():
             "CLIP hat alles verändert — und die Modelle danach haben Multimodal-KI definiert."
     )
 
-    tabs = st.tabs(["🔗 CLIP", "🌉 BLIP-2", "🦙 LLaVA", "🦩 Flamingo", "🎯 Anwendungen"])
+    tabs = st.tabs(["🔗 CLIP", "🌉 BLIP-2", "🦙 LLaVA", "🦩 Flamingo", "🎯 Anwendungen", "🎬 Lernvideos"])
 
     with tabs[0]:
         section_header("CLIP — Contrastive Language-Image Pretraining (2021)")
@@ -34,7 +37,14 @@ $$\mathcal{L} = -\frac{1}{2N} \sum_i \left[ \log \frac{e^{s_{ii}/\tau}}{\sum_j e
 - **Stable Diffusion** benutzt CLIP für Text-Conditioning
 - **Foundation Model** für viele Downstream-Tasks
         """)
+        info_box(
+            "CLIP installieren: `pip install git+https://github.com/openai/CLIP.git` "
+            "(separates Paket, nicht auf PyPI). Alternativ: `transformers` von HuggingFace nutzen.",
+            kind="warn",
+        )
         st.code("""
+# Option 1: OpenAI CLIP (Original)
+# pip install git+https://github.com/openai/CLIP.git
 import torch
 import clip
 
@@ -49,6 +59,23 @@ with torch.no_grad():
     txt_feat  = model.encode_text(text)
     logits, _ = model(image, text)
     probs     = logits.softmax(dim=-1)
+
+# Option 2: HuggingFace Transformers (einfacher zu installieren)
+# pip install transformers
+from transformers import CLIPProcessor, CLIPModel
+from PIL import Image
+
+model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+
+inputs = processor(
+    text=["ein Hund", "eine Katze", "ein Auto"],
+    images=image_pil,
+    return_tensors="pt", padding=True
+)
+with torch.no_grad():
+    outputs = model(**inputs)
+    probs = outputs.logits_per_image.softmax(dim=1)
         """, language="python")
 
     with tabs[1]:
@@ -109,7 +136,30 @@ Flamingo war historisch wichtig — die Architektur lebt in vielen heutigen Mult
         render_card_grid(cards, cols=3)
 
         info_box(
-            "Heutige Top-VLMs: GPT-4o, Claude 3.5 Sonnet, Gemini 1.5/2.0, LLaVA-NeXT, Qwen2-VL, "
-            "InternVL — die offene Szene holt rasant auf.",
+            "Heutige Top-VLMs (2026): GPT-4o, Claude 3.7 Sonnet, Gemini 2.0 Flash, LLaVA-NeXT, Qwen2-VL, "
+            "InternVL2, Pixtral — die offene Szene holt rasant auf.",
+            kind="tip",
+        )
+
+    with tabs[5]:
+        section_header("Lernvideos", "Vision-Language Models verstehen.")
+
+        st.markdown("#### CLIP erklärt — Yannic Kilcher")
+        video_embed("T9XSU0pKX2E",
+                    "CLIP: Connecting Text and Images — Yannic Kilcher",
+                    "Yannic Kilcher liest das CLIP-Paper durch und erklärt jedes Detail. ~40 Minuten.")
+
+        divider()
+
+        st.markdown("#### Vision Transformers (ViT) — Computerphile")
+        video_embed("TrdevFK_am4",
+                    "Vision Transformers — Computerphile",
+                    "Wie ViT und moderne VLMs intern funktionieren.")
+
+        divider()
+
+        info_box(
+            "Für CLIP: Das Originalpaper 'Learning Transferable Visual Models From Natural Language Supervision' "
+            "(Radford et al., 2021) ist sehr gut lesbar. Starte damit nach den Videos.",
             kind="tip",
         )

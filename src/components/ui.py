@@ -39,6 +39,55 @@ def section_header(title: str, sub: str = ""):
     )
 
 
+def lab_header(title: str, desc: str = ""):
+    """Header für interaktive Lab-Sektionen mit farbiger Markierung."""
+    st.markdown(
+        f"""
+        <div class="lab-header">
+          <span class="lab-pill">🧪 Lab</span>
+          <h3 style="margin:0.5rem 0 0.25rem 0; font-weight:700;">{title}</h3>
+          {f'<p style="color:#9CA3AF; margin:0; font-size:0.9rem;">{desc}</p>' if desc else ''}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def video_embed(youtube_id: str, title: str = "Lernvideo", caption: str = ""):
+    """Bettet ein YouTube-Video als responsiven iframe ein."""
+    st.markdown(
+        f"""
+        <div class="video-wrap">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/{youtube_id}?rel=0&modestbranding=1"
+            title="{title}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+        </div>
+        {f'<p class="video-caption">{caption}</p>' if caption else ''}
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def key_concept(emoji: str, term: str, explanation: str):
+    """Hervorgehobener Schlüsselbegriff mit Erklärung."""
+    st.markdown(
+        f"""
+        <div class="key-concept">
+          <span class="key-emoji">{emoji}</span>
+          <div>
+            <div class="key-term">{term}</div>
+            <div class="key-exp">{explanation}</div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def divider():
     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 
@@ -106,3 +155,33 @@ def info_box(text: str, kind: str = "info"):
 def level_badge(level: str) -> str:
     colors = {"Anfänger": "green", "Fortgeschritten": "amber", "Experte": "pink"}
     return f'<span class="card-tag {colors.get(level, "")}">{level}</span>'
+
+
+def math_box(latex: str, label: str = ""):
+    """Visuell hervorgehobene Formel-Box."""
+    lbl = f'<div class="math-label">{label}</div>' if label else ""
+    st.markdown(
+        f"""
+        <div class="math-box">
+          {lbl}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.latex(latex)
+
+
+def step_list(steps: list[tuple[str, str]]):
+    """Nummerierte Schritt-Liste mit Titel + Beschreibung."""
+    items = ""
+    for i, (title, desc) in enumerate(steps, 1):
+        items += f"""
+        <div class="step-item">
+          <div class="step-num">{i}</div>
+          <div>
+            <div class="step-title">{title}</div>
+            <div class="step-desc">{desc}</div>
+          </div>
+        </div>
+        """
+    st.markdown(f'<div class="step-list">{items}</div>', unsafe_allow_html=True)

@@ -97,7 +97,7 @@ DoG ist die Basis von SIFT.
         else:
             # Demo: Gradient + Kreis + Rechteck
             img = np.zeros((300, 300, 3), dtype=np.uint8)
-            for y in range(300):
+            for y in range(256):
                 img[y, :] = (y, y, y)
             cv2.circle(img, (150, 150), 60, (255, 255, 255), -1)
             cv2.rectangle(img, (50, 50), (110, 110), (0, 0, 0), -1)
