@@ -1,6 +1,6 @@
 """
 Modul-Registry — zentrale Konfiguration aller Lernmodule.
-Alle 27 Module mit Metadaten für Navigation, Kategorisierung und Rendering.
+Alle 32 Module mit Metadaten für Navigation, Kategorisierung und Rendering.
 """
 
 from dataclasses import dataclass, field
@@ -24,17 +24,18 @@ class Module:
 # --------------------------------------------------------------------
 CATEGORIES = {
     "🏠 Übersicht":      ["home", "roadmap"],
-    "🧮 Grundlagen":     ["math", "linalg", "calculus", "probability"],
+    "🧮 Grundlagen":     ["math", "linalg", "calculus", "probability", "tensor_playground"],
     "🖼️ Bildverarbeitung": ["image_basics", "filters", "edges", "features", "morphology", "segmentation_classic"],
     "🤖 Deep Learning":   ["nn_basics", "cnn", "training", "modern_archs"],
-    "🔥 State-of-the-Art": ["transformers", "vlm", "diffusion", "gen_ai", "multimodal"],
-    "🚀 Praxis":          ["projects", "datasets", "deployment"],
-    "📰 Live":            ["news", "papers", "resources"],
+    "🔥 State-of-the-Art": ["transformers", "vlm", "diffusion", "gen_ai", "multimodal", "pose_estimation"],
+    "🚀 Praxis":          ["projects", "datasets", "deployment", "compression"],
+    "📰 Live":            ["news", "papers", "paper_of_month", "resources"],
+    "📚 Referenz":        ["glossar"],
 }
 
 
 # --------------------------------------------------------------------
-# Alle Module (27 Stück)
+# Alle Module (32 Stück)
 # --------------------------------------------------------------------
 MODULES: List[Module] = [
     # --- Übersicht ---
@@ -74,9 +75,18 @@ MODULES: List[Module] = [
     Module("deployment", "🚀", "Deployment & MLOps",      "ONNX, TensorRT, FastAPI, Docker",         "Praxis", "Experte",          "50 min", ["praxis"]),
 
     # --- Live ---
-    Module("news",      "📰", "Live News",                "Aktuelle Forschung & Releases",          "Live", "Anfänger", "live", ["live"]),
-    Module("papers",    "📄", "Paper-Bibliothek",         "Must-Read Papers nach Thema",            "Live", "Experte",   "varies", ["live"]),
-    Module("resources", "🔗", "Ressourcen & Tools",       "Bücher, Kurse, Frameworks, Communities", "Live", "Anfänger", "varies", ["live"]),
+    Module("news",          "📰", "Live News",                "Aktuelle Forschung & Releases",                "Live",    "Anfänger",        "live",    ["live"]),
+    Module("papers",        "📄", "Paper-Bibliothek",         "Must-Read Papers nach Thema",                  "Live",    "Experte",          "varies",  ["live"]),
+    Module("paper_of_month","🗞️", "Paper des Monats",         "Kuratiertes Paper mit Deep-Dive & Video",      "Live",    "Fortgeschritten",  "30 min",  ["live", "paper"]),
+    Module("resources",     "🔗", "Ressourcen & Tools",       "Bücher, Kurse, Frameworks, Communities",       "Live",    "Anfänger",         "varies",  ["live"]),
+
+    # --- Referenz ---
+    Module("glossar",       "📖", "Glossar & Wörterbuch",     "500+ CV & AI Begriffe durchsuchen",            "Referenz", "Anfänger",        "varies",  ["reference", "glossar"]),
+
+    # --- Neue Inhalte ---
+    Module("tensor_playground", "🎮", "Tensor Playground",    "NumPy interaktiv: Reshape, Einsum, Broadcasting", "Grundlagen",    "Anfänger",    "30 min", ["math", "numpy", "core"]),
+    Module("compression",       "🗜️", "Model Compression",    "Quantisierung, Pruning, KD, ONNX, TensorRT",      "Praxis",        "Experte",      "45 min", ["praxis", "edge", "deployment"]),
+    Module("pose_estimation",   "🧍", "Pose Estimation",      "Human Pose, 6DoF, Skeleton-Visualizer",           "State-of-the-Art", "Experte",  "45 min", ["sota", "cv", "pose"]),
 ]
 
 

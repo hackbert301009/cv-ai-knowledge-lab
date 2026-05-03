@@ -62,7 +62,12 @@ MODULE_FILES = {
     "deployment":          "src.modules.deployment",
     "news":                "src.modules.news",
     "papers":              "src.modules.papers",
+    "paper_of_month":      "src.modules.paper_of_month",
     "resources":           "src.modules.resources",
+    "glossar":             "src.modules.glossar",
+    "tensor_playground":   "src.modules.tensor_playground",
+    "compression":         "src.modules.compression",
+    "pose_estimation":     "src.modules.pose_estimation",
 }
 
 # ----------------------------------------------------------------------
