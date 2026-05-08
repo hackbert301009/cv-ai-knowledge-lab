@@ -1,6 +1,6 @@
 """Ressourcen — Bücher, Kurse, Frameworks, Communities."""
 import streamlit as st
-from src.components import hero, section_header, divider, info_box, card, render_card_grid
+from src.components import hero, section_header, divider, info_box, card, render_card_grid, render_learning_block
 
 
 def render():
@@ -96,4 +96,56 @@ def render():
         "Der Versuch, alle 50 Ressourcen parallel zu konsumieren, endet meist in nichts. "
         "Tiefe schlägt Breite — wenigstens am Anfang.",
         kind="tip",
+    )
+
+    divider()
+    render_learning_block(
+        key_prefix="resources",
+        progression=[
+            ("🟢", "Guided Lab", "Eine Hauptressource wählen und 2-Wochen-Plan aufsetzen.", "Beginner", "green"),
+            ("🟠", "Challenge Lab", "Theoriequelle + Praxisprojekt sinnvoll kombinieren.", "Intermediate", "amber"),
+            ("🔴", "Debug Lab", "Lernstau erkennen und Ressourcenset fokussiert reduzieren.", "Advanced", "pink"),
+            ("🏁", "Mini-Projekt", "Persönliches Learning-OS mit Weekly-Review bauen.", "Abschluss", "blue"),
+        ],
+        mcq_question="Was erhöht Lernerfolg typischerweise am stärksten?",
+        mcq_options=[
+            "Viele Quellen parallel",
+            "Konsequentes Arbeiten mit einer Kernquelle + Praxis",
+            "Nur Videos schauen",
+            "Nur Paper lesen",
+        ],
+        mcq_correct_option="Konsequentes Arbeiten mit einer Kernquelle + Praxis",
+        mcq_success_message="Richtig. Fokus + Anwendung schlägt reine Breite.",
+        mcq_retry_message="Nicht optimal. Fokus ist entscheidend.",
+        open_question="Offene Frage: Welche 3 Ressourcen setzt du in den nächsten 30 Tagen konkret ein?",
+        code_task="""# Code-Aufgabe: Lernplan-Datenstruktur
+learning_plan = {
+    "week_1": [],
+    "week_2": [],
+    "week_3": [],
+    "week_4": [],
+}
+# TODO: pro Woche Theorie, Praxis, Review ergänzen
+""",
+        community_rows=[
+            {"Format": "Diskussion", "Fokus": "Welche Quelle hat dir zuletzt wirklich geholfen?", "Output": "Kurzbeitrag"},
+            {"Format": "Peer-Feedback", "Fokus": "Ist dein Lernplan realistisch und ausgewogen?", "Output": "2 Stärken + 1 Verbesserung"},
+            {"Format": "Challenge", "Fokus": "30-Tage-Lernstreak", "Output": "Weekly Check-in"},
+        ],
+        cheat_sheet=[
+            "Eine Kernquelle + eine Praxisquelle reicht zum Start.",
+            "Wöchentliches Review fest einplanen.",
+            "Lernen sichtbar machen (Notizen, Demos, Repo).",
+        ],
+        key_takeaways=[
+            "Konsistenz schlägt Intensität.",
+            "Ressourcen wirken erst durch Umsetzung.",
+        ],
+        common_errors=[
+            "Zu viele Quellen.",
+            "Kein konkreter Wochenplan.",
+            "Keine Wiederholung.",
+            "Kein Praxisanteil.",
+            "Fortschritt nicht dokumentiert.",
+        ],
     )

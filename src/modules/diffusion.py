@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list, card, render_card_grid,
+    video_embed, lab_header, key_concept, step_list, card, render_card_grid, render_learning_block,
 )
 
 
@@ -25,6 +25,7 @@ def render():
         "🎬 Video Diffusion",
         "🧪 Interaktives Lab",
         "🎬 Lernvideos",
+        "🧭 Lernpfad & Übungen",
     ])
 
     # ------------------------------------------------------------------ #
@@ -422,4 +423,62 @@ Das schafft neue Herausforderungen:
             "Stable Diffusion und der zugrundeliegenden Mathematik. "
             "Dann lies das Original-DDPM Paper (Ho et al., 2020) — es ist sehr gut geschrieben.",
             kind="tip",
+        )
+
+    # ------------------------------------------------------------------ #
+    with tabs[8]:
+        render_learning_block(
+            key_prefix="diffusion",
+            section_title="Lernpfad für Diffusion",
+            section_sub="Vom Prinzip bis zum eigenen Generator-Experiment",
+            progression=[
+                ("🟢", "Guided Lab", "Forward-Process simulieren und SNR entlang t interpretieren.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Vergleiche DDIM, DPM-Solver und Schritte vs. Qualität.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Analysiere Artefakte durch Guidance Scale und Samplerwahl.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Prompt-Study: 20 Prompts, Metriken, kurze Ergebnisanalyse.", "Abschluss", "blue"),
+            ],
+            mcq_question="Wofür steht Classifier-Free Guidance im Kern?",
+            mcq_options=[
+                "Zusätzlicher externer Classifier steuert Sampling",
+                "Kombination aus conditional und unconditional Noise-Schätzung",
+                "Ausschließlich deterministisches Sampling",
+                "Nur für Video-Diffusion nutzbar",
+            ],
+            mcq_correct_option="Kombination aus conditional und unconditional Noise-Schätzung",
+            mcq_success_message="Genau. CFG kombiniert beide Vorhersagen über den Guidance-Faktor.",
+            mcq_retry_message="Noch nicht. Lies die CFG-Formel im Sampling-Tab erneut.",
+            open_question="Offene Frage: Wann würdest du Guidance reduzieren statt erhöhen?",
+            code_task="""# Code-Aufgabe: experimentelles Grid über guidance_scale
+scales = [3.0, 5.0, 7.5, 10.0, 14.0]
+images = []
+for gs in scales:
+    out = pipe(
+        prompt=prompt,
+        num_inference_steps=25,
+        guidance_scale=gs,
+    ).images[0]
+    images.append(out)
+# TODO: Qualität vs. Prompttreue systematisch bewerten
+""",
+            community_rows=[
+                {"Element": "Diskussion", "Frage": "Wo kippt CFG bei dir in Artefakte?", "Lieferobjekt": "2 Beispiele"},
+                {"Element": "Peer-Review", "Frage": "Ist Samplerwahl begründet?", "Lieferobjekt": "Kurzkommentar"},
+                {"Element": "Challenge", "Frage": "Bestes Bild bei <= 10 Schritten", "Lieferobjekt": "Prompt + Seed + Bild"},
+            ],
+            cheat_sheet=[
+                "DDPM: robust, aber langsam; DDIM/DPM-Solver: schneller.",
+                "CFG 6-8 oft guter Startbereich.",
+                "Seed, Steps, Sampler und Prompt immer mitloggen.",
+            ],
+            key_takeaways=[
+                "Diffusion lernt iteratives Entrauschen statt direkte Pixelvorhersage.",
+                "Sampler und Guidance entscheiden massiv über Qualität und Stil.",
+            ],
+            common_errors=[
+                "Zu hohe Guidance -> Übersättigung/Artefakte.",
+                "Zu wenige Schritte bei komplexen Prompts.",
+                "Samplerwechsel ohne gleiche Seeds/Settings.",
+                "Fehlende negative prompts bei kritischen Motiven.",
+                "Keine qualitative + quantitative Evaluation kombiniert.",
+            ],
         )

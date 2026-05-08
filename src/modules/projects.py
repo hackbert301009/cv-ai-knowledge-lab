@@ -1,6 +1,6 @@
 """Praxisprojekte — 12 Projekte mit Code."""
 import streamlit as st
-from src.components import hero, section_header, divider, info_box, card, render_card_grid
+from src.components import hero, section_header, divider, info_box, card, render_card_grid, render_learning_block
 
 
 def render():
@@ -118,3 +118,56 @@ for epoch in range(10):
 - **[Papers with Code Datasets](https://paperswithcode.com/datasets)** — verlinkt zu Papern
 - **Tools**: PyTorch, torchvision, timm, transformers, ultralytics, opencv
 """)
+
+    divider()
+    render_learning_block(
+        key_prefix="projects",
+        section_title="Lernpfad & Projekt-Übungen",
+        progression=[
+            ("🟢", "Guided Labs", "Klare Schrittfolge mit Setup, Baseline und Checkpoints.", "Beginner", "green"),
+            ("🟠", "Challenge Labs", "Reale Problemstellung mit Bewertungskriterien und Zeitlimit.", "Intermediate", "amber"),
+            ("🔴", "Debug Labs", "Kaputte Trainings-/Inference-Pipelines systematisch reparieren.", "Advanced", "pink"),
+            ("🏁", "Mini-Projekte", "Modulabschluss mit Report, Demo und Lessons Learned.", "Portfolio", "blue"),
+        ],
+        mcq_question="Was ist der wichtigste erste Schritt in einem neuen Praxisprojekt?",
+        mcq_options=[
+            "Direkt komplexes SOTA-Modell trainieren",
+            "Eine reproduzierbare Baseline mit klarer Metrik aufsetzen",
+            "Nur Hyperparameter feinjustieren",
+            "Datensatz ohne Split komplett trainieren",
+        ],
+        mcq_correct_option="Eine reproduzierbare Baseline mit klarer Metrik aufsetzen",
+        mcq_success_message="Richtig. Baseline + Metrik ist die Grundlage für jede Verbesserung.",
+        mcq_retry_message="Nicht optimal. Ohne Baseline sind Verbesserungen kaum belastbar.",
+        open_question="Offene Frage: Welche zwei Risiken würdest du vor Projektstart aktiv absichern (z.B. Datenqualität, Laufzeit, Label-Noise)?",
+        code_task="""# Code-Aufgabe: Experiment-Tracking-Grundstruktur
+run = {
+    "model": "resnet18",
+    "dataset": "cats_vs_dogs",
+    "seed": 42,
+    "metrics": {"val_acc": None, "f1": None},
+}
+# TODO: ergänze logging pro Epoche für Loss, LR und Best-Checkpoint
+""",
+        community_rows=[
+            {"Format": "Diskussion", "Fokus": "Welche Entscheidung hat dein Projekt am meisten verbessert?", "Output": "Kurzbeitrag"},
+            {"Format": "Peer-Feedback", "Fokus": "Ist Pipeline reproduzierbar und fair evaluiert?", "Output": "2 Pluspunkte + 1 To-do"},
+            {"Format": "Team-Challenge", "Fokus": "Gemeinsamer Benchmark auf gleichem Datensatz", "Output": "Leaderboard + Learnings"},
+        ],
+        cheat_sheet=[
+            "Problem klar definieren: Zielmetrik, Constraints, Datenquelle.",
+            "Baseline zuerst, dann inkrementell verbessern.",
+            "Jede Änderung mit gleicher Eval-Methodik vergleichen.",
+        ],
+        key_takeaways=[
+            "Praxisfortschritt entsteht durch kurze Experimentierrunden mit sauberem Logging.",
+            "Gute Dokumentation ist Teil des Modells, nicht Extra-Arbeit.",
+        ],
+        common_errors=[
+            "Kein klarer Train/Val/Test-Split.",
+            "Ergebnisse ohne Baseline interpretieren.",
+            "Nur auf Accuracy schauen statt auf passende Metrik.",
+            "Keine Fehlanalysen auf schwierige Klassen.",
+            "Fehlende Reproduzierbarkeit (Seed, Versionen, Config).",
+        ],
+    )

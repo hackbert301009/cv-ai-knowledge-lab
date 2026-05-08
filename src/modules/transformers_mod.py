@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list, card, render_card_grid,
+    video_embed, lab_header, key_concept, step_list, card, render_card_grid, render_learning_block,
 )
 
 
@@ -29,6 +29,7 @@ def render():
         "🆚 ViT vs CNN",
         "🧪 Attention Lab",
         "🎬 Lernvideos",
+        "🧭 Lernpfad & Übungen",
     ])
 
     # ------------------------------------------------------------------ #
@@ -385,4 +386,68 @@ Wir berechnen, wie stark jeder Patch auf jeden anderen "achtet".""")
             "Karpathys GPT-Tutorial ist lang, aber jede Minute wert. "
             "Nach diesem Video kannst du einen eigenen Transformer implementieren.",
             kind="tip",
+        )
+
+    # ------------------------------------------------------------------ #
+    with tabs[7]:
+        st.markdown("### Visual: Modell-Entscheidung")
+        st.graphviz_chart(
+            """
+            digraph G {
+                rankdir=TB;
+                node [shape=box, style=rounded];
+                A [label="Datensatzgröße?"];
+                B [label="<10k: CNN/Transfer"];
+                C [label(">50k + Pretraining: ViT/Swin")];
+                D [label="Detection/Segmentation: Swin"];
+                A -> B;
+                A -> C;
+                C -> D;
+            }
+            """
+        )
+
+        render_learning_block(
+            key_prefix="transformers",
+            section_title="Lernpfad für Transformer",
+            section_sub="Progression mit Praxisfokus",
+            progression=[
+                ("🟢", "Guided Lab", "Baue Attention-Matrix für eine Mini-Sequenz und interpretiere Heads.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Vergleiche ViT und CNN auf kleinem Datensatz mit gleichem Budget.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Finde Ursachen für instabile Attention oder schlechte Generalisierung.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Patch-Classifier mit Fehleranalyse und Kurzbericht.", "Abschluss", "blue"),
+            ],
+            mcq_question="Warum braucht ViT ohne starkes Pretraining oft mehr Daten als CNN?",
+            mcq_options=[
+                "Weil ViT keine Residual Connections hat",
+                "Weil ViT weniger Parameter hat",
+                "Weil ViT weniger induktiven Bias (Lokalität/Translation) besitzt",
+                "Weil ViT nicht mit AdamW trainiert werden kann",
+            ],
+            mcq_correct_option="Weil ViT weniger induktiven Bias (Lokalität/Translation) besitzt",
+            mcq_success_message="Exakt. Weniger Bias bedeutet oft höheren Datenbedarf.",
+            mcq_retry_message="Noch nicht. Schau in den ViT-vs-CNN Vergleich.",
+            open_question="Offene Frage: In welchem Produktfall würdest du Swin statt ViT-B einsetzen und warum?",
+            code_task="""# Code-Aufgabe: Attention-Map pro Head mitteln
+import torch
+
+attn = torch.randn(12, 197, 197)  # 12 Heads
+# TODO: gemittelte Attention über alle Heads berechnen
+""",
+            cheat_sheet=[
+                "Kleine Daten: CNN + Transfer Learning.",
+                "Große Daten / Foundation: ViT.",
+                "Detection/Segmentation mit Hierarchie: Swin.",
+            ],
+            key_takeaways=[
+                "Attention ermöglicht globale Abhängigkeiten in einem Schritt.",
+                "Architekturwahl ist immer ein Trade-off aus Daten, Compute und Latenz.",
+            ],
+            common_errors=[
+                "ViT ohne Pretraining auf sehr kleinen Datensätzen.",
+                "Positions-Embeddings bei Auflösungswechsel falsch behandeln.",
+                "Nur Accuracy vergleichen, keine Laufzeit/Memory-Metriken.",
+                "Unterschiedliche Augmentationen zwischen Modellen.",
+                "Fehlende Fehleranalyse der Aufmerksamkeitsmuster.",
+            ],
         )

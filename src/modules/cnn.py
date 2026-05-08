@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    card, render_card_grid, video_embed, lab_header, key_concept, step_list,
+    card, render_card_grid, video_embed, lab_header, key_concept, step_list, render_learning_block,
 )
 
 
@@ -24,6 +24,7 @@ def render():
         "🧪 Interaktiv",
         "💻 Code",
         "🎬 Lernvideos",
+        "🧭 Lernpfad & Übungen",
     ])
 
     # ------------------------------------------------------------------ #
@@ -463,4 +464,64 @@ optimizer = torch.optim.AdamW([
             "Karpathy's Tutorial ist der Goldstandard: nach diesem Video weißt du nicht nur, "
             "**was** PyTorch macht, sondern **warum** — weil du es selbst gebaut hast.",
             kind="tip",
+        )
+
+    # ------------------------------------------------------------------ #
+    with tabs[7]:
+        st.graphviz_chart(
+            """
+            digraph G {
+              rankdir=LR;
+              node [shape=box, style=rounded];
+              A [label="Daten"];
+              B [label="Baseline CNN"];
+              C [label="Tuning"];
+              D [label="Fehleranalyse"];
+              E [label="Deployment-Demo"];
+              A -> B -> C -> D -> E;
+            }
+            """
+        )
+        render_learning_block(
+            key_prefix="cnn",
+            section_title="Lernpfad für CNNs",
+            section_sub="Progression pro Modulabschluss",
+            progression=[
+                ("🟢", "Guided Lab", "Baue ein kleines CNN auf CIFAR-10 mit vorgegebenem Template.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Verbessere Accuracy > 85% mit Augmentation und LR-Schedule.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Diagnostiziere Overfitting, exploding gradients und Data-Leakage.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Classifier + Fehleranalyse + Kurzbericht als Portfolio-Artefakt.", "Abschluss", "blue"),
+            ],
+            mcq_question="Welche Maßnahme reduziert Overfitting typischerweise am direktesten?",
+            mcq_options=["Höhere Lernrate", "Data Augmentation", "Mehr Epochen", "Größerer Batch"],
+            mcq_correct_option="Data Augmentation",
+            mcq_success_message="Richtig. Augmentation verbessert Generalisierung auf neuen Daten.",
+            mcq_retry_message="Nicht optimal. Prüfe, welche Methode explizit Generalisierung stärkt.",
+            open_question="Offene Frage: Woran erkennst du in deinen Kurven Underfitting vs. Overfitting?",
+            code_task="""# Code-Aufgabe: Early-Stopping Logik ergänzen
+best_val = 0.0
+patience = 3
+counter = 0
+
+for epoch in range(epochs):
+    train_one_epoch(...)
+    val_acc = validate(...)
+    # TODO: best_val, counter und break korrekt setzen
+""",
+            cheat_sheet=[
+                "Start immer mit einer starken Baseline.",
+                "Conv -> BN -> ReLU ist ein robuster Default.",
+                "Train/Val-Test sauber trennen, kein Data-Leak.",
+            ],
+            key_takeaways=[
+                "CNNs nutzen Lokalität und Weight-Sharing effizient aus.",
+                "Trainingserfolg hängt oft mehr von Daten und Setup als von Modellgröße ab.",
+            ],
+            common_errors=[
+                "Accuracy ohne Klassenbalance zu prüfen.",
+                "Validation-Set versehentlich in Augmentation-Train-Pipeline.",
+                "Zu hohe Lernrate ohne Warmup/Scheduler.",
+                "Kein Checkpointing der besten Epoche.",
+                "Keine Fehlanalyse pro Klasse.",
+            ],
         )

@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list,
+    video_embed, lab_header, key_concept, step_list, render_learning_block,
 )
 
 
@@ -34,6 +34,7 @@ def render():
         "🔍 Training Debuggen",
         "🧪 Loss-Visualisierung",
         "🎬 Lernvideos",
+        "🧭 Lernpfad & Übungen",
     ])
 
     # ------------------------------------------------------------------ #
@@ -487,4 +488,68 @@ for batch in dataloader:
             "Der ultimative Resource: Karpathys Blog-Post **'A Recipe for Training Neural Networks'** "
             "(google.com/search). Lese ihn zweimal — einmal am Anfang, einmal nach deinem ersten Projekt.",
             kind="tip",
+        )
+
+    # ------------------------------------------------------------------ #
+    with tabs[7]:
+        st.graphviz_chart(
+            """
+            digraph G {
+                rankdir=LR;
+                node [shape=box, style=rounded];
+                A [label="Loss verstehen"];
+                B [label="Optimizer wählen"];
+                C [label="LR Schedule"];
+                D [label="Debugging"];
+                E [label="Mini-Projekt"];
+                A -> B -> C -> D -> E;
+            }
+            """
+        )
+        render_learning_block(
+            key_prefix="training",
+            section_title="Lernpfad für Training & Optimizer",
+            progression=[
+                ("🟢", "Guided Lab", "Trainiere ein Basis-CNN mit AdamW und dokumentiere Loss/Val-Kurven.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Steigere Val-Accuracy durch Warmup + Cosine + Augmentation.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Behebe NaN-Loss, Underfitting oder Overfitting systematisch.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Erstelle einen reproduzierbaren Training-Report mit Konfigurationsvergleich.", "Abschluss", "blue"),
+            ],
+            mcq_question="Welche Kombination ist meist ein robuster Default für moderne Transformer?",
+            mcq_options=["SGD + konstante LR", "AdamW + Warmup + Cosine", "RMSProp + Step Decay", "Adam ohne Weight Decay"],
+            mcq_correct_option="AdamW + Warmup + Cosine",
+            mcq_success_message="Richtig. Das ist in vielen Setups der stabile Praxis-Default.",
+            mcq_retry_message="Noch nicht korrekt. Prüfe die Optimizer-Sektion und LR-Schedules.",
+            open_question="Offene Frage: Wie entscheidest du zwischen Overfitting und zu hoher Lernrate, wenn die Kurven instabil sind?",
+            code_task="""# Code-Aufgabe: Early-Stopping korrekt ergänzen
+best_val = float("inf")
+patience = 5
+counter = 0
+
+for epoch in range(epochs):
+    train_one_epoch(...)
+    val_loss = validate(...)
+    # TODO: speichere bestes Modell, erhöhe counter, stoppe bei patience
+""",
+            community_rows=[
+                {"Format": "Diskussion", "Fokus": "Welche Hyperparameter brachten den größten Effekt?", "Output": "Kurzbegründung"},
+                {"Format": "Peer-Feedback", "Fokus": "Ist der Trainingsvergleich fair und reproduzierbar?", "Output": "2 Stärken + 1 Verbesserung"},
+                {"Format": "Challenge", "Fokus": "Bestes Ergebnis bei gleichem Epochenbudget", "Output": "Config + Kurve"},
+            ],
+            cheat_sheet=[
+                "Erst Baseline, dann genau eine Änderung pro Experiment.",
+                "LR-Finder oder grober LR-Sweep vor langem Training.",
+                "Seeds, Scheduler und Augmentation immer mitloggen.",
+            ],
+            key_takeaways=[
+                "Optimizer-Wahl, LR und Datenqualität entscheiden häufiger als Modellgröße.",
+                "Debugging beginnt bei den Daten, nicht beim neuesten Trick.",
+            ],
+            common_errors=[
+                "Mehrere Hyperparameter gleichzeitig ändern.",
+                "Validation-Metrik nicht konsequent tracken.",
+                "NaN-Fehler ohne Gradient-/LR-Check ignorieren.",
+                "Kein Checkpoint des besten Modells.",
+                "Fehlende Reproduzierbarkeit (Seed/Versionen).",
+            ],
         )

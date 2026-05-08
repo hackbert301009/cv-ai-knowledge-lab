@@ -4,7 +4,7 @@ from src.components import (
     hero, divider, section_header, stat_tile, card, render_card_grid,
     info_box, video_embed, key_concept,
 )
-from src.registry import MODULES, modules_by_category
+from src.registry import MODULES, modules_by_category, get_module
 
 
 def render():
@@ -19,13 +19,69 @@ def render():
     # ---------- Stats ----------
     cols = st.columns(4)
     stats = [
-        ("27+", "Module"),
+        (str(len(MODULES)), "Module"),
         ("200+", "Kapitel & Themen"),
         ("100+", "Code-Beispiele"),
         ("∞",   "Lernpotenzial"),
     ]
     for col, (num, label) in zip(cols, stats):
         col.markdown(stat_tile(num, label), unsafe_allow_html=True)
+
+    divider()
+
+    # ---------- Personal Hub ----------
+    section_header("Dein Personal Hub", "Fortschritt, Favoriten und schneller Wiedereinstieg.")
+    trackable_ids = [m.id for m in MODULES if m.id != "home"]
+    completed = set(st.session_state.get("completed_modules", []))
+    favorites = st.session_state.get("favorite_modules", [])
+    recent = st.session_state.get("visited_modules", [])
+    done_count = len(completed.intersection(trackable_ids))
+    progress_pct = int((done_count / max(1, len(trackable_ids))) * 100)
+
+    hcols = st.columns(4)
+    hub_stats = [
+        (f"{progress_pct}%", "Lernfortschritt"),
+        (str(done_count), "Abgeschlossen"),
+        (str(len(favorites)), "Favoriten"),
+        (str(len(recent)), "Zuletzt besucht"),
+    ]
+    for col, (num, label) in zip(hcols, hub_stats):
+        col.markdown(stat_tile(num, label), unsafe_allow_html=True)
+
+    st.progress(progress_pct / 100)
+
+    last_id = st.session_state.get("last_module", "home")
+    last_mod = get_module(last_id)
+    if last_mod is not None and last_mod.id != "home":
+        if st.button(f"▶️ Weiterlernen: {last_mod.icon} {last_mod.title}", key="home_resume_last"):
+            st.session_state.current_module = last_mod.id
+            st.rerun()
+
+    q1, q2 = st.columns(2)
+    with q1:
+        st.markdown("**⭐ Deine Favoriten**")
+        if favorites:
+            for fav_id in favorites[:4]:
+                fav = get_module(fav_id)
+                if fav is None:
+                    continue
+                if st.button(f"{fav.icon} {fav.title}", key=f"home_fav_{fav_id}", use_container_width=True):
+                    st.session_state.current_module = fav_id
+                    st.rerun()
+        else:
+            st.caption("Noch keine Favoriten markiert.")
+    with q2:
+        st.markdown("**🕘 Zuletzt besucht**")
+        if recent:
+            for rec_id in recent[:4]:
+                rec = get_module(rec_id)
+                if rec is None:
+                    continue
+                if st.button(f"{rec.icon} {rec.title}", key=f"home_recent_{rec_id}", use_container_width=True):
+                    st.session_state.current_module = rec_id
+                    st.rerun()
+        else:
+            st.caption("Noch keine Module besucht.")
 
     divider()
 

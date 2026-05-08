@@ -5,7 +5,7 @@ import cv2
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list,
+    video_embed, lab_header, key_concept, step_list, render_learning_block,
 )
 
 
@@ -24,6 +24,7 @@ def render():
         "✍️ Eigener Kernel",
         "🔗 Brücke zu CNN",
         "🎬 Lernvideos",
+        "🧭 Lernpfad & Übungen",
     ])
 
     # ------------------------------------------------------------------ #
@@ -349,4 +350,54 @@ with torch.no_grad():
             "Nachdem du diese Videos geschaut hast, öffne das 'Interaktiv'-Tab und probiere alle Kernel durch. "
             "Aktives Experimentieren ist 5× effektiver als nur zuschauen.",
             kind="tip",
+        )
+
+    # ------------------------------------------------------------------ #
+    with tabs[6]:
+        render_learning_block(
+            key_prefix="filters",
+            section_title="Lernpfad für dieses Modul",
+            progression=[
+                ("🟢", "Guided Lab", "Sobel und Gauß mit fester Anleitung vergleichen.", "Filters", "green"),
+                ("🟠", "Challenge Lab", "Wähle selbst Kernel-Kombination für ein unscharfes Bild.", "Filters", "amber"),
+                ("🔴", "Debug Lab", "Finde, warum Kanten doppelt oder verrauscht erscheinen.", "Filters", "pink"),
+                ("🏁", "Mini-Projekt", "Baue eine kleine Streamlit Filter-Workbench.", "Filters", "blue"),
+            ],
+            mcq_question="Welcher Kernel eignet sich am besten für horizontale Kanten?",
+            mcq_options=["Sobel-X", "Sobel-Y", "Identity", "Box-Blur"],
+            mcq_correct_option="Sobel-Y",
+            mcq_success_message="Richtig. Sobel-Y reagiert auf Intensitätsänderungen entlang der y-Richtung.",
+            mcq_retry_message="Noch nicht korrekt. Tipp: Welche Ableitung liefert horizontale Kanten?",
+            open_question="Offene Frage: Wann würdest du Laplace statt Sobel verwenden?",
+            code_task="""# Code-Aufgabe: kombiniere Sobel-X und Sobel-Y
+import cv2
+import numpy as np
+
+gray = ...  # uint8-Bild
+sx = cv2.Sobel(gray, cv2.CV_32F, 1, 0, ksize=3)
+sy = cv2.Sobel(gray, cv2.CV_32F, 0, 1, ksize=3)
+mag = np.sqrt(sx**2 + sy**2)
+edges = np.clip(mag, 0, 255).astype(np.uint8)
+""",
+            community_rows=[
+                {"Format": "Diskussion", "Prompt": "Welcher Kernel ist in deinem Use-Case stabiler?", "Output": "1 Vergleich + Begründung"},
+                {"Format": "Peer-Feedback", "Prompt": "Ist der Kernel begründet und reproduzierbar?", "Output": "2 Stärken + 1 Verbesserung"},
+                {"Format": "Challenge-Team", "Prompt": "Gemeinsamer Benchmark auf 3 Testbildern", "Output": "Kurzreport"},
+            ],
+            cheat_sheet=[
+                "Sobel für robuste Gradienten, Laplace für feine Kanten.",
+                "Blur vor Kanten-Detektion reduziert Noise stark.",
+                "Kernel-Summe nahe 1 hält Helligkeit stabil.",
+            ],
+            key_takeaways=[
+                "Faltung ist die Brücke zwischen klassischer CV und CNNs.",
+                "Gute Ergebnisse kommen oft aus der richtigen Reihenfolge von Filtern.",
+            ],
+            common_errors=[
+                "Falscher Datentyp (Overflow bei uint8).",
+                "Kein Padding berücksichtigt -> Randartefakte.",
+                "Kanten-Kernel ohne Absolutwert fehlinterpretiert.",
+                "Zu große Kernel bei kleinen Bildern.",
+                "Kein visueller Vorher/Nachher-Vergleich.",
+            ],
         )

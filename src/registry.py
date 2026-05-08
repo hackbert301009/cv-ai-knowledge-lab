@@ -1,6 +1,6 @@
 """
 Modul-Registry — zentrale Konfiguration aller Lernmodule.
-Alle 32 Module mit Metadaten für Navigation, Kategorisierung und Rendering.
+Alle Module mit Metadaten für Navigation, Kategorisierung und Rendering.
 """
 
 from dataclasses import dataclass, field
@@ -25,17 +25,17 @@ class Module:
 CATEGORIES = {
     "🏠 Übersicht":      ["home", "roadmap"],
     "🧮 Grundlagen":     ["math", "linalg", "calculus", "probability", "tensor_playground"],
-    "🖼️ Bildverarbeitung": ["image_basics", "filters", "edges", "features", "morphology", "segmentation_classic"],
+    "🖼️ Bildverarbeitung": ["image_basics", "camera_pipeline", "filters", "edges", "features", "morphology", "segmentation_classic"],
     "🤖 Deep Learning":   ["nn_basics", "cnn", "training", "modern_archs"],
     "🔥 State-of-the-Art": ["transformers", "vlm", "diffusion", "gen_ai", "multimodal", "pose_estimation"],
-    "🚀 Praxis":          ["projects", "datasets", "deployment", "compression"],
+    "🚀 Praxis":          ["learning_studio", "projects", "datasets", "deployment", "compression"],
     "📰 Live":            ["news", "papers", "paper_of_month", "resources"],
     "📚 Referenz":        ["glossar"],
 }
 
 
 # --------------------------------------------------------------------
-# Alle Module (32 Stück)
+# Alle Module
 # --------------------------------------------------------------------
 MODULES: List[Module] = [
     # --- Übersicht ---
@@ -50,6 +50,7 @@ MODULES: List[Module] = [
 
     # --- Bildverarbeitung ---
     Module("image_basics",        "🖼️", "Bildgrundlagen & Pixel",          "Was ist ein Bild? Farbräume, Sampling",      "Bildverarbeitung", "Anfänger",       "20 min", ["cv"]),
+    Module("camera_pipeline",     "📷", "Wie eine Kamera ein Bild macht",  "Photonen, Sensor, Bayer, ISP und Grundpipeline", "Bildverarbeitung", "Anfänger",   "35 min", ["cv", "camera", "sensor", "isp"]),
     Module("filters",             "🌫️", "Filter & Faltung",                 "Convolution, Gauß, Median, Bilateral",       "Bildverarbeitung", "Anfänger",       "30 min", ["cv", "core"]),
     Module("edges",               "📏", "Kantendetektion",                 "Sobel, Canny, Laplace — interaktiv",         "Bildverarbeitung", "Fortgeschritten", "25 min", ["cv"]),
     Module("features",            "🔑", "Feature Detection & Matching",    "SIFT, ORB, Harris, Keypoints",               "Bildverarbeitung", "Fortgeschritten", "40 min", ["cv"]),
@@ -70,6 +71,7 @@ MODULES: List[Module] = [
     Module("multimodal",   "🌐", "Multimodal & LLMs",               "GPT-4o, Gemini, Sora — Bild+Text+Video",       "State-of-the-Art", "Experte", "40 min", ["sota"]),
 
     # --- Praxis ---
+    Module("learning_studio", "🧪", "Lernstudio: Labs & Uebungen", "Progressive Labs, Mischformat und Community", "Praxis", "Anfänger", "35 min", ["praxis", "labs", "community"]),
     Module("projects",   "💻", "Praxisprojekte",          "10+ Hands-on Projekte mit Code",          "Praxis", "Fortgeschritten", "varies", ["praxis"]),
     Module("datasets",   "📦", "Datasets & Tools",        "ImageNet, COCO, HuggingFace, Roboflow",   "Praxis", "Anfänger",        "20 min", ["praxis"]),
     Module("deployment", "🚀", "Deployment & MLOps",      "ONNX, TensorRT, FastAPI, Docker",         "Praxis", "Experte",          "50 min", ["praxis"]),

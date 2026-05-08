@@ -2,7 +2,7 @@
 import streamlit as st
 from src.components import (
     hero, section_header, divider, info_box, card, render_card_grid,
-    video_embed, lab_header, key_concept, step_list,
+    video_embed, lab_header, key_concept, step_list, render_learning_block,
 )
 
 
@@ -14,7 +14,7 @@ def render():
             "CLIP hat alles verändert — und die Modelle danach haben Multimodal-KI definiert."
     )
 
-    tabs = st.tabs(["🔗 CLIP", "🌉 BLIP-2", "🦙 LLaVA", "🦩 Flamingo", "🎯 Anwendungen", "🎬 Lernvideos"])
+    tabs = st.tabs(["🔗 CLIP", "🌉 BLIP-2", "🦙 LLaVA", "🦩 Flamingo", "🎯 Anwendungen", "🎬 Lernvideos", "🧭 Lernpfad & Übungen"])
 
     with tabs[0]:
         section_header("CLIP — Contrastive Language-Image Pretraining (2021)")
@@ -162,4 +162,55 @@ Flamingo war historisch wichtig — die Architektur lebt in vielen heutigen Mult
             "Für CLIP: Das Originalpaper 'Learning Transferable Visual Models From Natural Language Supervision' "
             "(Radford et al., 2021) ist sehr gut lesbar. Starte damit nach den Videos.",
             kind="tip",
+        )
+
+    with tabs[6]:
+        render_learning_block(
+            key_prefix="vlm",
+            section_title="Lernpfad für VLMs",
+            progression=[
+                ("🟢", "Guided Lab", "CLIP Zero-Shot auf einem kleinen Bildset testen.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Prompt-Varianten vergleichen und Fehlerfälle dokumentieren.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Halluzinationen und Fehlgrounding in VLM-Antworten analysieren.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Multimodaler Assistent für ein kleines Bildarchiv.", "Abschluss", "blue"),
+            ],
+            mcq_question="Was war der Kernbeitrag von CLIP?",
+            mcq_options=[
+                "Rein textbasiertes Sprachmodell",
+                "Gemeinsamer Bild-Text-Embeddingraum durch kontrastives Lernen",
+                "Erstes Modell mit Cross-Attention",
+                "Nur Datensatzkompression ohne Modelltraining",
+            ],
+            mcq_correct_option="Gemeinsamer Bild-Text-Embeddingraum durch kontrastives Lernen",
+            mcq_success_message="Richtig. Genau das ermöglicht Zero-Shot Matching.",
+            mcq_retry_message="Noch nicht korrekt. Schau in den CLIP-Abschnitt.",
+            open_question="Offene Frage: Welche Arten von VLM-Fehlern sind in sicherheitskritischen Anwendungen besonders problematisch?",
+            code_task="""# Code-Aufgabe: CLIP-Ähnlichkeit normalisieren
+import torch
+
+img_feat = ...
+txt_feat = ...
+# TODO: L2-Normierung + Cosine Similarity Matrix berechnen
+""",
+            community_rows=[
+                {"Format": "Diskussion", "Fokus": "Wo versagt Zero-Shot in deinem Datensatz?", "Output": "2 Beispiele"},
+                {"Format": "Peer-Feedback", "Fokus": "Sind Prompts und Auswertung fair dokumentiert?", "Output": "Kurzreview"},
+                {"Format": "Challenge", "Fokus": "Bestes Prompting bei gleichem Modell", "Output": "Prompt-Sammlung"},
+            ],
+            cheat_sheet=[
+                "CLIP: stark für Matching, begrenzt für feine reasoning-Aufgaben.",
+                "Prompting beeinflusst Ergebnisse stark.",
+                "Immer qualitative + quantitative Evaluation kombinieren.",
+            ],
+            key_takeaways=[
+                "VLMs verbinden visuelle und sprachliche Repräsentationen.",
+                "Gute Auswertung braucht Benchmark plus Fehleranalyse.",
+            ],
+            common_errors=[
+                "Nur Einzelerfolge zeigen.",
+                "Keine negativen Beispiele testen.",
+                "Prompt-Leakage in Evaluation.",
+                "Fehlende Grounding-Prüfung.",
+                "Sicherheitsgrenzen ignorieren.",
+            ],
         )

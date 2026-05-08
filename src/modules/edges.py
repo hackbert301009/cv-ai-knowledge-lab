@@ -2,7 +2,7 @@
 import streamlit as st
 import numpy as np
 import cv2
-from src.components import hero, section_header, divider, info_box
+from src.components import hero, section_header, divider, info_box, step_list, render_learning_block
 
 
 def render():
@@ -13,7 +13,7 @@ def render():
             "Sobel, Canny, Laplace — die Klassiker."
     )
 
-    tabs = st.tabs(["📐 Theorie", "🔵 Sobel", "🎯 Canny", "🌊 Laplace", "🧪 Live-Demo"])
+    tabs = st.tabs(["📐 Theorie", "🔵 Sobel", "🎯 Canny", "🌊 Laplace", "🧪 Live-Demo", "🧭 Lernpfad & Übungen"])
 
     with tabs[0]:
         section_header("Was ist eine Kante?")
@@ -125,4 +125,56 @@ DoG ist die Basis von SIFT.
             "Sobel zeigt graue Kanten unterschiedlicher Stärke. Canny zeigt nur dünne, binäre Kanten — "
             "ideal als Eingang für weitere Algorithmen wie Hough-Transformation oder Konturen.",
             kind="info",
+        )
+
+    with tabs[5]:
+        render_learning_block(
+            key_prefix="edges",
+            section_title="Lernpfad für Kantendetektion",
+            progression=[
+                ("🟢", "Guided Lab", "Sobel, Laplace und Canny auf denselben Bildern vergleichen.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Schwellwerte für Canny auf verrauschten Bildern robust einstellen.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Unstabile Kanten durch Noise, Blur oder falsche Thresholds beheben.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Edge-Dashboard mit Presets für Indoor/Outdoor/Low-Light.", "Abschluss", "blue"),
+            ],
+            mcq_question="Warum nutzt Canny zwei Schwellwerte?",
+            mcq_options=[
+                "Um zwei Bildkanäle gleichzeitig zu verarbeiten",
+                "Für Hysterese: schwache Kanten nur bei Verbindung zu starken Kanten behalten",
+                "Um Laplace und Sobel zu kombinieren",
+                "Nur für Geschwindigkeit auf GPU",
+            ],
+            mcq_correct_option="Für Hysterese: schwache Kanten nur bei Verbindung zu starken Kanten behalten",
+            mcq_success_message="Richtig. Genau das macht Canny besonders robust.",
+            mcq_retry_message="Noch nicht korrekt. Schau in den Canny-Ablauf.",
+            open_question="Offene Frage: Wann ist ein schwächerer Canny-Low-Threshold sinnvoll?",
+            code_task="""# Code-Aufgabe: Canny mit adaptiven Schwellen
+import cv2
+import numpy as np
+
+gray = ...
+med = np.median(gray)
+# TODO: low/high automatisch aus med ableiten und cv2.Canny anwenden
+""",
+            community_rows=[
+                {"Format": "Diskussion", "Fokus": "Welche Kanten sind für deinen Task relevant?", "Output": "Beispielbild"},
+                {"Format": "Peer-Feedback", "Fokus": "Sind Parameterwahl und Ergebnis nachvollziehbar?", "Output": "Kurzfeedback"},
+                {"Format": "Challenge", "Fokus": "Beste Kantenqualität bei starkem Noise", "Output": "Vorher/Nachher"},
+            ],
+            cheat_sheet=[
+                "Vor Canny meist leicht glätten.",
+                "Low/High als Paar abstimmen, nicht isoliert.",
+                "Sobel zeigt Stärke, Canny liefert binäre Kanten.",
+            ],
+            key_takeaways=[
+                "Gute Kanten sind oft die Grundlage für Segmentierung und Geometrie.",
+                "Parameterstabilität ist wichtiger als ein gutes Einzelbild.",
+            ],
+            common_errors=[
+                "Kein Blur vor Canny.",
+                "High/Low unpassend gewählt.",
+                "Ergebnis nur visuell, nicht auf mehreren Bildern geprüft.",
+                "Falscher Datentyp.",
+                "Kanten ohne Kontext interpretiert.",
+            ],
         )

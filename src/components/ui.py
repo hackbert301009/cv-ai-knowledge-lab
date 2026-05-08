@@ -3,6 +3,7 @@ Wiederverwendbare UI-Komponenten und Layout-Helpers.
 """
 import streamlit as st
 from pathlib import Path
+from typing import Sequence
 
 
 def inject_css():
@@ -185,3 +186,68 @@ def step_list(steps: list[tuple[str, str]]):
         </div>
         """
     st.markdown(f'<div class="step-list">{items}</div>', unsafe_allow_html=True)
+
+
+def _as_markdown_list(items: Sequence[str]) -> str:
+    return "\n".join(f"- {item}" for item in items)
+
+
+def render_learning_block(
+    *,
+    key_prefix: str,
+    section_title: str = "Lernpfad & Übungen",
+    section_sub: str = "Guided -> Challenge -> Debug -> Mini-Projekt",
+    progression: list[tuple[str, str, str, str, str]] | None = None,
+    mcq_question: str | None = None,
+    mcq_options: list[str] | None = None,
+    mcq_correct_option: str | None = None,
+    mcq_success_message: str = "Richtig.",
+    mcq_retry_message: str = "Nicht korrekt. Prüfe den Abschnitt erneut.",
+    open_question: str | None = None,
+    code_task: str | None = None,
+    code_language: str = "python",
+    community_rows: list[dict[str, str]] | None = None,
+    cheat_sheet: list[str] | None = None,
+    key_takeaways: list[str] | None = None,
+    common_errors: list[str] | None = None,
+):
+    """Rendert einen standardisierten Lernblock für Module."""
+    section_header(section_title, section_sub)
+
+    if progression:
+        cards = [
+            card(icon, title, desc, [level], [color])
+            for icon, title, desc, level, color in progression
+        ]
+        render_card_grid(cards, cols=min(4, max(1, len(cards))))
+
+    st.markdown("### Mischformat-Übung")
+    if mcq_question and mcq_options and mcq_correct_option:
+        selected = st.radio(mcq_question, mcq_options, key=f"{key_prefix}_mcq")
+        if st.button("Antwort prüfen", key=f"{key_prefix}_mcq_check"):
+            if selected == mcq_correct_option:
+                st.success(mcq_success_message)
+            else:
+                st.warning(mcq_retry_message)
+
+    if open_question:
+        st.text_area(open_question, key=f"{key_prefix}_open_question", height=90)
+
+    if code_task:
+        st.code(code_task, language=code_language)
+
+    if community_rows:
+        st.markdown("### Community & Peer-Feedback")
+        st.table(community_rows)
+
+    if cheat_sheet:
+        st.markdown("### Cheat Sheet")
+        st.markdown(_as_markdown_list(cheat_sheet))
+
+    if key_takeaways:
+        st.markdown("### Key Takeaways")
+        st.markdown(_as_markdown_list(key_takeaways))
+
+    if common_errors:
+        st.markdown("### Häufige Fehler")
+        st.markdown("\n".join(f"{idx}. {item}" for idx, item in enumerate(common_errors, 1)))

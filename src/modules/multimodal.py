@@ -1,6 +1,6 @@
 """Multimodal & LLMs — GPT-4o, Gemini, Sora."""
 import streamlit as st
-from src.components import hero, section_header, divider, info_box, card, render_card_grid
+from src.components import hero, section_header, divider, info_box, card, render_card_grid, step_list, render_learning_block
 
 
 def render():
@@ -11,7 +11,7 @@ def render():
             "Die Frontier von 2024–2026."
     )
 
-    tabs = st.tabs(["🌐 Was ist Multimodal?", "🚀 Frontier Models", "🏗️ Architekturen", "🎬 Sora & Video", "📈 Ausblick"])
+    tabs = st.tabs(["🌐 Was ist Multimodal?", "🚀 Frontier Models", "🏗️ Architekturen", "🎬 Sora & Video", "📈 Ausblick", "🧭 Lernpfad & Übungen"])
 
     with tabs[0]:
         section_header("Multimodal — was heißt das?")
@@ -127,4 +127,46 @@ Modelle, die nicht nur Text/Bild/Audio erzeugen, sondern **handeln**:
             "verstehe die **Konzepte**. Architekturen kommen und gehen, aber Attention, Diffusion und "
             "Contrastive Learning bleiben für die nächsten Jahre relevant.",
             kind="tip",
+        )
+
+    with tabs[5]:
+        render_learning_block(
+            key_prefix="multimodal",
+            section_title="Lernpfad für Multimodal",
+            progression=[
+                ("🟢", "Guided Lab", "Multimodale Beispiele analysieren: Bild+Text+Audio Eingaben vergleichen.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Use-Case für multimodales System mit klaren Metriken definieren.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Fehlgrundierung oder Modalitätskonflikte in Outputs diagnostizieren.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Kleiner multimodaler Prototyp mit dokumentiertem Evaluationsplan.", "Abschluss", "blue"),
+            ],
+            mcq_question="Welche Trainingsstrategie optimiert alle Modalitäten gemeinsam von Anfang an?",
+            mcq_options=["Late Fusion", "Mid Fusion", "Early Fusion", "Post Fusion"],
+            mcq_correct_option="Early Fusion",
+            mcq_success_message="Richtig. Das ist oft am leistungsfähigsten, aber teuer.",
+            mcq_retry_message="Nicht korrekt. Siehe Architekturvergleich.",
+            open_question="Offene Frage: Wann ist Mid-Fusion in der Praxis sinnvoller als Early-Fusion?",
+            code_task="""# Code-Aufgabe: Modalitäts-Metadaten vorbereiten
+sample = {
+    "text": "...",
+    "image_path": "...",
+    "audio_path": "...",
+}
+# TODO: einheitliche Token/Feature-Repräsentation pro Modalität skizzieren
+""",
+            cheat_sheet=[
+                "Early-Fusion: stark, teuer.",
+                "Mid-Fusion: pragmatischer Transferweg.",
+                "Evaluation immer modalitätsübergreifend aufsetzen.",
+            ],
+            key_takeaways=[
+                "Multimodalität ist zentral für reale Assistenz- und Robotikaufgaben.",
+                "Architekturwahl folgt Daten, Latenz und Budget.",
+            ],
+            common_errors=[
+                "Nur Textmetrik reporten.",
+                "Modalitäten unsauber synchronisiert.",
+                "Bias zwischen Modalitäten ignoriert.",
+                "Kein Fehlerfall-Test auf schwierige Inputs.",
+                "Keine Sicherheitsprüfung.",
+            ],
         )

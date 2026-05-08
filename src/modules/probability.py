@@ -2,7 +2,7 @@
 import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
-from src.components import hero, section_header, divider, info_box
+from src.components import hero, section_header, divider, info_box, step_list, render_learning_block
 
 
 def render():
@@ -13,7 +13,7 @@ def render():
             "mit denen ML-Modelle Unsicherheit ausdrücken und messen."
     )
 
-    tabs = st.tabs(["🎲 Basics", "📊 Verteilungen", "🔄 Bayes", "📉 Cross-Entropy", "🌊 KL-Divergenz"])
+    tabs = st.tabs(["🎲 Basics", "📊 Verteilungen", "🔄 Bayes", "📉 Cross-Entropy", "🌊 KL-Divergenz", "🧭 Lernpfad & Übungen"])
 
     with tabs[0]:
         section_header("Wahrscheinlichkeit — die Grundregeln")
@@ -131,4 +131,43 @@ Misst, wie sehr eine Verteilung $q$ von einer Verteilung $p$ abweicht.
             "KL ist ein Maß, wie viel Information du verlierst, wenn du $p$ durch $q$ approximierst. "
             "Cross-Entropy = Entropie + KL — deshalb sind die beiden so eng verwandt.",
             kind="tip",
+        )
+
+    with tabs[5]:
+        render_learning_block(
+            key_prefix="probability",
+            section_title="Lernpfad für Wahrscheinlichkeit",
+            progression=[
+                ("🟢", "Guided Lab", "Gauß-Verteilungen mit unterschiedlichen mu/sigma vergleichen.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Bayes-Update für ein kleines Klassifikationsproblem implementieren.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Numerische Instabilität bei log(0) und Softmax beheben.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Mini-Notebook: CE, KL und Unsicherheitsanalyse auf Predictions.", "Abschluss", "blue"),
+            ],
+            mcq_question="Was ist bei Klassifikation mit One-Hot Labels der CE-Loss?",
+            mcq_options=["-log Wahrscheinlichkeit der wahren Klasse", "MSE der Logits", "Varianz der Klassen", "Summe der Softmaxwerte"],
+            mcq_correct_option="-log Wahrscheinlichkeit der wahren Klasse",
+            mcq_success_message="Richtig. Genau diese Größe wird minimiert.",
+            mcq_retry_message="Noch nicht korrekt. Schau in den CE-Abschnitt.",
+            open_question="Offene Frage: Wann hilft KL-Divergenz beim Modellvergleich besonders?",
+            code_task="""# Code-Aufgabe: stabile Softmax
+import numpy as np
+logits = np.array([2.0, 1.0, -3.0])
+# TODO: numerisch stabile Softmax mit max-shift implementieren
+""",
+            cheat_sheet=[
+                "CE misst Fehler relativ zur wahren Klasse.",
+                "KL ist asymmetrisch.",
+                "Log-Wahrscheinlichkeiten numerisch stabil rechnen.",
+            ],
+            key_takeaways=[
+                "Wahrscheinlichkeit ist Grundlage für Unsicherheit in ML.",
+                "Gute Modellentscheidungen brauchen mehr als Accuracy.",
+            ],
+            common_errors=[
+                "Logits als Wahrscheinlichkeiten interpretieren.",
+                "Instabile Softmax-Berechnung.",
+                "KL-Richtung vertauscht.",
+                "Klassenungleichgewicht ignoriert.",
+                "Nur Top-1 statt Kalibrierung prüfen.",
+            ],
         )

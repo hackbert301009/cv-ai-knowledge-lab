@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list,
+    video_embed, lab_header, key_concept, step_list, render_learning_block,
 )
 
 
@@ -33,6 +33,7 @@ def render():
         "🧪 Interaktives Lab",
         "💻 Eigenes Netz",
         "🎬 Lernvideos",
+        "🧭 Lernpfad & Übungen",
     ])
 
     # ------------------------------------------------------------------ #
@@ -503,4 +504,57 @@ print("Training fertig!")
             "Nach diesen drei Videos hast du ein solides intuitives Verständnis von Neural Networks. "
             "Dann komm zurück und lies den mathematischen Teil nochmal — er wird viel klarer sein.",
             kind="tip",
+        )
+
+    # ------------------------------------------------------------------ #
+    with tabs[8]:
+        render_learning_block(
+            key_prefix="nn_basics",
+            section_title="Lernpfad für NN-Basics",
+            progression=[
+                ("🟢", "Guided Lab", "Ein MLP auf einem einfachen Datensatz trainieren und Kurven lesen.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "XOR mit minimaler Architektur lösen und dokumentieren.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Vanishing Gradients oder Dead ReLUs diagnostizieren.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Kleiner Klassifikator mit Fehleranalyse und sauberem Training-Log.", "Abschluss", "blue"),
+            ],
+            mcq_question="Warum sind Aktivierungsfunktionen in Hidden Layers unverzichtbar?",
+            mcq_options=[
+                "Nur damit das Modell schneller läuft",
+                "Ohne sie bleibt das Netz linear, egal wie tief es ist",
+                "Sie ersetzen den Optimizer",
+                "Damit kein Loss benötigt wird",
+            ],
+            mcq_correct_option="Ohne sie bleibt das Netz linear, egal wie tief es ist",
+            mcq_success_message="Richtig. Nichtlinearität ist die Kernidee tiefer Netze.",
+            mcq_retry_message="Noch nicht korrekt. Prüfe den MLP-Abschnitt.",
+            open_question="Offene Frage: Wann würdest du Leaky ReLU statt ReLU einsetzen?",
+            code_task="""# Code-Aufgabe: einfache Forward-Funktion ergänzen
+import numpy as np
+
+def forward(x, W1, b1, W2, b2):
+    # TODO: hidden = relu(x @ W1 + b1)
+    # TODO: out = hidden @ W2 + b2
+    return out
+""",
+            community_rows=[
+                {"Format": "Diskussion", "Fokus": "Welche Aktivierung funktionierte bei dir stabil?", "Output": "Begründung"},
+                {"Format": "Peer-Feedback", "Fokus": "Ist die Backprop-Intuition korrekt erklärt?", "Output": "Kurzkommentar"},
+                {"Format": "Challenge", "Fokus": "Bestes XOR-Modell mit wenig Parametern", "Output": "Architektur + Ergebnis"},
+            ],
+            cheat_sheet=[
+                "Perzeptron ist linear, MLP mit Aktivierungen ist nichtlinear.",
+                "Backprop = Kettenregel über Layer.",
+                "ReLU/Leaky ReLU sind starke Defaults.",
+            ],
+            key_takeaways=[
+                "Tiefe + Nichtlinearität machen komplexe Funktionen lernbar.",
+                "Trainingserfolg hängt von Aktivierung, Loss und LR zusammen.",
+            ],
+            common_errors=[
+                "Falsche Output-Aktivierung.",
+                "Loss passt nicht zur Aufgabe.",
+                "Keine Feature-Skalierung.",
+                "Zu hohe LR führt zu Instabilität.",
+                "Keine Kontrolle der Gradienten.",
+            ],
         )

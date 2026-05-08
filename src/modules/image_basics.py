@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list,
+    video_embed, lab_header, key_concept, step_list, render_learning_block,
 )
 
 
@@ -25,6 +25,7 @@ def render():
         "🔢 Quantisierung",
         "💾 Formate & Kompression",
         "🎬 Lernvideos",
+        "🧭 Lernpfad & Übungen",
     ])
 
     # ------------------------------------------------------------------ #
@@ -443,4 +444,49 @@ tensor = np.load('tensor.npy')
             "**Tipp:** Schau die Videos in 1,5× Geschwindigkeit und pausiere bei den Formeln. "
             "Dann öffne Jupyter und probiere die Beispiele selbst nach — aktives Lernen ist 4× effektiver.",
             kind="tip",
+        )
+
+    # ------------------------------------------------------------------ #
+    with tabs[7]:
+        render_learning_block(
+            key_prefix="image_basics",
+            section_title="Lernpfad für Bildgrundlagen",
+            progression=[
+                ("🟢", "Guided Lab", "RGB/HSV/LAB auf einem Bild vergleichen und Unterschiede begründen.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Robuste Farbbereichs-Segmentierung bei wechselnder Beleuchtung bauen.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "BGR/RGB-Verwechslung und Aliasing-Artefakte gezielt finden und beheben.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Ein kleiner Pixel-Inspector mit Histogrammen und Farbraum-Ansicht.", "Abschluss", "blue"),
+            ],
+            mcq_question="Welcher Farbraum ist für farbbasierte Segmentierung oft am praktischsten?",
+            mcq_options=["RGB", "HSV", "RAW Bayer", "Graustufen"],
+            mcq_correct_option="HSV",
+            mcq_success_message="Richtig. HSV trennt Farbton und Helligkeit für viele Tasks besser.",
+            mcq_retry_message="Noch nicht korrekt. Prüfe den Farbraum-Vergleich.",
+            open_question="Offene Frage: Wann würdest du 16-bit statt 8-bit Bilddaten verwenden?",
+            code_task="""# Code-Aufgabe: BGR -> RGB korrekt umwandeln
+import cv2
+img_bgr = cv2.imread("input.jpg")
+# TODO: richtige Umwandlung ergänzen und anschließend HSV berechnen
+""",
+            community_rows=[
+                {"Format": "Diskussion", "Thema": "Welche Fehler entstehen durch falschen Farbraum?", "Output": "Kurzbeispiel"},
+                {"Format": "Peer-Feedback", "Thema": "Sind Histogramm und Interpretation stimmig?", "Output": "2 Pluspunkte + 1 Verbesserung"},
+                {"Format": "Challenge", "Thema": "Bestes Segmentierungsresultat bei wechselndem Licht", "Output": "Bildvergleich"},
+            ],
+            cheat_sheet=[
+                "OpenCV liest BGR, viele Libraries erwarten RGB.",
+                "Downsampling mit Anti-Aliasing durchführen.",
+                "Bit-Tiefe bewusst nach Aufgabe wählen.",
+            ],
+            key_takeaways=[
+                "Pixel, Sampling und Farbraumwahl bestimmen viele spätere Modellgrenzen.",
+                "Saubere Bildvorverarbeitung spart später viel Debug-Zeit.",
+            ],
+            common_errors=[
+                "BGR/RGB verwechselt.",
+                "Falsche Interpolation beim Resize.",
+                "Zu aggressive JPEG-Kompression im Datensatz.",
+                "Bit-Tiefe ignoriert.",
+                "Histogramme nicht geprüft.",
+            ],
         )

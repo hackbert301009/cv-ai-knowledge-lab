@@ -2,7 +2,7 @@
 import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
-from src.components import hero, section_header, divider, info_box
+from src.components import hero, section_header, divider, info_box, step_list, render_learning_block
 
 
 def render():
@@ -13,7 +13,7 @@ def render():
             "Die Mathematik hinter dem 'Lernen' in Machine Learning."
     )
 
-    tabs = st.tabs(["📈 Ableitung", "🌐 Gradient", "⛓️ Kettenregel", "⬇️ Gradient Descent", "🔬 Backprop"])
+    tabs = st.tabs(["📈 Ableitung", "🌐 Gradient", "⛓️ Kettenregel", "⬇️ Gradient Descent", "🔬 Backprop", "🧭 Lernpfad & Übungen"])
 
     # ---------- Ableitung ----------
     with tabs[0]:
@@ -156,3 +156,43 @@ loss.backward()
 
 print(w1.grad, w2.grad)   # Gradienten — automatisch berechnet
         """, language="python")
+
+    with tabs[5]:
+        render_learning_block(
+            key_prefix="calculus",
+            section_title="Lernpfad für Analysis",
+            progression=[
+                ("🟢", "Guided Lab", "Ableitung, Gradient und Lernrate an einfachen Funktionen visualisieren.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Gradient Descent mit verschiedenen Lernraten vergleichen.", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "Divergenz durch zu hohe Lernrate diagnostizieren und stabilisieren.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Interaktiver Optimizer-Explorer mit Kurvenvergleich.", "Abschluss", "blue"),
+            ],
+            mcq_question="Was beschreibt der Gradient in einem Punkt am besten?",
+            mcq_options=["Richtung des steilsten Abstiegs", "Richtung des steilsten Anstiegs", "Nur die Krümmung", "Nur den Funktionswert"],
+            mcq_correct_option="Richtung des steilsten Anstiegs",
+            mcq_success_message="Richtig. Für Minimierung gehen wir in die Gegenrichtung.",
+            mcq_retry_message="Nicht korrekt. Prüfe die Gradient-Definition.",
+            open_question="Offene Frage: Wann ist eine kleinere Lernrate trotz langsamerem Training sinnvoll?",
+            code_task="""# Code-Aufgabe: einfacher GD-Schritt
+theta = 1.2
+grad = 0.8
+lr = 0.05
+# TODO: theta_neu berechnen
+""",
+            cheat_sheet=[
+                "Gradient zeigt Anstieg, negative Richtung minimiert.",
+                "Lernrate steuert Schrittgröße.",
+                "Kettenregel ist Basis von Backprop.",
+            ],
+            key_takeaways=[
+                "Ohne Analysis kein kontrolliertes Training.",
+                "Kleine mathematische Fehler führen oft zu großen Trainingseffekten.",
+            ],
+            common_errors=[
+                "Zu große Lernrate.",
+                "Gradient-Vorzeichen verwechselt.",
+                "Ableitung der Aktivierung ignoriert.",
+                "Keine Skalierung der Features.",
+                "Instabile Kurven nicht analysiert.",
+            ],
+        )

@@ -1,6 +1,6 @@
 """Deployment & MLOps."""
 import streamlit as st
-from src.components import hero, section_header, divider, info_box
+from src.components import hero, section_header, divider, info_box, step_list, render_learning_block
 
 
 def render():
@@ -11,7 +11,7 @@ def render():
             "in Produktion bringst — schnell, robust und skalierbar."
     )
 
-    tabs = st.tabs(["📦 Export", "⚡ Optimierung", "🌐 Serving", "🐳 Docker", "📊 Monitoring"])
+    tabs = st.tabs(["📦 Export", "⚡ Optimierung", "🌐 Serving", "🐳 Docker", "📊 Monitoring", "🧭 Lernpfad & Übungen"])
 
     with tabs[0]:
         section_header("Export: Vom Notebook zur deploybaren Datei")
@@ -171,4 +171,50 @@ docker run --gpus all -p 8000:8000 my-cv-api
             "Modelle 'verfaulen' in Produktion. Die Welt ändert sich, deine Trainings-Daten nicht. "
             "Plane Retraining-Zyklen schon beim ersten Deployment ein.",
             kind="warn",
+        )
+
+    with tabs[5]:
+        render_learning_block(
+            key_prefix="deployment",
+            section_title="Lernpfad für Deployment",
+            progression=[
+                ("🟢", "Guided Lab", "Ein Modell nach ONNX exportieren und lokal serven.", "Beginner", "green"),
+                ("🟠", "Challenge Lab", "Latenz unter Zielwert bringen (Quantisierung/Scheduler/Batching).", "Intermediate", "amber"),
+                ("🔴", "Debug Lab", "API-Fehler, Shape-Mismatch und Inferenz-Timeouts beheben.", "Advanced", "pink"),
+                ("🏁", "Mini-Projekt", "Deployment-Pipeline mit Monitoring und Health-Checks.", "Abschluss", "blue"),
+            ],
+            mcq_question="Welche Metrik zeigt am besten Tail-Latenz in Produktion?",
+            mcq_options=["p50", "p95/p99", "Mean Accuracy", "GPU Temperature only"],
+            mcq_correct_option="p95/p99",
+            mcq_success_message="Richtig. Tail-Latenz entscheidet oft über echte Nutzererfahrung.",
+            mcq_retry_message="Noch nicht korrekt. Monitoring-Sektion prüfen.",
+            open_question="Offene Frage: Welche Deploy-Risiken würdest du vor Go-Live aktiv absichern?",
+            code_task="""# Code-Aufgabe: einfacher Health-Endpoint in FastAPI
+from fastapi import FastAPI
+
+app = FastAPI()
+
+# TODO: /health Endpoint ergänzen, der Status und Modellversion zurückgibt
+""",
+            community_rows=[
+                {"Format": "Diskussion", "Fokus": "Welcher Bottleneck war bei dir am größten?", "Output": "Kurzbeitrag"},
+                {"Format": "Peer-Feedback", "Fokus": "Ist das Deployment reproduzierbar dokumentiert?", "Output": "2 Pluspunkte + 1 Risiko"},
+                {"Format": "Challenge", "Fokus": "Niedrigste p95 bei gleicher Qualität", "Output": "Benchmarks"},
+            ],
+            cheat_sheet=[
+                "Export-Format früh festlegen.",
+                "Health, logging, tracing von Anfang an einbauen.",
+                "p95/p99 und Fehlerquote kontinuierlich überwachen.",
+            ],
+            key_takeaways=[
+                "Deployment ist ein Produktproblem, nicht nur ein Modellproblem.",
+                "Observability ist Pflicht, sonst werden Fehler zu spät sichtbar.",
+            ],
+            common_errors=[
+                "Kein Health-Endpoint.",
+                "Keine Lasttests vor Go-Live.",
+                "Model/Input-Versionen nicht versioniert.",
+                "Nur Mean-Latenz statt p95/p99.",
+                "Kein Retraining-Plan.",
+            ],
         )

@@ -1,6 +1,6 @@
 """Datasets & Tools."""
 import streamlit as st
-from src.components import hero, section_header, divider, info_box, card, render_card_grid
+from src.components import hero, section_header, divider, info_box, card, render_card_grid, render_learning_block
 
 
 def render():
@@ -67,4 +67,47 @@ def render():
         "Faustregel: Wenn dein Modell schlecht performt, ist die Wahrscheinlichkeit am größten, dass das Problem in den Daten liegt. "
         "Nicht im Modell, nicht in den Hyperparametern. **Schau dir die Daten an.**",
         kind="warn",
+    )
+
+    divider()
+    render_learning_block(
+        key_prefix="datasets",
+        progression=[
+            ("🟢", "Guided Lab", "Datensatz auditieren: Klassen, Labels, Qualität, Splits.", "Beginner", "green"),
+            ("🟠", "Challenge Lab", "Unbalancierte Klassen mit sauberen Gegenmaßnahmen stabilisieren.", "Intermediate", "amber"),
+            ("🔴", "Debug Lab", "Data Leakage und Label-Noise identifizieren und beheben.", "Advanced", "pink"),
+            ("🏁", "Mini-Projekt", "Dataset Card + reproduzierbare Data-Pipeline erstellen.", "Abschluss", "blue"),
+        ],
+        mcq_question="Was sollte vor Augmentation und Training immer zuerst passieren?",
+        mcq_options=["Hyperparameter-Suche", "Train/Val/Test-Split", "Model Compression", "Deployment-Setup"],
+        mcq_correct_option="Train/Val/Test-Split",
+        mcq_success_message="Richtig. Sonst riskierst du Data Leakage.",
+        mcq_retry_message="Nicht korrekt. Prüfe die Best-Practices.",
+        open_question="Offene Frage: Welche zwei Checks würdest du für Label-Qualität einführen?",
+        code_task="""# Code-Aufgabe: Stratified Split
+from sklearn.model_selection import train_test_split
+X, y = ...
+# TODO: erst train/temp, dann val/test mit stratify=y aufteilen
+""",
+        community_rows=[
+            {"Format": "Diskussion", "Fokus": "Wo entstehen bei euch die meisten Datenfehler?", "Output": "Kurzbeispiel"},
+            {"Format": "Peer-Feedback", "Fokus": "Sind Splits und Label-Checks reproduzierbar?", "Output": "2 Pluspunkte + 1 Risiko"},
+            {"Format": "Challenge", "Fokus": "Bestes Ergebnis ohne Data-Leakage", "Output": "Data-Checklist"},
+        ],
+        cheat_sheet=[
+            "Daten erst prüfen, dann trainieren.",
+            "Splits reproduzierbar machen.",
+            "Klassenbalance und Labelqualität aktiv monitoren.",
+        ],
+        key_takeaways=[
+            "Datenqualität limitiert Modellqualität.",
+            "Gute Doku (Dataset Card) spart später massiv Zeit.",
+        ],
+        common_errors=[
+            "Data Leakage.",
+            "Kein stratified split.",
+            "Label-Noise ignoriert.",
+            "Augmentation nicht validiert.",
+            "Keine Datenversionierung.",
+        ],
     )
