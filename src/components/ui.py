@@ -251,3 +251,49 @@ def render_learning_block(
     if common_errors:
         st.markdown("### Häufige Fehler")
         st.markdown("\n".join(f"{idx}. {item}" for idx, item in enumerate(common_errors, 1)))
+
+
+def render_quiz_checkpoint(
+    *,
+    key_prefix: str,
+    module_id: str | None = None,
+    title: str = "Quiz & Checkpoint",
+    question: str,
+    options: list[str],
+    correct_option: str,
+    checklist: list[str] | None = None,
+    capstone_prompt: str | None = None,
+):
+    """Standardisierter Abschlussblock mit Quiz, Selbstcheck und Mini-Transfer."""
+    section_header(title, "Verstehe ich das Thema wirklich?")
+    tracked_module_id = module_id or key_prefix
+    st.session_state.setdefault("quiz_completed_modules", [])
+    quiz_done = tracked_module_id in st.session_state.get("quiz_completed_modules", [])
+
+    if quiz_done:
+        st.success("Checkpoint bereits bestanden. Du kannst direkt weitermachen oder erneut testen.")
+
+    selected = st.radio(question, options, key=f"{key_prefix}_quiz_choice")
+    if st.button("Quiz prüfen", key=f"{key_prefix}_quiz_check"):
+        if selected == correct_option:
+            completed = list(st.session_state.get("quiz_completed_modules", []))
+            if tracked_module_id not in completed:
+                completed.append(tracked_module_id)
+            st.session_state.quiz_completed_modules = completed
+            st.success("Richtig. Du kannst zum naechsten Modul weitergehen.")
+        else:
+            st.warning("Noch nicht korrekt. Wiederhole die Kerngedanken und probiere es erneut.")
+
+    if checklist:
+        st.markdown("### Checkpoint")
+        for idx, item in enumerate(checklist):
+            st.checkbox(item, key=f"{key_prefix}_check_{idx}")
+
+    if capstone_prompt:
+        st.markdown("### Mini-Transfer")
+        st.text_area(
+            "Formuliere kurz deinen Loesungsansatz",
+            value=capstone_prompt,
+            height=120,
+            key=f"{key_prefix}_transfer",
+        )

@@ -25,10 +25,10 @@ class Module:
 CATEGORIES = {
     "🏠 Übersicht":      ["home", "roadmap"],
     "🧮 Grundlagen":     ["math", "linalg", "calculus", "probability", "tensor_playground"],
-    "🖼️ Bildverarbeitung": ["image_basics", "camera_pipeline", "filters", "edges", "features", "morphology", "segmentation_classic"],
-    "🤖 Deep Learning":   ["nn_basics", "cnn", "training", "modern_archs"],
-    "🔥 State-of-the-Art": ["transformers", "vlm", "diffusion", "gen_ai", "multimodal", "pose_estimation"],
-    "🚀 Praxis":          ["learning_studio", "projects", "datasets", "deployment", "compression"],
+    "🖼️ Bildverarbeitung": ["image_basics", "camera_pipeline", "filters", "edges", "features", "morphology", "segmentation_classic", "object_tracking"],
+    "🤖 Deep Learning":   ["nn_basics", "cnn", "training", "modern_archs", "self_supervised", "video_understanding"],
+    "🔥 State-of-the-Art": ["transformers", "vlm", "diffusion", "gen_ai", "multimodal", "pose_estimation", "three_d_vision", "rag_multimodal_agents"],
+    "🚀 Praxis":          ["learning_studio", "projects", "datasets", "deployment", "compression", "evaluation_robustness"],
     "📰 Live":            ["news", "papers", "paper_of_month", "resources"],
     "📚 Referenz":        ["glossar"],
 }
@@ -56,12 +56,15 @@ MODULES: List[Module] = [
     Module("features",            "🔑", "Feature Detection & Matching",    "SIFT, ORB, Harris, Keypoints",               "Bildverarbeitung", "Fortgeschritten", "40 min", ["cv"]),
     Module("morphology",          "🧱", "Morphologie",                     "Erosion, Dilatation, Opening, Closing",      "Bildverarbeitung", "Fortgeschritten", "20 min", ["cv"]),
     Module("segmentation_classic","✂️", "Klassische Segmentierung",        "Threshold, Watershed, GrabCut, K-Means",     "Bildverarbeitung", "Fortgeschritten", "30 min", ["cv"]),
+    Module("object_tracking",      "🎯", "Objekterkennung & Tracking",      "YOLO, DETR, NMS, mAP, MOT, ByteTrack",       "Bildverarbeitung", "Fortgeschritten", "55 min", ["cv", "detection", "tracking"]),
 
     # --- Deep Learning ---
     Module("nn_basics",    "🧠", "Neuronale Netze von Grund auf", "Perzeptron, MLP, Aktivierungen",              "Deep Learning",   "Anfänger",        "45 min", ["dl", "core"]),
     Module("cnn",          "🔲", "Convolutional Neural Networks",  "Von LeNet bis ResNet",                        "Deep Learning",   "Fortgeschritten", "60 min", ["dl", "core"]),
     Module("training",     "🎯", "Training, Loss & Optimizer",     "SGD, Adam, Regularisierung, Learning Rate",   "Deep Learning",   "Fortgeschritten", "45 min", ["dl"]),
     Module("modern_archs", "🏛️", "Moderne Architekturen",          "ResNet, EfficientNet, ConvNeXt, U-Net",        "Deep Learning",   "Experte",          "60 min", ["dl"]),
+    Module("self_supervised", "🧪", "Self-Supervised Learning",      "SimCLR, MoCo, DINO, MAE und Label-Effizienz",  "Deep Learning",   "Experte",          "50 min", ["dl", "ssl"]),
+    Module("video_understanding", "🎬", "Video Understanding",        "Action Recognition, Temporal Modeling, Video Transformer", "Deep Learning", "Experte", "55 min", ["dl", "video"]),
 
     # --- State-of-the-Art ---
     Module("transformers", "⚡", "Transformer & Attention",        "Self-Attention, ViT, Swin Transformer",        "State-of-the-Art", "Experte", "60 min", ["sota"]),
@@ -69,12 +72,15 @@ MODULES: List[Module] = [
     Module("diffusion",    "🌊", "Diffusion Models",                "DDPM, Stable Diffusion, Flow Matching",        "State-of-the-Art", "Experte", "55 min", ["sota"]),
     Module("gen_ai",       "🎨", "Generative KI",                   "GANs, VAEs, Autoregressive Modelle",           "State-of-the-Art", "Experte", "45 min", ["sota"]),
     Module("multimodal",   "🌐", "Multimodal & LLMs",               "GPT-4o, Gemini, Sora — Bild+Text+Video",       "State-of-the-Art", "Experte", "40 min", ["sota"]),
+    Module("three_d_vision", "🧊", "3D Computer Vision",            "Kamera-Geometrie, Epipolar, SfM/SLAM, NeRF",   "State-of-the-Art", "Experte", "60 min", ["sota", "3d", "cv"]),
+    Module("rag_multimodal_agents", "🛰️", "RAG + Multimodal Agents", "Vision-RAG, Tool-Use, Prompting, Guardrails",  "State-of-the-Art", "Experte", "50 min", ["sota", "rag", "agents"]),
 
     # --- Praxis ---
     Module("learning_studio", "🧪", "Lernstudio: Labs & Uebungen", "Progressive Labs, Mischformat und Community", "Praxis", "Anfänger", "35 min", ["praxis", "labs", "community"]),
     Module("projects",   "💻", "Praxisprojekte",          "10+ Hands-on Projekte mit Code",          "Praxis", "Fortgeschritten", "varies", ["praxis"]),
     Module("datasets",   "📦", "Datasets & Tools",        "ImageNet, COCO, HuggingFace, Roboflow",   "Praxis", "Anfänger",        "20 min", ["praxis"]),
     Module("deployment", "🚀", "Deployment & MLOps",      "ONNX, TensorRT, FastAPI, Docker",         "Praxis", "Experte",          "50 min", ["praxis"]),
+    Module("evaluation_robustness", "🛡️", "Evaluation & Robustness", "Calibration, OOD, Domain Shift, Bias/Fairness", "Praxis", "Fortgeschritten", "45 min", ["praxis", "evaluation", "robustness"]),
 
     # --- Live ---
     Module("news",          "📰", "Live News",                "Aktuelle Forschung & Releases",                "Live",    "Anfänger",        "live",    ["live"]),

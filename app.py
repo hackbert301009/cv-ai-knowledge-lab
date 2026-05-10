@@ -49,19 +49,25 @@ MODULE_FILES = {
     "features":            "src.modules.features",
     "morphology":          "src.modules.morphology",
     "segmentation_classic":"src.modules.segmentation_classic",
+    "object_tracking":      "src.modules.object_tracking",
     "nn_basics":           "src.modules.nn_basics",
     "cnn":                 "src.modules.cnn",
     "training":            "src.modules.training",
     "modern_archs":        "src.modules.modern_archs",
+    "self_supervised":     "src.modules.self_supervised",
+    "video_understanding": "src.modules.video_understanding",
     "transformers":        "src.modules.transformers_mod",  # Datei umbenannt, um Konflikt mit HF-Lib zu vermeiden
     "vlm":                 "src.modules.vlm",
     "diffusion":           "src.modules.diffusion",
     "gen_ai":              "src.modules.gen_ai",
     "multimodal":          "src.modules.multimodal",
+    "three_d_vision":      "src.modules.three_d_vision",
+    "rag_multimodal_agents":"src.modules.rag_multimodal_agents",
     "learning_studio":     "src.modules.learning_studio",
     "projects":            "src.modules.projects",
     "datasets":            "src.modules.datasets",
     "deployment":          "src.modules.deployment",
+    "evaluation_robustness":"src.modules.evaluation_robustness",
     "news":                "src.modules.news",
     "papers":              "src.modules.papers",
     "paper_of_month":      "src.modules.paper_of_month",
@@ -73,6 +79,14 @@ MODULE_FILES = {
 }
 
 TRACKABLE_MODULES = [m.id for m in MODULES if m.id != "home"]
+CHECKPOINT_MODULES = {
+    "object_tracking",
+    "three_d_vision",
+    "self_supervised",
+    "video_understanding",
+    "evaluation_robustness",
+    "rag_multimodal_agents",
+}
 
 
 def _init_hub_state():
@@ -81,6 +95,7 @@ def _init_hub_state():
     st.session_state.setdefault("visited_modules", [])
     st.session_state.setdefault("favorite_modules", [])
     st.session_state.setdefault("completed_modules", [])
+    st.session_state.setdefault("quiz_completed_modules", [])
     st.session_state.setdefault("last_module", "home")
 
 
@@ -112,6 +127,12 @@ def _completion_ratio() -> float:
     return len(completed.intersection(TRACKABLE_MODULES)) / total
 
 
+def _quiz_completion_ratio() -> float:
+    quiz_done = set(st.session_state.get("quiz_completed_modules", []))
+    total = max(1, len(CHECKPOINT_MODULES))
+    return len(quiz_done.intersection(CHECKPOINT_MODULES)) / total
+
+
 def _render_personal_hub():
     """Sidebar-Block mit personalisiertem Lernstatus und Shortcuts."""
     st.markdown("### 🧭 Personal Hub")
@@ -120,6 +141,36 @@ def _render_personal_hub():
     completed_count = len(set(st.session_state.get("completed_modules", [])).intersection(TRACKABLE_MODULES))
     st.progress(progress)
     st.caption(f"Fortschritt: {completed_count}/{len(TRACKABLE_MODULES)} Module abgeschlossen")
+
+    quiz_progress = _quiz_completion_ratio()
+    quiz_done_count = len(set(st.session_state.get("quiz_completed_modules", [])).intersection(CHECKPOINT_MODULES))
+    st.progress(quiz_progress)
+    st.caption(f"Checkpoint-Quiz: {quiz_done_count}/{len(CHECKPOINT_MODULES)} bestanden")
+
+    open_checkpoint_ids = [
+        mod_id for mod_id in TRACKABLE_MODULES
+        if mod_id in CHECKPOINT_MODULES and mod_id not in st.session_state.get("quiz_completed_modules", [])
+    ]
+    if open_checkpoint_ids:
+        st.caption(f"📌 Offene Checkpoints: {len(open_checkpoint_ids)}")
+        next_mod = get_module(open_checkpoint_ids[0])
+        if next_mod is not None and st.button(
+            f"➡️ Nächster Checkpoint: {next_mod.title}",
+            key="hub_next_open_checkpoint",
+            use_container_width=True,
+        ):
+            st.session_state.current_module = next_mod.id
+            st.rerun()
+
+        for mod_id in open_checkpoint_ids[:4]:
+            mod = get_module(mod_id)
+            if mod is None:
+                continue
+            if st.button(f"{mod.icon} {mod.title}", key=f"hub_open_checkpoint_{mod_id}", use_container_width=True):
+                st.session_state.current_module = mod_id
+                st.rerun()
+    else:
+        st.caption("✅ Alle Checkpoints bestanden")
 
     last_mod_id = st.session_state.get("last_module", "home")
     last_mod = get_module(last_mod_id)
@@ -154,6 +205,7 @@ def _render_personal_hub():
         st.session_state.visited_modules = []
         st.session_state.favorite_modules = []
         st.session_state.completed_modules = []
+        st.session_state.quiz_completed_modules = []
         st.session_state.last_module = "home"
         st.rerun()
 
@@ -226,6 +278,9 @@ with st.sidebar:
     if current_mod is not None and current_mod.id != "home":
         is_favorite = current_mod.id in st.session_state.favorite_modules
         is_completed = current_mod.id in st.session_state.completed_modules
+        is_quiz_done = current_mod.id in st.session_state.quiz_completed_modules
+        if is_quiz_done:
+            st.caption("🧠 Checkpoint bestanden")
         c1, c2 = st.columns(2)
         with c1:
             if st.button(

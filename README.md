@@ -12,7 +12,7 @@
 
 ## ✨ Was ist das?
 
-Ein **Mega-Wissenshub** mit **27 Lernmodulen**, der den kompletten Bogen von
+Ein **Mega-Wissenshub** mit **33+ Lernmodulen**, der den kompletten Bogen von
 "Was ist ein Pixel?" bis "Wie funktioniert Sora?" spannt. Drei Dinge zeichnen es aus:
 
 - 🎨 **Modernes, dunkles Design** — Inter & JetBrains Mono, Gradient-Akzente, Cards mit Hover, hand-crafted CSS.
@@ -40,12 +40,15 @@ Ein **Mega-Wissenshub** mit **27 Lernmodulen**, der den kompletten Bogen von
 - **Feature Detection** — SIFT, ORB, Harris, Live-Keypoints
 - **Morphologie** — Erosion, Dilatation, Opening, Closing live
 - **Segmentierung** — Threshold, Otsu, Adaptive, K-Means
+- **Objekterkennung & Tracking** — YOLO/DETR, mAP, NMS, MOT, ByteTrack/DeepSORT
 
 ### 🤖 Deep Learning
 - **Neuronale Netze von Grund auf** — Perzeptron, MLP, MLP-Implementation
 - **Convolutional Neural Networks** — von LeNet bis ConvNeXt
 - **Training, Loss & Optimizer** — alles, was zwischen 70% und 95% entscheidet
 - **Moderne Architekturen** — ResNet, EfficientNet, ConvNeXt, U-Net, YOLO
+- **Self-Supervised Learning** — SimCLR, MoCo, DINO, MAE
+- **Video Understanding** — Action Recognition, Temporal Modeling, Video-Transformer
 
 ### 🔥 State-of-the-Art
 - **Transformer & Attention** — Self-Attention, ViT, Swin
@@ -53,11 +56,14 @@ Ein **Mega-Wissenshub** mit **27 Lernmodulen**, der den kompletten Bogen von
 - **Diffusion Models** — DDPM, Stable Diffusion, Flow Matching, Sora
 - **Generative KI** — GANs, VAEs, Autoregressive — und der Vergleich
 - **Multimodal & LLMs** — GPT-4o, Gemini, Claude, Sora, Frontier 2026
+- **3D Computer Vision** — Kamera-Geometrie, Epipolar, SfM/SLAM, NeRF/3D Gaussian Splatting
+- **RAG + Multimodal Agents** — Vision-RAG, Tool-Use, Prompting-Patterns, Guardrails
 
 ### 🚀 Praxis
 - **Praxisprojekte** — 12 Projekte mit kompletten Code-Beispielen
 - **Datasets & Tools** — wo du Daten findest und wie du sie nutzt
 - **Deployment & MLOps** — vom Notebook zur Production-API
+- **Evaluation & Robustness** — Calibration, OOD, Domain Shift, Error Analysis, Bias/Fairness
 
 ### 📰 Live
 - **Live News** — RSS-Feeds aus arXiv, OpenAI, DeepMind, HuggingFace, Anthropic, Google AI
