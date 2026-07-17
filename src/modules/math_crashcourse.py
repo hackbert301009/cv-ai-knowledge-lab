@@ -2,7 +2,7 @@
 import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
-from src.components import hero, section_header, divider, info_box, lab_header, step_list, video_embed
+from src.components import hero, section_header, divider, info_box, lab_header, step_list, video_embed, video_search
 
 
 def render():
@@ -460,7 +460,7 @@ print(heap_sort([12, 11, 13, 5, 6, 7]))
 
         divider()
         section_header("Lernvideos")
-        video_embed("kgBjXUE_Vre", "Sorting Algorithms — CS50", "Harvard CS50: alle Sortieralgorithmen visuell erklärt")
+        video_search("sorting algorithms visualized comparison", "Sortieralgorithmen visualisiert", "Alle Sortieralgorithmen visuell erklärt.")
         st.markdown("---")
         video_embed("ZZuD6iUe3Pc", "Sorting Algorithms Visualized", "Visueller Vergleich aller Algorithmen — Bubble, Merge, Quick, Heap")
 

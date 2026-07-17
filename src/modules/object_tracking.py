@@ -12,7 +12,7 @@ from src.components import (
     section_header,
     step_list,
     render_quiz_checkpoint,
-    video_embed,
+    video_embed, video_search,
 )
 
 
@@ -62,7 +62,7 @@ def render():
         eyebrow="Bildverarbeitung · Detection & Tracking",
         title="Objekterkennung und Tracking",
         sub=(
-            "Von YOLO und DETR ueber mAP/NMS bis Multi-Object Tracking mit "
+            "Von YOLO und DETR über mAP/NMS bis Multi-Object Tracking mit "
             "ByteTrack und DeepSORT."
         ),
     )
@@ -85,20 +85,20 @@ def render():
         st.markdown(
             """
 - **Objekterkennung (Detection):** In einem Einzelbild Klassen + Bounding Boxes finden.
-- **Tracking:** Erkannte Objekte ueber Zeit konsistent mit IDs verfolgen.
+- **Tracking:** Erkannte Objekte über Zeit konsistent mit IDs verfolgen.
 - **MOT Pipeline:** Detection -> Association -> Track-Management.
             """
         )
         key_concept("📦", "Bounding Box", "Rechteck mit (x1, y1, x2, y2) um ein Objekt.")
         key_concept("🧷", "Association", "Zuordnung aktueller Detektionen zu existierenden Tracks.")
-        key_concept("🆔", "ID Switch", "Tracker verliert die Identitaet eines Objekts.")
+        key_concept("🆔", "ID Switch", "Tracker verliert die Identität eines Objekts.")
 
         divider()
         st.markdown(
             """
-#### Typische Einsatzfaelle
+#### Typische Einsatzfälle
 - Retail Analytics (Personenfluss, Shelf-Tracking)
-- Verkehrsanalyse (Fahrzeuge, Zaehlung, Verhalten)
+- Verkehrsanalyse (Fahrzeuge, Zählung, Verhalten)
 - Industrie (Defekterkennung + Teileverfolgung)
 - Sport-Analyse (Spielertracking)
             """
@@ -113,7 +113,7 @@ def render():
 **YOLO-Familie**
 - One-stage, sehr schnell
 - Anchor-free Varianten in neueren Versionen
-- Sehr stark fuer Echtzeit-Use-Cases
+- Sehr stark für Echtzeit-Use-Cases
                 """
             )
         with c2:
@@ -129,10 +129,10 @@ def render():
         divider()
         st.markdown(
             """
-| Modell | Staerke | Schwaeche | Typisches Setting |
+| Modell | Stärke | Schwäche | Typisches Setting |
 |---|---|---|---|
 | YOLOv8/11 | Sehr niedrige Latenz | Kleine Objekte teils schwieriger | Edge, Live-Cams |
-| RT-DETR | Gute Balance aus Speed/Qualitaet | Hoehere Komplexitaet | Server Inference |
+| RT-DETR | Gute Balance aus Speed/Qualität | Höhere Komplexität | Server Inference |
 | D-FINE / DINO DETR | Hohe AP | Mehr Compute | Offline-Batch |
             """
         )
@@ -143,7 +143,7 @@ def render():
         st.latex(r"mAP = \frac{1}{C} \sum_{c=1}^{C} AP_c")
         st.latex(r"MOTA = 1 - \frac{FN + FP + IDSW}{GT}")
         info_box(
-            "mAP misst Detection-Qualitaet pro Klasse. MOTA fokussiert auf Tracking-Fehler ueber Zeit.",
+            "mAP misst Detection-Qualität pro Klasse. MOTA fokussiert auf Tracking-Fehler über Zeit.",
             kind="tip",
         )
         step_list(
@@ -241,11 +241,11 @@ print(summary)
     with tabs[6]:
         render_quiz_checkpoint(
             key_prefix="object_tracking",
-            question="Welche Metrik gehoert primaer zum Multi-Object Tracking?",
+            question="Welche Metrik gehört primär zum Multi-Object Tracking?",
             options=["mAP", "MOTA", "IoU", "PSNR"],
             correct_option="MOTA",
             checklist=[
-                "Ich kann IoU und mAP kurz erklaeren.",
+                "Ich kann IoU und mAP kurz erklären.",
                 "Ich verstehe, warum NMS notwendig ist.",
                 "Ich kenne den Einfluss von FN/FP/IDSW auf MOTA.",
             ],
@@ -255,8 +255,8 @@ print(summary)
 
     with tabs[7]:
         section_header("Lernvideos")
-        video_embed("ag3DLKsl2vk", "YOLO Erklaerung", "Intuitiver Einstieg in YOLO Detection.")
+        video_embed("ag3DLKsl2vk", "YOLO Erklärung", "Intuitiver Einstieg in YOLO Detection.")
         divider()
-        video_embed("zQeNQQ6L2j8", "DETR in 5 Minuten", "Set Prediction und Hungarian Matching.")
+        video_search("DETR object detection transformer explained", "DETR erklärt", "Set Prediction und Hungarian Matching.")
         divider()
-        video_embed("0P4vI4c9N4Q", "ByteTrack", "Warum low-score Boxen bei Tracking helfen.")
+        video_search("ByteTrack multi object tracking", "ByteTrack", "Warum low-score Boxen beim Tracking helfen.")

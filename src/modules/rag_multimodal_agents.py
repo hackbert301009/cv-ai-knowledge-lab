@@ -1,4 +1,4 @@
-"""RAG und multimodale Agents fuer Vision + Sprache."""
+"""RAG und multimodale Agents für Vision + Sprache."""
 import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
@@ -12,7 +12,7 @@ from src.components import (
     section_header,
     step_list,
     render_quiz_checkpoint,
-    video_embed,
+    video_embed, video_search,
 )
 
 
@@ -49,22 +49,22 @@ def render():
             [
                 ("Ingest", "Dokumente, Bilder, OCR-Text und Metadaten extrahieren."),
                 ("Index", "Embeddings in Vector Store speichern."),
-                ("Retrieve", "Top-k relevante Chunks fuer Anfrage abrufen."),
+                ("Retrieve", "Top-k relevante Chunks für Anfrage abrufen."),
                 ("Grounded Generation", "VLM/LLM antwortet mit Quellenbezug."),
             ]
         )
-        key_concept("🧩", "Chunking", "Gute Chunk-Groesse erhoeht Recall und reduziert Halluzinationen.")
-        key_concept("🖼️", "Multimodal Retrieval", "Suche ueber Text + Bildfeatures statt nur Text.")
+        key_concept("🧩", "Chunking", "Gute Chunk-Größe erhöht Recall und reduziert Halluzinationen.")
+        key_concept("🖼️", "Multimodal Retrieval", "Suche über Text + Bildfeatures statt nur Text.")
 
     with tabs[1]:
         section_header("VLM Tool-Use")
         st.markdown(
             """
 Ein Agent kombiniert Modellantworten mit externen Tools:
-- OCR fuer Text in Bildern
+- OCR für Text in Bildern
 - Detection/Segmentation APIs
 - Tabellenabfragen, Knowledge Base, Search
-- Deterministische Checker fuer kritische Aussagen
+- Deterministische Checker für kritische Aussagen
             """
         )
         info_box("Toolformer-Verhalten braucht strikte Tool-Schemas und Timeouts.", kind="tip")
@@ -82,10 +82,10 @@ Ein Agent kombiniert Modellantworten mit externen Tools:
             """
         )
         key_concept("🧾", "Citations", "Antworten sollten auf konkrete Quellen-IDs verweisen.")
-        key_concept("⛔", "Tool Allowlist", "Agent darf nur explizit freigegebene Aktionen ausfuehren.")
+        key_concept("⛔", "Tool Allowlist", "Agent darf nur explizit freigegebene Aktionen ausführen.")
 
     with tabs[3]:
-        lab_header("RAG Tuning", "Top-k, Chunking und Reranking beeinflussen Antwortqualitaet.")
+        lab_header("RAG Tuning", "Top-k, Chunking und Reranking beeinflussen Antwortqualität.")
         top_k = st.slider("Top-k Retrieval", 1, 25, 8, 1)
         chunk = st.slider("Chunk Size (tokens)", 120, 1200, 420, 20)
         rerank = st.checkbox("Reranking aktivieren", value=True)
@@ -150,7 +150,7 @@ def safe_call(tool_name, args):
             """
 - **Ground-then-answer:** Erst Quellen ausgeben, dann Antwort.
 - **Tool-first for uncertainty:** Bei unklarer Evidenz zuerst Retrieval/Tool aufrufen.
-- **Structured output:** JSON Schema fuer downstream Verarbeitung.
+- **Structured output:** JSON Schema für downstream Verarbeitung.
 - **Self-check:** Modell validiert eigene Antwort gegen Quellenliste.
             """
         )
@@ -158,7 +158,7 @@ def safe_call(tool_name, args):
     with tabs[6]:
         render_quiz_checkpoint(
             key_prefix="rag_multimodal_agents",
-            question="Welcher Guardrail gehoert zur Runtime-Ebene?",
+            question="Welcher Guardrail gehört zur Runtime-Ebene?",
             options=[
                 "Tool Allowlist",
                 "Chunking",
@@ -168,10 +168,10 @@ def safe_call(tool_name, args):
             correct_option="Tool Allowlist",
             checklist=[
                 "Ich verstehe die Schritte Ingest -> Index -> Retrieve -> Generate.",
-                "Ich weiss, wann Reranking sinnvoll ist.",
+                "Ich weiß, wann Reranking sinnvoll ist.",
                 "Ich kann mindestens drei Guardrail-Layer benennen.",
             ],
-            capstone_prompt="Skizziere einen Vision-RAG-Agenten fuer technische Dokumente "
+            capstone_prompt="Skizziere einen Vision-RAG-Agenten für technische Dokumente "
             "inklusive Tool-Schema, Citation-Policy und Fehlerbehandlung.",
         )
 
@@ -181,4 +181,4 @@ def safe_call(tool_name, args):
         divider()
         video_embed("a8QvnIAGjPA", "Multimodal RAG", "Text und Bildquellen gemeinsam nutzen.")
         divider()
-        video_embed("4nUjYp8fN0Q", "Agent Guardrails", "Sicherheitsmuster fuer produktive Agents.")
+        video_search("LLM agent guardrails safety patterns", "Agent Guardrails", "Sicherheitsmuster für produktive Agents.")

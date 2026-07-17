@@ -1,4 +1,4 @@
-"""Self-Supervised Learning fuer Vision."""
+"""Self-Supervised Learning für Vision."""
 import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
@@ -11,7 +11,7 @@ from src.components import (
     lab_header,
     section_header,
     render_quiz_checkpoint,
-    video_embed,
+    video_embed, video_search,
 )
 
 
@@ -25,7 +25,7 @@ def render():
     hero(
         eyebrow="Deep Learning · SSL",
         title="Self-Supervised Learning",
-        sub="SimCLR, MoCo, DINO und MAE fuer starke Repräsentationen ohne teure Labels.",
+        sub="SimCLR, MoCo, DINO und MAE für starke Repräsentationen ohne teure Labels.",
     )
 
     tabs = st.tabs(
@@ -51,22 +51,22 @@ Danach wird mit wenigen Labels feinjustiert (Fine-Tuning).
             """
         )
         key_concept("🪞", "Augmentations", "Verschiedene Ansichten desselben Bildes bilden positives Paar.")
-        key_concept("🧲", "Embedding Space", "Aehnliche Inhalte liegen nah beieinander.")
-        key_concept("💸", "Label-Effizienz", "Weniger Annotation bei vergleichbarer Downstream-Qualitaet.")
+        key_concept("🧲", "Embedding Space", "Ähnliche Inhalte liegen nah beieinander.")
+        key_concept("💸", "Label-Effizienz", "Weniger Annotation bei vergleichbarer Downstream-Qualität.")
 
     with tabs[1]:
         section_header("Die vier Klassiker")
         st.markdown(
             """
-| Methode | Kernidee | Staerke |
+| Methode | Kernidee | Stärke |
 |---|---|---|
-| SimCLR | Contrastive Loss mit grossen Batches | Einfach und stark |
+| SimCLR | Contrastive Loss mit großen Batches | Einfach und stark |
 | MoCo | Momentum-Encoder + Queue | Stabil bei kleineren Batches |
-| DINO | Teacher-Student ohne Labels | Sehr gute Features fuer ViT |
-| MAE | Masked Image Modeling | Effizientes Pretraining fuer Vision Transformer |
+| DINO | Teacher-Student ohne Labels | Sehr gute Features für ViT |
+| MAE | Masked Image Modeling | Effizientes Pretraining für Vision Transformer |
             """
         )
-        info_box("DINO/MAE sind besonders relevant fuer moderne ViT-basierte Pipelines.", kind="success")
+        info_box("DINO/MAE sind besonders relevant für moderne ViT-basierte Pipelines.", kind="success")
 
     with tabs[2]:
         lab_header("Contrastive Verlust", "Experimentiere mit Similarity und Temperatur.")
@@ -75,7 +75,7 @@ Danach wird mit wenigen Labels feinjustiert (Fine-Tuning).
         temperature = st.slider("Temperatur tau", 0.03, 1.0, 0.1, 0.01)
         loss = _contrastive_score(pos_sim, neg_sim, temperature)
         st.metric("InfoNCE Loss", f"{loss:.4f}")
-        info_box("Niedrige Temperatur erzwingt staerkere Separation im Embedding-Space.", kind="tip")
+        info_box("Niedrige Temperatur erzwingt stärkere Separation im Embedding-Space.", kind="tip")
 
     with tabs[3]:
         lab_header("Label-Budget Simulation", "Wie stark profitiert SSL bei wenig Labels?")
@@ -127,27 +127,27 @@ loss = ((recon - target_patches(masked_idx)) ** 2).mean()
     with tabs[5]:
         render_quiz_checkpoint(
             key_prefix="self_supervised",
-            question="Wofuer ist SSL besonders nuetzlich?",
+            question="Wofür ist SSL besonders nützlich?",
             options=[
                 "Wenn Labels knapp sind",
-                "Nur fuer Textdaten",
-                "Nur fuer GAN-Training",
-                "Ausschliesslich fuer Segmentation mit Vollannotation",
+                "Nur für Textdaten",
+                "Nur für GAN-Training",
+                "Ausschließlich für Segmentation mit Vollannotation",
             ],
             correct_option="Wenn Labels knapp sind",
             checklist=[
                 "Ich kann SimCLR, MoCo, DINO, MAE grob unterscheiden.",
                 "Ich verstehe den Zusammenhang zwischen Augmentations und Contrastive Loss.",
-                "Ich kann erklaeren, warum SSL Label-Effizienz verbessert.",
+                "Ich kann erklären, warum SSL Label-Effizienz verbessert.",
             ],
-            capstone_prompt="Definiere ein SSL-Pretraining fuer ein kleines Industriebild-Dataset "
-            "und beschreibe, wie du den Fine-Tuning Gewinn messen wuerdest.",
+            capstone_prompt="Definiere ein SSL-Pretraining für ein kleines Industriebild-Dataset "
+            "und beschreibe, wie du den Fine-Tuning Gewinn messen würdest.",
         )
 
     with tabs[6]:
         section_header("Lernvideos")
-        video_embed("sS6eMQp8R4A", "SimCLR", "Contrastive Learning und Augmentations.")
+        video_search("SimCLR contrastive learning explained", "SimCLR", "Contrastive Learning und Augmentations.")
         divider()
-        video_embed("h3ij3F3c9lE", "DINO", "Self-distillation fuer starke ViT Features.")
+        video_search("DINO self-supervised vision transformer explained", "DINO", "Self-Distillation für starke ViT-Features.")
         divider()
-        video_embed("YicbFdNTTyQ", "MAE", "Masked Autoencoders fuer Vision Transformer.")
+        video_search("Masked Autoencoders MAE vision explained", "MAE", "Masked Autoencoders für Vision Transformer.")

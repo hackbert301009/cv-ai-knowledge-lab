@@ -1,6 +1,6 @@
 from .ui import (
     inject_css, hero, section_header, divider,
     stat_tile, card, render_card_grid, info_box, level_badge,
-    video_embed, lab_header, key_concept, math_box, step_list,
+    video_embed, video_search, lab_header, key_concept, math_box, step_list,
     render_learning_block, render_quiz_checkpoint,
 )

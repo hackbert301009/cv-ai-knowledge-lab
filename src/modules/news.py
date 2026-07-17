@@ -26,7 +26,7 @@ _TAG_RE = re.compile(r"<[^>]+>")
 
 
 def _clean(text: str, limit: int = 280) -> str:
-    """HTML entfernen und auf Laenge kuerzen."""
+    """HTML entfernen und auf Länge kürzen."""
     text = _TAG_RE.sub("", text or "").strip()
     return text[:limit] + ("…" if len(text) > limit else "")
 
@@ -60,17 +60,17 @@ def _fetch_feed_cached(url: str, max_items: int) -> list[dict]:
 
 
 def fetch_feed(url: str, max_items: int = 10) -> tuple[list[dict], str | None]:
-    """Feed laden. Gibt (items, fehlermeldung) zurueck. Fehler werden nicht gecached."""
+    """Feed laden. Gibt (items, fehlermeldung) zurück. Fehler werden nicht gecached."""
     try:
         items = _fetch_feed_cached(url, max_items)
         if not items:
-            return [], "Feed lieferte keine Eintraege (evtl. umgezogen oder leer)."
+            return [], "Feed lieferte keine Einträge (evtl. umgezogen oder leer)."
         return items, None
     except requests.Timeout:
-        return [], "Zeitueberschreitung — Quelle antwortet nicht (Timeout 8 s)."
+        return [], "Zeitüberschreitung — Quelle antwortet nicht (Timeout 8 s)."
     except requests.RequestException as exc:
         return [], f"Netzwerk-/HTTP-Fehler: {exc}"
-    except Exception as exc:  # pragma: no cover — feedparser-Randfaelle
+    except Exception as exc:  # pragma: no cover — feedparser-Randfälle
         return [], f"Unerwarteter Fehler: {exc}"
 
 
@@ -117,7 +117,7 @@ def render():
             continue
 
         for it in items:
-            # Duplikate ueber Quellen hinweg ueberspringen
+            # Duplikate über Quellen hinweg überspringen
             if it["link"] in seen_links and it["link"] != "#":
                 continue
             seen_links.add(it["link"])

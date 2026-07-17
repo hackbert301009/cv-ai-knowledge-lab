@@ -3,7 +3,7 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
-from src.components import hero, section_header, divider, info_box, video_embed, lab_header, key_concept, step_list
+from src.components import hero, section_header, divider, info_box, video_embed, video_search, lab_header, key_concept, step_list
 
 
 def render():
@@ -441,11 +441,9 @@ context = engine.create_execution_context()
         video_embed("DsGd2e9JNH4", "Quantization Explained — Confident Learning",
                     "Quantisierung und INT8 erklärt — warum 8 Bits oft genug sind")
         divider()
-        video_embed("mBVjJ1ORQZY", "Knowledge Distillation — Yannic Kilcher",
-                    "Hinton's Knowledge Distillation Paper erklärt")
+        video_search("Knowledge Distillation neural networks explained", "Knowledge Distillation", "Kleines Student-Modell lernt vom Teacher.")
         divider()
         video_embed("v_4KWmkwmsU", "TensorRT — NVIDIA Developer",
                     "TensorRT Workflow: ONNX Export → Optimierung → Deployment")
         divider()
-        video_embed("W0HdmFCq8mc", "Pruning Deep Neural Networks",
-                    "Iteratives Pruning, Sparsity und die Lottery Ticket Hypothesis")
+        video_search("Pruning deep neural networks explained", "Pruning erklärt", "Gewichte/Filter entfernen für kleinere Netze.")

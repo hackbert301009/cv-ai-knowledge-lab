@@ -4,7 +4,7 @@ import numpy as np
 import streamlit as st
 
 from src.components import (
-    hero, section_header, divider, info_box, lab_header, key_concept, video_embed,
+    hero, section_header, divider, info_box, lab_header, key_concept, video_embed, video_search,
     render_learning_block, render_quiz_checkpoint,
 )
 
@@ -155,7 +155,7 @@ Dichter Fluss wird oft als **Farbbild** visualisiert: Farbton = Richtung, Sätti
             video_embed("5AUypv5BNbI", "Optical Flow")
         with col2:
             st.markdown("**RAFT erklärt**")
-            video_embed("kAP-U_Xj6-0", "RAFT explained")
+            video_search("RAFT optical flow deep learning explained", "RAFT erklärt", "")
 
     divider()
     render_learning_block(

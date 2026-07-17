@@ -239,18 +239,9 @@ _init_hub_state()
 with st.sidebar:
     st.markdown(
         """
-        <div style="text-align:center; padding: 0.5rem 0 1.5rem 0;">
-          <div style="font-size: 2rem;">🧠</div>
-          <div style="font-size: 1.05rem; font-weight: 700;
-               background: linear-gradient(135deg, #7C3AED, #EC4899, #F59E0B);
-               -webkit-background-clip: text;
-               -webkit-text-fill-color: transparent;">
-            CV &amp; AI Knowledge Lab
-          </div>
-          <div style="font-size: 0.7rem; color: #9CA3AF; letter-spacing: 0.1em;
-               text-transform: uppercase; margin-top: 0.2rem;">
-            Master Edition
-          </div>
+        <div class="term-logo">
+          <div><span class="tl-prompt">~/cv-ai $</span> <span class="tl-title">knowledge_lab</span><span class="tl-cursor">▋</span></div>
+          <div class="tl-sub">// master edition · 2026</div>
         </div>
         """,
         unsafe_allow_html=True,
