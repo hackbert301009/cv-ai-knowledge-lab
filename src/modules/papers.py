@@ -96,7 +96,7 @@ PAPERS = {
 
 def render():
     hero(
-        eyebrow="Live · Modul 24",
+        eyebrow="Live · Paper-Bibliothek",
         title="Paper-Bibliothek",
         sub="Eine kuratierte Liste der wichtigsten Paper, sortiert nach Thema. "
             "Die hier sind die, die du wenigstens einmal angefasst haben solltest."

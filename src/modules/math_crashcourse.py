@@ -7,7 +7,7 @@ from src.components import hero, section_header, divider, info_box, lab_header, 
 
 def render():
     hero(
-        eyebrow="Grundlagen · Modul 1",
+        eyebrow="Grundlagen · Mathe-Crashkurs",
         title="Mathe-Crashkurs",
         sub="Die mathematische Sprache von CV und KI auf einen Blick. "
             "Keine Beweise, keine Trockenheit — nur das, was du wirklich brauchst."
@@ -386,9 +386,9 @@ print(heap_sort([12, 11, 13, 5, 6, 7]))
                 while j >= 0 and a[j] > key:
                     a[j + 1] = a[j]
                     j -= 1
-                    a[j + 1] = key
-                    steps.append(a[:])
-                    highlights.append((j + 1, j + 2))
+                a[j + 1] = key
+                steps.append(a[:])
+                highlights.append((j + 1, i))
             return steps, highlights
 
         fn_map = {

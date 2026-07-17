@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list, render_learning_block,
+    video_embed, lab_header, key_concept, step_list, render_learning_block, render_quiz_checkpoint,
 )
 
 
@@ -20,7 +20,7 @@ def _warmup_cosine_lr(t, warmup, T, eta_max=1e-3, eta_min=1e-6):
 
 def render():
     hero(
-        eyebrow="Deep Learning · Modul 13",
+        eyebrow="Deep Learning · Training & Optimizer",
         title="Training, Loss &amp; Optimizer",
         sub="Wie ein Netz wirklich lernt: Loss-Funktionen, Optimizer, Learning-Rate Scheduling, "
             "Regularisierung. Die handwerklichen Tricks, die zwischen 70% und 95% Accuracy entscheiden."
@@ -552,4 +552,17 @@ for epoch in range(epochs):
                 "Kein Checkpoint des besten Modells.",
                 "Fehlende Reproduzierbarkeit (Seed/Versionen).",
             ],
+        )
+
+        render_quiz_checkpoint(
+            key_prefix="training",
+            module_id="training",
+            question="Wofür sorgt ein Learning-Rate-Warmup zu Trainingsbeginn?",
+            options=[
+                "Stabilere Updates, während sich Adam-Statistiken einpendeln",
+                "Ein kleineres Modell",
+                "Weniger Trainingsdaten nötig",
+                "Automatische Datenaugmentation",
+            ],
+            correct_option="Stabilere Updates, während sich Adam-Statistiken einpendeln",
         )

@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list, card, render_card_grid, render_learning_block,
+    video_embed, lab_header, key_concept, step_list, card, render_card_grid, render_learning_block, render_quiz_checkpoint,
 )
 
 
@@ -15,7 +15,7 @@ def _softmax(x, axis=-1):
 
 def render():
     hero(
-        eyebrow="State-of-the-Art · Modul 15",
+        eyebrow="State-of-the-Art · Transformer & Attention",
         title="Transformer &amp; Attention",
         sub="Die Architektur, die alles verändert hat. Self-Attention, Vision Transformer, "
             "Swin — die neue Lingua Franca von Computer Vision und KI."
@@ -398,7 +398,7 @@ Wir berechnen, wie stark jeder Patch auf jeden anderen "achtet".""")
                 node [shape=box, style=rounded];
                 A [label="Datensatzgröße?"];
                 B [label="<10k: CNN/Transfer"];
-                C [label(">50k + Pretraining: ViT/Swin")];
+                C [label=">50k + Pretraining: ViT/Swin"];
                 D [label="Detection/Segmentation: Swin"];
                 A -> B;
                 A -> C;
@@ -450,4 +450,17 @@ attn = torch.randn(12, 197, 197)  # 12 Heads
                 "Unterschiedliche Augmentationen zwischen Modellen.",
                 "Fehlende Fehleranalyse der Aufmerksamkeitsmuster.",
             ],
+        )
+
+        render_quiz_checkpoint(
+            key_prefix="transformers_mod",
+            module_id="transformers",
+            question="Warum wird der Attention-Score durch die Wurzel von d_k geteilt?",
+            options=[
+                "Damit die Dot-Product-Varianz nicht explodiert und Softmax nicht sättigt",
+                "Um die Sequenzlänge zu normalisieren",
+                "Um Positions-Embeddings zu ersetzen",
+                "Aus reiner Konvention",
+            ],
+            correct_option="Damit die Dot-Product-Varianz nicht explodiert und Softmax nicht sättigt",
         )

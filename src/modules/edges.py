@@ -7,7 +7,7 @@ from src.components import hero, section_header, divider, info_box, step_list, r
 
 def render():
     hero(
-        eyebrow="Bildverarbeitung · Modul 7",
+        eyebrow="Bildverarbeitung · Kantendetektion",
         title="Kantendetektion",
         sub="Wo ändert sich die Helligkeit stark? Genau dort sind Kanten — und dort fängt Bildverstehen an. "
             "Sobel, Canny, Laplace — die Klassiker."
@@ -91,10 +91,13 @@ DoG ist die Basis von SIFT.
         section_header("Live-Demo: alle Detektoren vergleichen")
         uploaded = st.file_uploader("Bild hochladen", type=["png", "jpg", "jpeg"], key="edge_upload")
 
+        img = None
         if uploaded:
             file_bytes = np.frombuffer(uploaded.read(), np.uint8)
             img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-        else:
+            if img is None:
+                st.warning("Bild konnte nicht dekodiert werden — verwende Demo-Bild.")
+        if img is None:
             # Demo: Gradient + Kreis + Rechteck
             img = np.zeros((300, 300, 3), dtype=np.uint8)
             grad = np.linspace(0, 255, 300, dtype=np.uint8)

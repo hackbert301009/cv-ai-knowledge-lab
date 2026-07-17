@@ -1,10 +1,13 @@
 """
 Modul-Registry — zentrale Konfiguration aller Lernmodule.
-Alle Module mit Metadaten für Navigation, Kategorisierung und Rendering.
+
+Single Source of Truth: Die MODULES-Liste definiert Reihenfolge, Kategorie und
+Metadaten jedes Moduls. CATEGORIES (Sidebar-Navigation) wird daraus automatisch
+abgeleitet — es gibt keine zweite, manuell gepflegte ID-Liste mehr.
 """
 
 from dataclasses import dataclass, field
-from typing import Callable, List
+from typing import List
 
 
 @dataclass
@@ -20,22 +23,34 @@ class Module:
 
 
 # --------------------------------------------------------------------
-# Kategorien
+# Kategorie-Reihenfolge + Icons (die einzige Stelle, an der Kategorien
+# definiert werden). Module.category muss auf einen dieser Namen zeigen.
 # --------------------------------------------------------------------
-CATEGORIES = {
-    "🏠 Übersicht":      ["home", "roadmap"],
-    "🧮 Grundlagen":     ["math", "linalg", "calculus", "probability", "tensor_playground"],
-    "🖼️ Bildverarbeitung": ["image_basics", "camera_pipeline", "filters", "edges", "features", "morphology", "segmentation_classic", "object_tracking"],
-    "🤖 Deep Learning":   ["nn_basics", "cnn", "training", "modern_archs", "self_supervised", "video_understanding"],
-    "🔥 State-of-the-Art": ["transformers", "vlm", "diffusion", "gen_ai", "multimodal", "pose_estimation", "three_d_vision", "rag_multimodal_agents"],
-    "🚀 Praxis":          ["learning_studio", "projects", "datasets", "deployment", "compression", "evaluation_robustness"],
-    "📰 Live":            ["news", "papers", "paper_of_month", "resources"],
-    "📚 Referenz":        ["glossar"],
+CATEGORY_ORDER: List[str] = [
+    "Übersicht",
+    "Grundlagen",
+    "Bildverarbeitung",
+    "Deep Learning",
+    "State-of-the-Art",
+    "Praxis",
+    "Live",
+    "Referenz",
+]
+
+CATEGORY_ICONS = {
+    "Übersicht":        "🏠",
+    "Grundlagen":       "🧮",
+    "Bildverarbeitung": "🖼️",
+    "Deep Learning":    "🤖",
+    "State-of-the-Art": "🔥",
+    "Praxis":           "🚀",
+    "Live":             "📰",
+    "Referenz":         "📚",
 }
 
 
 # --------------------------------------------------------------------
-# Alle Module
+# Alle Module — Reihenfolge = Lernreihenfolge innerhalb der Kategorie
 # --------------------------------------------------------------------
 MODULES: List[Module] = [
     # --- Übersicht ---
@@ -47,6 +62,7 @@ MODULES: List[Module] = [
     Module("linalg",      "🧮", "Lineare Algebra",                "Tensoren, Matrixoperationen, Eigenwerte",      "Grundlagen",      "Anfänger",       "45 min", ["math", "core"]),
     Module("calculus",    "∂",  "Analysis & Gradienten",          "Ableitungen, Backprop, Optimierung",           "Grundlagen",      "Anfänger",       "40 min", ["math"]),
     Module("probability", "🎲", "Wahrscheinlichkeit & Statistik", "Bayes, Verteilungen, Information Theory",     "Grundlagen",      "Anfänger",       "35 min", ["math"]),
+    Module("tensor_playground", "🎮", "Tensor Playground",    "NumPy interaktiv: Reshape, Einsum, Broadcasting", "Grundlagen",    "Anfänger",    "30 min", ["math", "numpy", "core"]),
 
     # --- Bildverarbeitung ---
     Module("image_basics",        "🖼️", "Bildgrundlagen & Pixel",          "Was ist ein Bild? Farbräume, Sampling",      "Bildverarbeitung", "Anfänger",       "20 min", ["cv"]),
@@ -56,6 +72,7 @@ MODULES: List[Module] = [
     Module("features",            "🔑", "Feature Detection & Matching",    "SIFT, ORB, Harris, Keypoints",               "Bildverarbeitung", "Fortgeschritten", "40 min", ["cv"]),
     Module("morphology",          "🧱", "Morphologie",                     "Erosion, Dilatation, Opening, Closing",      "Bildverarbeitung", "Fortgeschritten", "20 min", ["cv"]),
     Module("segmentation_classic","✂️", "Klassische Segmentierung",        "Threshold, Watershed, GrabCut, K-Means",     "Bildverarbeitung", "Fortgeschritten", "30 min", ["cv"]),
+    Module("optical_flow",        "🌬️", "Optical Flow & Motion",           "Lucas-Kanade, Farnebäck, RAFT, Motion",      "Bildverarbeitung", "Fortgeschritten", "35 min", ["cv", "motion", "flow"]),
     Module("object_tracking",      "🎯", "Objekterkennung & Tracking",      "YOLO, DETR, NMS, mAP, MOT, ByteTrack",       "Bildverarbeitung", "Fortgeschritten", "55 min", ["cv", "detection", "tracking"]),
 
     # --- Deep Learning ---
@@ -71,7 +88,9 @@ MODULES: List[Module] = [
     Module("vlm",          "👁️‍🗨️", "Vision-Language Models",       "CLIP, BLIP-2, LLaVA, Flamingo",                "State-of-the-Art", "Experte", "50 min", ["sota"]),
     Module("diffusion",    "🌊", "Diffusion Models",                "DDPM, Stable Diffusion, Flow Matching",        "State-of-the-Art", "Experte", "55 min", ["sota"]),
     Module("gen_ai",       "🎨", "Generative KI",                   "GANs, VAEs, Autoregressive Modelle",           "State-of-the-Art", "Experte", "45 min", ["sota"]),
-    Module("multimodal",   "🌐", "Multimodal & LLMs",               "GPT-4o, Gemini, Sora — Bild+Text+Video",       "State-of-the-Art", "Experte", "40 min", ["sota"]),
+    Module("multimodal",   "🌐", "Multimodal & LLMs",               "GPT-5, Gemini, Sora — Bild+Text+Video",        "State-of-the-Art", "Experte", "40 min", ["sota"]),
+    Module("vision_foundation", "🧭", "Vision Foundation Models",   "SAM 2, DINOv3, Depth Anything, CLIP, Grounding", "State-of-the-Art", "Experte", "45 min", ["sota", "foundation"]),
+    Module("pose_estimation",   "🧍", "Pose Estimation",      "Human Pose, 6DoF, Skeleton-Visualizer",           "State-of-the-Art", "Experte",  "45 min", ["sota", "cv", "pose"]),
     Module("three_d_vision", "🧊", "3D Computer Vision",            "Kamera-Geometrie, Epipolar, SfM/SLAM, NeRF",   "State-of-the-Art", "Experte", "60 min", ["sota", "3d", "cv"]),
     Module("rag_multimodal_agents", "🛰️", "RAG + Multimodal Agents", "Vision-RAG, Tool-Use, Prompting, Guardrails",  "State-of-the-Art", "Experte", "50 min", ["sota", "rag", "agents"]),
 
@@ -79,8 +98,10 @@ MODULES: List[Module] = [
     Module("learning_studio", "🧪", "Lernstudio: Labs & Uebungen", "Progressive Labs, Mischformat und Community", "Praxis", "Anfänger", "35 min", ["praxis", "labs", "community"]),
     Module("projects",   "💻", "Praxisprojekte",          "10+ Hands-on Projekte mit Code",          "Praxis", "Fortgeschritten", "varies", ["praxis"]),
     Module("datasets",   "📦", "Datasets & Tools",        "ImageNet, COCO, HuggingFace, Roboflow",   "Praxis", "Anfänger",        "20 min", ["praxis"]),
-    Module("deployment", "🚀", "Deployment & MLOps",      "ONNX, TensorRT, FastAPI, Docker",         "Praxis", "Experte",          "50 min", ["praxis"]),
     Module("evaluation_robustness", "🛡️", "Evaluation & Robustness", "Calibration, OOD, Domain Shift, Bias/Fairness", "Praxis", "Fortgeschritten", "45 min", ["praxis", "evaluation", "robustness"]),
+    Module("compression",       "🗜️", "Model Compression",    "Quantisierung, Pruning, KD, ONNX, TensorRT",      "Praxis",        "Experte",      "45 min", ["praxis", "edge", "deployment"]),
+    Module("edge_ai",           "🔌", "Edge & Embedded CV",   "Jetson, TFLite, Core ML, On-Device-Inferenz",     "Praxis",        "Experte",      "40 min", ["praxis", "edge", "embedded"]),
+    Module("deployment", "🚀", "Deployment & MLOps",      "ONNX, TensorRT, FastAPI, Docker",         "Praxis", "Experte",          "50 min", ["praxis"]),
 
     # --- Live ---
     Module("news",          "📰", "Live News",                "Aktuelle Forschung & Releases",                "Live",    "Anfänger",        "live",    ["live"]),
@@ -89,13 +110,29 @@ MODULES: List[Module] = [
     Module("resources",     "🔗", "Ressourcen & Tools",       "Bücher, Kurse, Frameworks, Communities",       "Live",    "Anfänger",         "varies",  ["live"]),
 
     # --- Referenz ---
-    Module("glossar",       "📖", "Glossar & Wörterbuch",     "500+ CV & AI Begriffe durchsuchen",            "Referenz", "Anfänger",        "varies",  ["reference", "glossar"]),
-
-    # --- Neue Inhalte ---
-    Module("tensor_playground", "🎮", "Tensor Playground",    "NumPy interaktiv: Reshape, Einsum, Broadcasting", "Grundlagen",    "Anfänger",    "30 min", ["math", "numpy", "core"]),
-    Module("compression",       "🗜️", "Model Compression",    "Quantisierung, Pruning, KD, ONNX, TensorRT",      "Praxis",        "Experte",      "45 min", ["praxis", "edge", "deployment"]),
-    Module("pose_estimation",   "🧍", "Pose Estimation",      "Human Pose, 6DoF, Skeleton-Visualizer",           "State-of-the-Art", "Experte",  "45 min", ["sota", "cv", "pose"]),
+    Module("glossar",       "📖", "Glossar & Wörterbuch",     "CV & AI Begriffe durchsuchen",                 "Referenz", "Anfänger",        "varies",  ["reference", "glossar"]),
 ]
+
+
+# --------------------------------------------------------------------
+# Abgeleitete Strukturen — automatisch aus MODULES gebaut
+# --------------------------------------------------------------------
+def _build_categories() -> dict:
+    """CATEGORIES (Emoji-Key → [mod_id]) aus MODULES ableiten — keine Doppelpflege."""
+    grouped: dict = {}
+    for cat in CATEGORY_ORDER:
+        key = f"{CATEGORY_ICONS[cat]} {cat}"
+        ids = [m.id for m in MODULES if m.category == cat]
+        if ids:
+            grouped[key] = ids
+    return grouped
+
+
+CATEGORIES = _build_categories()
+
+# Konsistenz-Check: jede Modul-Kategorie muss bekannt sein.
+_unknown = sorted({m.category for m in MODULES} - set(CATEGORY_ORDER))
+assert not _unknown, f"Unbekannte Kategorie(n) in MODULES: {_unknown}"
 
 
 def get_module(mod_id: str) -> Module | None:
@@ -104,8 +141,17 @@ def get_module(mod_id: str) -> Module | None:
 
 
 def modules_by_category() -> dict:
-    """Module gruppiert nach Kategorie zurückgeben."""
-    grouped: dict = {}
+    """Module gruppiert nach Kategorie (in CATEGORY_ORDER-Reihenfolge)."""
+    grouped: dict = {cat: [] for cat in CATEGORY_ORDER}
     for m in MODULES:
-        grouped.setdefault(m.category, []).append(m)
-    return grouped
+        grouped[m.category].append(m)
+    return {cat: mods for cat, mods in grouped.items() if mods}
+
+
+def module_position(mod_id: str) -> tuple[int, int]:
+    """1-basierte Position eines Moduls unter allen Nicht-Home-Modulen + Gesamtzahl."""
+    trackable = [m.id for m in MODULES if m.id != "home"]
+    total = len(trackable)
+    if mod_id in trackable:
+        return trackable.index(mod_id) + 1, total
+    return 0, total

@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list, render_learning_block,
+    video_embed, lab_header, key_concept, step_list, render_learning_block, render_quiz_checkpoint,
 )
 
 
@@ -18,7 +18,7 @@ def _leaky(x):   return np.where(x > 0, x, 0.01 * x)
 
 def render():
     hero(
-        eyebrow="Deep Learning · Modul 11",
+        eyebrow="Deep Learning · Neuronale Netze",
         title="Neuronale Netze von Grund auf",
         sub="Vom einzelnen Perzeptron zum tiefen Netz. Die fundamentale Architektur, "
             "auf der **alles** in modernem Deep Learning aufbaut — Schritt für Schritt erklärt."
@@ -557,4 +557,17 @@ def forward(x, W1, b1, W2, b2):
                 "Zu hohe LR führt zu Instabilität.",
                 "Keine Kontrolle der Gradienten.",
             ],
+        )
+
+        render_quiz_checkpoint(
+            key_prefix="nn_basics",
+            module_id="nn_basics",
+            question="Warum braucht ein MLP nichtlineare Aktivierungsfunktionen?",
+            options=[
+                "Ohne sie kollabiert das gesamte Netz zu einer einzigen linearen Abbildung",
+                "Um Speicher zu sparen",
+                "Damit die Gradienten größer werden",
+                "Nur aus historischen Gründen",
+            ],
+            correct_option="Ohne sie kollabiert das gesamte Netz zu einer einzigen linearen Abbildung",
         )

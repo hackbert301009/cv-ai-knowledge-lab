@@ -129,7 +129,7 @@ TERMS = [
 
     # VLMs & Multimodal
     ("CLIP", "Contrastive Language-Image Pretraining (OpenAI). Verbindet Bild und Text in gemeinsamem Raum.", "VLM", "vlm"),
-    ("Contrastive Learning", "Ähnliche Paare nah, unähnliche weit im Embedding-Raum. Basis von CLIP, SimCLR.", "VLM", "vlm"),
+    ("Kontrastives Lernen (CLIP)", "Bild- und Text-Embedding desselben Paares nah, andere weit — trainiert VLMs wie CLIP.", "VLM", "vlm"),
     ("Zero-Shot Learning", "Auf Klassen generalisieren, die im Training nicht gesehen wurden — nur über Textbeschreibung.", "VLM", "vlm"),
     ("Prompt Engineering", "Optimierung von Text-Eingaben für bessere Modell-Ausgaben ohne Gewichts-Update.", "VLM", None),
     ("LLaVA", "Large Language and Vision Assistant. CLIP Vision + LLM mit MLP-Bridge. Effizientes VLM.", "VLM", "vlm"),
@@ -177,7 +177,6 @@ TERMS = [
 
     # Misc
     ("Foundation Model", "Großes pretrained Modell als universelle Basis für viele Downstream-Tasks.", "Allgemein", None),
-    ("Fine-Tuning", "Foundation Model auf spezifische Aufgabe anpassen — wenig Daten, wenig Compute nötig.", "Allgemein", "cnn"),
     ("Inference", "Modell auf neuen Daten anwenden (nach Training). Auch: Deployment.", "Allgemein", None),
     ("Hyperparameter", "Trainings-Konfiguration (LR, Batch Size, Modellgröße) — nicht durch Training gelernt.", "Training", "training"),
     ("Ablation Study", "Experiment das zeigt wie jede Komponente zum Gesamtergebnis beiträgt (eine nach der anderen entfernen).", "Allgemein", None),
@@ -190,6 +189,58 @@ TERMS = [
     ("Temperature Sampling", "Skalierung von Logits vor Softmax: höhere Temp = diversere Outputs, niedrige = greedy.", "LLM", None),
     ("LoRA", "Low-Rank Adaptation. Trainiere nur kleine Rang-Matrix statt ganzer Gewichte. 10-100× effizienter.", "Fine-Tuning", None),
     ("RLHF", "Reinforcement Learning from Human Feedback. Macht LLMs hilfsbereit (ChatGPT, Claude).", "LLM", None),
+
+    # Motion & Optical Flow
+    ("Lucas-Kanade", "Klassisches sparse Optical-Flow-Verfahren; nimmt lokal konstanten Fluss an.", "Bildverarbeitung", None),
+    ("Farnebäck", "Dichtes Optical-Flow-Verfahren über polynomiale Nachbarschafts-Approximation.", "Bildverarbeitung", None),
+    ("RAFT", "Recurrent All-Pairs Field Transforms — Deep-Learning-SOTA für dichten Optical Flow (2020).", "Bildverarbeitung", None),
+
+    # Foundation & moderne Modelle
+    ("SAM / SAM 2", "Segment Anything Model (Meta) — promptbare Zero-Shot-Segmentierung, SAM 2 auch für Video.", "State-of-the-Art", None),
+    ("DINOv2 / DINOv3", "Selbstüberwachte Vision-Foundation-Features (Meta), stark für Dense-Tasks ohne Labels.", "State-of-the-Art", "self_supervised"),
+    ("Depth Anything", "Foundation-Modell für monokulare Tiefenschätzung mit starker Zero-Shot-Generalisierung.", "State-of-the-Art", None),
+    ("Grounding DINO", "Open-Vocabulary-Objektdetektor: Erkennung per Textprompt statt fester Klassen.", "State-of-the-Art", None),
+    ("Zero-Shot", "Aufgabe lösen ohne aufgabenspezifisches Training — nur durch Prompt/Beschreibung.", "State-of-the-Art", "vlm"),
+    ("Open-Vocabulary", "Erkennung beliebiger, nicht vordefinierter Klassen über Sprach-Prompts.", "State-of-the-Art", None),
+
+    # 3D & Rendering
+    ("NeRF", "Neural Radiance Field — MLP kodiert eine 3D-Szene für fotorealistische neue Ansichten.", "State-of-the-Art", "three_d_vision"),
+    ("3D Gaussian Splatting", "Szene als Millionen 3D-Gaußfunktionen; echtzeitfähiges Rendern (2023).", "State-of-the-Art", "three_d_vision"),
+    ("SfM", "Structure from Motion — 3D-Struktur + Kamerapose aus vielen Bildern rekonstruieren.", "State-of-the-Art", "three_d_vision"),
+    ("SLAM", "Simultaneous Localization and Mapping — gleichzeitig Karte bauen und sich darin lokalisieren.", "State-of-the-Art", "three_d_vision"),
+    ("Epipolargeometrie", "Geometrische Beziehung zweier Kameraansichten; Fundamentalmatrix F, Essentialmatrix E.", "State-of-the-Art", "three_d_vision"),
+    ("Homographie", "Projektive 3×3-Transformation zwischen zwei Ebenen — Panorama-Stitching, Rectification.", "Bildverarbeitung", "features"),
+
+    # Kamera & Sensor
+    ("Bayer-Pattern", "RGGB-Farbfiltermosaik auf dem Sensor; Demosaicing rekonstruiert das Farbbild.", "Bildverarbeitung", "camera_pipeline"),
+    ("Demosaicing", "Interpolation der fehlenden Farbkanäle aus dem Bayer-Mosaik.", "Bildverarbeitung", "camera_pipeline"),
+    ("ISP", "Image Signal Processor — Pipeline von RAW zu RGB (Weißabgleich, Denoise, Tonemap).", "Bildverarbeitung", "camera_pipeline"),
+    ("Shot Noise", "Poisson-verteiltes Photonenrauschen; fundamentale Grenze bei wenig Licht.", "Bildverarbeitung", "camera_pipeline"),
+    ("SNR", "Signal-to-Noise Ratio — Verhältnis von Nutzsignal zu Rauschen.", "Bildverarbeitung", "camera_pipeline"),
+
+    # Detection & Tracking
+    ("IoU", "Intersection over Union — Überlappungsmaß zweier Boxen/Masken (Schnitt/Vereinigung).", "Bildverarbeitung", "object_tracking"),
+    ("NMS", "Non-Maximum Suppression — entfernt überlappende, redundante Detektionen.", "Bildverarbeitung", "object_tracking"),
+    ("mAP", "mean Average Precision — Standardmetrik für Objektdetektion über Klassen/IoU-Schwellen.", "Bildverarbeitung", "object_tracking"),
+    ("MOTA", "Multiple Object Tracking Accuracy — kombiniert FP, FN und ID-Switches.", "Bildverarbeitung", "object_tracking"),
+    ("ByteTrack", "Tracking-by-Detection-Verfahren, das auch schwache Detektionen assoziiert.", "Bildverarbeitung", "object_tracking"),
+
+    # Effizienz & Deployment
+    ("Quantisierung", "Gewichte/Aktivierungen mit weniger Bits (INT8/INT4) darstellen — kleiner, schneller.", "Praxis", "compression"),
+    ("FlashAttention", "IO-optimierter Attention-Kernel — exakt, aber deutlich speicher-/laufzeiteffizienter.", "State-of-the-Art", "transformers"),
+
+    # Evaluation & Robustheit
+    ("Calibration", "Stimmt die Modell-Konfidenz mit der tatsächlichen Trefferquote überein?", "Praxis", "evaluation_robustness"),
+    ("ECE", "Expected Calibration Error — misst die Fehlkalibrierung über Konfidenz-Bins.", "Praxis", "evaluation_robustness"),
+    ("OOD", "Out-of-Distribution — Eingaben, die nicht der Trainingsverteilung entsprechen.", "Praxis", "evaluation_robustness"),
+    ("Domain Shift", "Verteilungsunterschied zwischen Trainings- und Einsatzdaten — häufige Fehlerquelle.", "Praxis", "evaluation_robustness"),
+
+    # RAG & Agents
+    ("RAG", "Retrieval-Augmented Generation — externes Wissen abrufen und in die Antwort einbetten.", "LLM", "rag_multimodal_agents"),
+    ("Vektor-Datenbank", "Speichert Embeddings für schnelle Ähnlichkeitssuche (ANN) — Kern von RAG.", "LLM", "rag_multimodal_agents"),
+    ("Tool Use / Function Calling", "LLM ruft externe Funktionen/APIs strukturiert auf, um Aufgaben zu lösen.", "LLM", "rag_multimodal_agents"),
+    ("Guardrails", "Regeln/Filter, die Modell-Ein- und -Ausgaben absichern (Safety, Format, Policy).", "LLM", "rag_multimodal_agents"),
+    ("Hallucination", "Plausibel klingende, aber faktisch falsche Modellausgabe.", "LLM", None),
 ]
 
 CATEGORIES = sorted(set(t[2] for t in TERMS))
@@ -262,10 +313,10 @@ def render():
             for term, expl, mod in sorted(terms_in_cat, key=lambda x: x[0]):
                 mod_badge = ""
                 if mod and mod in MODULE_LINKS:
-                    mod_badge = (f'<a style="display:inline-block;font-size:0.65rem;font-weight:700;'
+                    mod_badge = (f'<span style="display:inline-block;font-size:0.65rem;font-weight:700;'
                                  f'padding:0.1rem 0.45rem;border-radius:5px;background:rgba(59,130,246,0.15);'
-                                 f'color:#93C5FD;text-decoration:none;margin-left:0.4rem;" '
-                                 f'href="?">→ {MODULE_LINKS[mod]}</a>')
+                                 f'color:#93C5FD;margin-left:0.4rem;">'
+                                 f'📚 {MODULE_LINKS[mod]}</span>')
                 st.markdown(
                     f"""<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
                       <span style="font-weight:700;color:#F3F4F6;">{term}</span>{mod_badge}

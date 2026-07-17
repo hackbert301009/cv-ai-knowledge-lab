@@ -11,7 +11,7 @@ from src.components import (
 
 def render():
     hero(
-        eyebrow="Bildverarbeitung · Modul 6",
+        eyebrow="Bildverarbeitung · Filter & Faltung",
         title="Filter &amp; Faltung",
         sub="Die fundamentale Operation: ein kleiner Kernel gleitet über das Bild und berechnet einen gewichteten Durchschnitt. "
             "Aus dieser einen Idee sind Convolutional Neural Networks entstanden."
@@ -113,7 +113,8 @@ Das Ergebnis ist der neue Pixelwert an dieser Position.
 
         info_box(
             "**Merkhilfe Gauß:** Die Mitte ist heißer als die Ränder — proportional zu $e^{-r^2/(2\\sigma^2)}$. "
-            "Der Gauß-Kernel ist der **einzige** Blur-Kernel, der das Nyquist-Theorem respektiert.",
+            "Der Gauß-Kernel erzeugt beim Weichzeichnen **keine Ringing-Artefakte** (anders als Box- oder idealer Tiefpassfilter) "
+            "und ist **separierbar** — deshalb die Standardwahl fürs Anti-Aliasing vor dem Downsampling.",
             kind="info",
         )
 
@@ -124,11 +125,15 @@ Das Ergebnis ist der neue Pixelwert an dieser Position.
 
         uploaded = st.file_uploader("Bild hochladen (PNG, JPG)", type=["png", "jpg", "jpeg"], key="filter_upload")
 
+        img = None
         if uploaded:
             file_bytes = np.frombuffer(uploaded.read(), np.uint8)
             img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        else:
+            if img is None:
+                st.warning("Bild konnte nicht dekodiert werden — verwende Demo-Bild.")
+            else:
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        if img is None:
             img = np.zeros((220, 220, 3), dtype=np.uint8)
             # Synthetisches Demo-Bild
             cv2.circle(img, (110, 110), 70, (240, 100, 200), -1)

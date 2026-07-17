@@ -4,13 +4,13 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list, card, render_card_grid, render_learning_block,
+    video_embed, lab_header, key_concept, step_list, card, render_card_grid, render_learning_block, render_quiz_checkpoint,
 )
 
 
 def render():
     hero(
-        eyebrow="State-of-the-Art · Modul 17",
+        eyebrow="State-of-the-Art · Diffusion Models",
         title="Diffusion Models",
         sub="Wie aus reinem Rauschen Bilder werden. Die mathematische Eleganz hinter "
             "Stable Diffusion, DALL·E 3, Midjourney und Sora."
@@ -295,7 +295,7 @@ Das schafft neue Herausforderungen:
 | Modell | Organisation | Besonderheit |
 |---|---|---|
 | **Sora** | OpenAI | DiT auf Spacetime-Patches, bis 60s |
-| **Veo 2** | Google DeepMind | Physik-realistisch, sehr hoch qualitativ |
+| **Veo 3** | Google DeepMind | Physik-realistisch, native Audio-Spur, sehr hohe Qualität |
 | **Gen-3 Alpha** | Runway | Sehr konsistent, API verfügbar |
 | **Kling 2.0** | Kuaishou | Günstig, gute Qualität |
 | **Hunyuan Video** | Tencent | Open-Source! 13B Parameter |
@@ -481,4 +481,17 @@ for gs in scales:
                 "Fehlende negative prompts bei kritischen Motiven.",
                 "Keine qualitative + quantitative Evaluation kombiniert.",
             ],
+        )
+
+        render_quiz_checkpoint(
+            key_prefix="diffusion",
+            module_id="diffusion",
+            question="Was lernt ein DDPM im Kern?",
+            options=[
+                "Das schrittweise Entrauschen — typischerweise die Vorhersage des addierten Rauschens",
+                "Direkt das fertige Bild in einem Schritt",
+                "Eine Klassifikation der Eingabe",
+                "Die Kompression des Bildes",
+            ],
+            correct_option="Das schrittweise Entrauschen — typischerweise die Vorhersage des addierten Rauschens",
         )

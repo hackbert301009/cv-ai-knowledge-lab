@@ -5,7 +5,7 @@ from src.components import hero, section_header, divider, info_box, card, render
 
 def render():
     hero(
-        eyebrow="Praxis · Modul 20",
+        eyebrow="Praxis · Praxisprojekte",
         title="Praxisprojekte",
         sub="Theorie ist gut. Code ist besser. Hier sind 12 hands-on Projekte vom Anfänger- bis "
             "zum Fortgeschrittenen-Niveau — jeweils mit Setup, Code und Erweiterungen."

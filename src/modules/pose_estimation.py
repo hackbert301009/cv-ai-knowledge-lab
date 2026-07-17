@@ -342,7 +342,7 @@ Dies wird mit **PnP (Perspective-n-Point)** gelöst — z.B. EPnP oder iterative
 | **PVNet** | Keypoints im Bild → PnP | Robust bei Verdeckung | Training-aufwendig |
 | **FoundPose** | Foundation Model, Zero-Shot | Kein 3D-Modell nötig | Langsam |
 | **GDR-Net** | Geometry-guided Direkt-Regression | SOTA auf YCB-V | Komplex |
-| **FoundPose** | ViT + Template Matching | Zero-Shot möglich | – |
+| **MegaPose / FoundationPose** | Render-and-Compare + ViT, Zero-Shot | Kein Training pro Objekt | Rechenintensiv |
         """)
 
         st.code("""

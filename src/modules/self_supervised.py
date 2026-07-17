@@ -1,6 +1,6 @@
 """Self-Supervised Learning fuer Vision."""
 import numpy as np
-import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 from src.components import (
@@ -85,15 +85,16 @@ Danach wird mit wenigen Labels feinjustiert (Fine-Tuning).
         gain_scale = st.slider("SSL Gain Skalierung", 0.5, 1.6, 1.0, 0.05)
         ssl_scaled = np.clip(sup + (ssl - sup) * gain_scale, 0, 100)
 
-        fig = px.line(
-            x=budget,
-            y={"Supervised": sup, "SSL + Fine-Tuning": ssl_scaled},
-            labels={"x": "Label-Anteil (%)", "value": "Top-1 Accuracy"},
-            markers=True,
+        fig = go.Figure()
+        fig.add_scatter(x=budget, y=sup, mode="lines+markers", name="Supervised")
+        fig.add_scatter(x=budget, y=ssl_scaled, mode="lines+markers", name="SSL + Fine-Tuning")
+        fig.update_layout(
             template="plotly_dark",
             title="Accuracy vs Label-Budget",
+            xaxis_title="Label-Anteil (%)",
+            yaxis_title="Top-1 Accuracy",
+            height=420,
         )
-        fig.update_layout(height=420)
         st.plotly_chart(fig, use_container_width=True)
 
     with tabs[4]:

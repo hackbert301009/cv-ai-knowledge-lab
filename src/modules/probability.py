@@ -7,7 +7,7 @@ from src.components import hero, section_header, divider, info_box, step_list, r
 
 def render():
     hero(
-        eyebrow="Grundlagen · Modul 4",
+        eyebrow="Grundlagen · Wahrscheinlichkeit & Statistik",
         title="Wahrscheinlichkeit &amp; Statistik",
         sub="Bayes, Verteilungen, Cross-Entropy, KL-Divergenz — die Werkzeuge, "
             "mit denen ML-Modelle Unsicherheit ausdrücken und messen."
