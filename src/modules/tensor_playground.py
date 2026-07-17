@@ -209,8 +209,8 @@ def render():
                 st.markdown(
                     f"""<div style="background:rgba(16,185,129,0.1);border:1px solid #10B981;
                         border-radius:10px;padding:1rem;margin:1rem 0;">
-                      <div style="font-weight:700;color:#6EE7B7;">✅ Broadcasting erfolgreich!</div>
-                      <div style="color:#E5E7EB;margin-top:0.5rem;">
+                      <div style="font-weight:700;color:#047857;">✅ Broadcasting erfolgreich!</div>
+                      <div style="color:#334155;margin-top:0.5rem;">
                         <code>{sa}</code> + <code>{sb}</code> → <code>{result_shape}</code>
                       </div>
                     </div>""",

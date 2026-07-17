@@ -341,9 +341,9 @@ def _render_paper(p: dict):
             border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;">
           <div style="font-size:0.75rem;color:#A78BFA;font-weight:700;text-transform:uppercase;
                letter-spacing:0.12em;margin-bottom:0.5rem;">{p['venue']} · {p['year']}</div>
-          <div style="font-size:1.5rem;font-weight:800;color:#F3F4F6;margin-bottom:0.3rem;">{p['title']}</div>
-          <div style="color:#9CA3AF;font-size:0.9rem;margin-bottom:0.75rem;">{p['authors']}</div>
-          <div style="color:#E5E7EB;font-size:0.95rem;line-height:1.6;margin-bottom:0.75rem;">{p['tldr']}</div>
+          <div style="font-size:1.5rem;font-weight:800;color:#0F172A;margin-bottom:0.3rem;">{p['title']}</div>
+          <div style="color:#64748B;font-size:0.9rem;margin-bottom:0.75rem;">{p['authors']}</div>
+          <div style="color:#334155;font-size:0.95rem;line-height:1.6;margin-bottom:0.75rem;">{p['tldr']}</div>
           <div>{''.join(f'<span style="display:inline-block;font-size:0.7rem;font-weight:700;padding:0.15rem 0.55rem;border-radius:6px;background:rgba(59,130,246,0.15);color:#93C5FD;margin:0.2rem;">{t}</span>' for t in p['tags'])}</div>
           <div style="margin-top:0.75rem;font-size:1.1rem;">Impact: {p['impact']}</div>
         </div>""",
