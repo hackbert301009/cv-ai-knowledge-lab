@@ -239,9 +239,12 @@ _init_hub_state()
 with st.sidebar:
     st.markdown(
         """
-        <div class="term-logo">
-          <div><span class="tl-prompt">~/cv-ai $</span> <span class="tl-title">knowledge_lab</span><span class="tl-cursor">▋</span></div>
-          <div class="tl-sub">// master edition · 2026</div>
+        <div class="brand-logo">
+          <div class="bl-row">
+            <div class="bl-mark">🧠</div>
+            <div class="bl-title">CV &amp; AI<br>Knowledge Lab</div>
+          </div>
+          <div class="bl-sub">Master Edition · 2026</div>
         </div>
         """,
         unsafe_allow_html=True,

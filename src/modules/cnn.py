@@ -156,8 +156,8 @@ In der Praxis: folge dem Paper der Architektur, die du benutzt.
                     border-left:2px solid {color};padding-left:1rem;margin-left:0.5rem;margin-bottom:0.5rem;">
                     <div style="min-width:3rem;font-weight:800;color:{color};font-size:0.85rem;">{year}</div>
                     <div>
-                      <div style="font-weight:700;color:#F3F4F6;">{name} <span style="font-weight:400;color:#9CA3AF;font-size:0.85rem;">— {authors}</span></div>
-                      <div style="font-size:0.875rem;color:#9CA3AF;margin-top:0.2rem;">{desc}</div>
+                      <div style="font-weight:700;color:#0F172A;">{name} <span style="font-weight:400;color:#64748B;font-size:0.85rem;">— {authors}</span></div>
+                      <div style="font-size:0.875rem;color:#475569;margin-top:0.2rem;">{desc}</div>
                     </div>
                 </div>""",
                 unsafe_allow_html=True,

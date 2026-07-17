@@ -318,9 +318,9 @@ def render():
                                  f'color:#93C5FD;margin-left:0.4rem;">'
                                  f'📚 {MODULE_LINKS[mod]}</span>')
                 st.markdown(
-                    f"""<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
-                      <span style="font-weight:700;color:#F3F4F6;">{term}</span>{mod_badge}
-                      <div style="color:#9CA3AF;font-size:0.875rem;margin-top:0.2rem;line-height:1.5;">{expl}</div>
+                    f"""<div style="padding:0.6rem 0;border-bottom:1px solid rgba(15,23,42,0.08);">
+                      <span style="font-weight:700;color:#0F172A;">{term}</span>{mod_badge}
+                      <div style="color:#64748B;font-size:0.875rem;margin-top:0.2rem;line-height:1.5;">{expl}</div>
                     </div>""",
                     unsafe_allow_html=True,
                 )

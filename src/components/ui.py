@@ -167,7 +167,7 @@ def info_box(text: str, kind: str = "info"):
             border-radius:8px;
             padding:1rem 1.2rem;
             margin:1rem 0;
-            color:#E5E7EB;">
+            color:#334155;">
           <strong>{icon} </strong>{text}
         </div>
         """,
