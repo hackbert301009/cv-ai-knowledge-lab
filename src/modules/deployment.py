@@ -5,7 +5,7 @@ from src.components import hero, section_header, divider, info_box, step_list, r
 
 def render():
     hero(
-        eyebrow="Praxis · Modul 22",
+        eyebrow="Praxis · Deployment & MLOps",
         title="Deployment &amp; MLOps",
         sub="Ein Modell, das nur in Jupyter läuft, hilft niemandem. Hier lernst du, wie du Modelle "
             "in Produktion bringst — schnell, robust und skalierbar."

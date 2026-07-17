@@ -5,7 +5,7 @@ from src.components import hero, section_header, divider, info_box, card, render
 
 def render():
     hero(
-        eyebrow="State-of-the-Art · Modul 19",
+        eyebrow="State-of-the-Art · Multimodal & LLMs",
         title="Multimodal &amp; LLMs",
         sub="Wenn ein Modell gleichzeitig Bild, Text, Audio und Video versteht — und auch erzeugt. "
             "Die Frontier von 2024–2026."
@@ -34,9 +34,9 @@ und kombinierte Aufgaben löst — z.B. ein Video anschauen und in natürlicher 
     with tabs[1]:
         section_header("Frontier Multimodal Models 2025/26")
         cards = [
-            card("🌟", "GPT-5 / GPT-4o", "OpenAI's Flaggschiff. Bild, Audio, Video Input, Text/Audio Output. End-to-end multimodal trainiert.", ["OpenAI"], ["pink"]),
-            card("💎", "Gemini 2 Pro", "Google's Antwort. Massives Kontextfenster (1M+ Tokens), nativ multimodal von Anfang an.", ["Google"], ["pink"]),
-            card("🎭", "Claude 3.5/4 Opus", "Anthropic — stark bei Reasoning, Bild- und Dokumentverständnis, Constitutional AI.", ["Anthropic"], ["pink"]),
+            card("🌟", "GPT-5", "OpenAI's Flaggschiff. Bild, Audio, Video Input, Text/Audio Output. End-to-end multimodal trainiert.", ["OpenAI"], ["pink"]),
+            card("💎", "Gemini 2.5 Pro", "Google's Antwort. Massives Kontextfenster (1M+ Tokens), nativ multimodal von Anfang an.", ["Google"], ["pink"]),
+            card("🎭", "Claude 4 (Opus & Sonnet)", "Anthropic — stark bei Reasoning, Bild- und Dokumentverständnis, Constitutional AI.", ["Anthropic"], ["pink"]),
             card("🦙", "LLaMA 4", "Meta's Open-Source-Familie, multimodal, von Forschern weltweit weiterentwickelt.", ["Meta"], ["green"]),
             card("🔮", "Qwen2.5-VL / InternVL", "Chinesische Open-Source-Modelle, oft state-of-the-art bei Vision-Tasks.", ["China"], ["green"]),
             card("🎬", "Sora 2 / Veo 3", "Video-Generierung — Sora & Google Veo dominieren die Spitze.", ["Generativ"], ["amber"]),

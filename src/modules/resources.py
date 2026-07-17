@@ -5,7 +5,7 @@ from src.components import hero, section_header, divider, info_box, card, render
 
 def render():
     hero(
-        eyebrow="Live · Modul 25",
+        eyebrow="Live · Ressourcen & Tools",
         title="Ressourcen &amp; Tools",
         sub="Kuratierte Sammlung der besten Bücher, Kurse, Frameworks, Newsletter "
             "und Communities — alles auf einer Seite."

@@ -2,12 +2,15 @@
 import streamlit as st
 import numpy as np
 import cv2
-from src.components import hero, section_header, divider, info_box
+from src.components import (
+    hero, section_header, divider, info_box,
+    render_learning_block, render_quiz_checkpoint,
+)
 
 
 def render():
     hero(
-        eyebrow="Bildverarbeitung · Modul 8",
+        eyebrow="Bildverarbeitung · Feature Detection",
         title="Feature Detection &amp; Matching",
         sub="Wie findet man dieselbe Stelle in zwei Bildern wieder? "
             "Keypoints, Deskriptoren, Matching — die Basis von Panorama-Stitching, SLAM und 3D-Rekonstruktion."
@@ -127,10 +130,13 @@ aus zufälligen Sample-Matches schätzt und Inliers zählst.
         section_header("Live-Demo: Features in deinem Bild")
         uploaded = st.file_uploader("Bild hochladen (oder Demo nutzen)", type=["png", "jpg", "jpeg"], key="feat_upload")
 
+        img = None
         if uploaded:
             file_bytes = np.frombuffer(uploaded.read(), np.uint8)
             img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-        else:
+            if img is None:
+                st.warning("Bild konnte nicht dekodiert werden — verwende Demo-Bild.")
+        if img is None:
             img = np.zeros((300, 400, 3), dtype=np.uint8)
             cv2.rectangle(img, (50, 50), (150, 150), (180, 180, 180), -1)
             cv2.circle(img, (280, 100), 50, (200, 100, 200), -1)
@@ -140,17 +146,79 @@ aus zufälligen Sample-Matches schätzt und Inliers zählst.
 
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+        detector = st.radio("Detektor", ["ORB", "SIFT", "Harris"], horizontal=True)
         n_features = st.slider("Max. Features", 50, 1000, 300)
-        orb = cv2.ORB_create(nfeatures=n_features)
-        kp, _ = orb.detectAndCompute(gray, None)
-        out = cv2.drawKeypoints(img, kp, None,
-                                color=(124, 58, 237),
-                                flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        out_rgb = cv2.cvtColor(out, cv2.COLOR_BGR2RGB)
-        st.image(out_rgb, caption=f"{len(kp)} ORB-Keypoints gefunden", use_container_width=True)
+
+        if detector == "Harris":
+            k = st.slider("Harris-Sensitivität k", 0.02, 0.10, 0.04, 0.01)
+            gray_f = np.float32(gray)
+            resp = cv2.cornerHarris(gray_f, blockSize=2, ksize=3, k=k)
+            resp = cv2.dilate(resp, None)
+            out = img.copy()
+            out[resp > 0.01 * resp.max()] = [0, 0, 255]  # Ecken rot (BGR)
+            n = int((resp > 0.01 * resp.max()).sum())
+            out_rgb = cv2.cvtColor(out, cv2.COLOR_BGR2RGB)
+            st.image(out_rgb, caption=f"Harris: {n} Ecken-Pixel markiert", use_container_width=True)
+        else:
+            if detector == "SIFT":
+                try:
+                    det = cv2.SIFT_create(nfeatures=n_features)
+                except AttributeError:
+                    st.warning("SIFT in dieser OpenCV-Version nicht verfügbar — nutze ORB.")
+                    det = cv2.ORB_create(nfeatures=n_features)
+            else:
+                det = cv2.ORB_create(nfeatures=n_features)
+            kp, _ = det.detectAndCompute(gray, None)
+            out = cv2.drawKeypoints(img, kp, None, color=(124, 58, 237),
+                                    flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            out_rgb = cv2.cvtColor(out, cv2.COLOR_BGR2RGB)
+            st.image(out_rgb, caption=f"{len(kp)} {detector}-Keypoints gefunden", use_container_width=True)
 
         info_box(
-            "Die Größe der Kreise entspricht der Skala, an der das Feature detektiert wurde. "
-            "Linien zeigen die Orientierung.",
+            "Bei ORB/SIFT entspricht die Kreisgröße der Detektionsskala, Linien zeigen die Orientierung. "
+            "Harris liefert nur Ecken-Positionen (keine Skala/Orientierung).",
             kind="tip",
         )
+
+    divider()
+    render_learning_block(
+        key_prefix="features",
+        mcq_question="Welcher Deskriptor nutzt die Hamming-Distanz zum Matching?",
+        mcq_options=["ORB (binär)", "SIFT (float)", "Harris", "Beide gleich"],
+        mcq_correct_option="ORB (binär)",
+        mcq_success_message="Richtig — binäre Deskriptoren (ORB/BRIEF) matchen per Hamming-Distanz.",
+        open_question="Erkläre Lowe's Ratio Test: warum vergleicht man die zwei besten Matches statt nur den besten?",
+        cheat_sheet=[
+            "Feature = Keypoint (Position/Skala/Orientierung) + Deskriptor.",
+            "Harris: Ecken über Eigenwerte der Strukturmatrix.",
+            "SIFT: skalen-/rotationsinvariant, 128-d float, sehr robust.",
+            "ORB: FAST + BRIEF, binär, frei und ~10× schneller.",
+            "Matching: L2 (SIFT) / Hamming (ORB) + Ratio-Test + RANSAC.",
+        ],
+        key_takeaways=[
+            "Gute Features sind wiederholbar, invariant, diskriminativ und effizient.",
+            "Ratio-Test und RANSAC entfernen falsche Matches — entscheidend für Stitching/SLAM.",
+        ],
+        common_errors=[
+            "Float- und Binär-Deskriptoren mit falscher Distanz matchen.",
+            "Ohne Ratio-Test/RANSAC zu viele Fehl-Matches.",
+            "SIFT patentrechtlich für alt halten — seit 2020 frei.",
+        ],
+    )
+    render_quiz_checkpoint(
+        key_prefix="features",
+        module_id="features",
+        question="Was verraten die beiden Eigenwerte der Harris-Strukturmatrix M?",
+        options=[
+            "Beide groß → Ecke; einer groß → Kante; beide klein → flache Region",
+            "Die Farbe des Pixels",
+            "Die Skala des Keypoints",
+            "Die Hamming-Distanz",
+        ],
+        correct_option="Beide groß → Ecke; einer groß → Kante; beide klein → flache Region",
+        checklist=[
+            "Ich verstehe Keypoint vs. Deskriptor.",
+            "Ich kann Harris, SIFT und ORB einordnen.",
+            "Ich kenne Ratio-Test und RANSAC.",
+        ],
+    )

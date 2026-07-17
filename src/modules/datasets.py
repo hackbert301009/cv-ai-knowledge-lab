@@ -5,7 +5,7 @@ from src.components import hero, section_header, divider, info_box, card, render
 
 def render():
     hero(
-        eyebrow="Praxis · Modul 21",
+        eyebrow="Praxis · Datensätze & Tools",
         title="Datasets &amp; Tools",
         sub="Saubere Daten sind 80% deines Erfolgs. Hier sind die wichtigsten öffentlichen Datasets, "
             "Tools zur Annotation und Best Practices."

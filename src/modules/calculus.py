@@ -7,7 +7,7 @@ from src.components import hero, section_header, divider, info_box, step_list, r
 
 def render():
     hero(
-        eyebrow="Grundlagen · Modul 3",
+        eyebrow="Grundlagen · Analysis & Gradienten",
         title="Analysis &amp; Gradienten",
         sub="Wie ein neuronales Netz lernt: Ableitungen, Kettenregel, Gradient Descent. "
             "Die Mathematik hinter dem 'Lernen' in Machine Learning."

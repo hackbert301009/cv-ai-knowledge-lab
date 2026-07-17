@@ -12,7 +12,7 @@
 
 ## ✨ Was ist das?
 
-Ein **Mega-Wissenshub** mit **33+ Lernmodulen**, der den kompletten Bogen von
+Ein **Mega-Wissenshub** mit **43 Lernmodulen**, der den kompletten Bogen von
 "Was ist ein Pixel?" bis "Wie funktioniert Sora?" spannt. Drei Dinge zeichnen es aus:
 
 - 🎨 **Modernes, dunkles Design** — Inter & JetBrains Mono, Gradient-Akzente, Cards mit Hover, hand-crafted CSS.
@@ -131,49 +131,46 @@ cv-ai-knowledge-lab/
 │   └── styles.css              # Globales Custom-CSS
 └── src/
     ├── __init__.py
-    ├── registry.py             # Modul-Registry mit allen 27 Modulen
+    ├── registry.py             # Modul-Registry (Single Source of Truth: MODULES → CATEGORIES)
     ├── components/
     │   ├── __init__.py
     │   └── ui.py               # Wiederverwendbare UI-Helpers
-    └── modules/
+    └── modules/                # 43 Lernmodule, eine Datei pro Modul
         ├── __init__.py
-        ├── home.py
-        ├── roadmap.py
-        ├── math_crashcourse.py
-        ├── linalg.py
-        ├── calculus.py
-        ├── probability.py
-        ├── image_basics.py
-        ├── filters.py
-        ├── edges.py
-        ├── features.py
-        ├── morphology.py
-        ├── segmentation_classic.py
-        ├── nn_basics.py
-        ├── cnn.py
-        ├── training.py
-        ├── modern_archs.py
-        ├── transformers_mod.py
-        ├── vlm.py
-        ├── diffusion.py
-        ├── gen_ai.py
-        ├── multimodal.py
-        ├── projects.py
-        ├── datasets.py
-        ├── deployment.py
-        ├── news.py
-        ├── papers.py
-        └── resources.py
+        ├── home.py · roadmap.py
+        ├── math_crashcourse.py · linalg.py · calculus.py · probability.py · tensor_playground.py
+        ├── image_basics.py · camera_pipeline.py · filters.py · edges.py · features.py
+        ├── morphology.py · segmentation_classic.py · optical_flow.py · object_tracking.py
+        ├── nn_basics.py · cnn.py · training.py · modern_archs.py · self_supervised.py · video_understanding.py
+        ├── transformers_mod.py · vlm.py · diffusion.py · gen_ai.py · multimodal.py · vision_foundation.py
+        ├── pose_estimation.py · three_d_vision.py · rag_multimodal_agents.py
+        ├── learning_studio.py · projects.py · datasets.py · evaluation_robustness.py · compression.py · edge_ai.py · deployment.py
+        ├── news.py · papers.py · paper_of_month.py · resources.py
+        └── glossar.py
 ```
+
+> **Modul-IDs sind stabil**, aber Reihenfolge & Kategorie werden ausschließlich in
+> `registry.py` gepflegt. `CATEGORIES` (Sidebar) wird daraus automatisch abgeleitet —
+> keine doppelte Liste mehr.
 
 ---
 
 ## 🧩 Eigenes Modul hinzufügen
 
 1. Erstelle `src/modules/dein_modul.py` mit einer `render()`-Funktion
-2. Trage es in `src/registry.py` (Module-Liste **und** CATEGORIES) ein
+2. Trage **einen** `Module(...)`-Eintrag in `src/registry.py` → `MODULES` ein
+   (Position in der Liste = Reihenfolge; `category` muss in `CATEGORY_ORDER` stehen)
 3. Mappe es in `app.py` → `MODULE_FILES` zu seiner Datei
-4. Fertig — Sidebar-Navigation aktualisiert sich automatisch
+4. Fertig — Sidebar-Navigation **und** `CATEGORIES` aktualisieren sich automatisch
+
+### Didaktik-Standard (empfohlener Modul-Aufbau)
+Ein Lehrmodul folgt idealerweise diesem Bogen:
+
+`hero()` → **Theorie** (Tabs) → **interaktives Lab** (`lab_header` + Sliders/Upload)
+→ `render_learning_block(...)` (Mischformat-Übung) → `render_quiz_checkpoint(...)` (Checkpoint).
+
+Nimmt ein Modul einen `render_quiz_checkpoint` mit `module_id="<id>"` auf, taucht es
+automatisch im **Personal-Hub-Fortschritt** auf (siehe `CHECKPOINT_MODULES` in `app.py`).
 
 Beispiel `src/modules/dein_modul.py`:
 ```python

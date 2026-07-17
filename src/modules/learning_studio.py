@@ -1,7 +1,7 @@
 """Lernstudio — strukturierte Labs, Uebungen und Community-Formate."""
 import streamlit as st
 
-from src.components import card, divider, hero, info_box, render_card_grid, section_header, render_learning_block
+from src.components import card, divider, hero, info_box, render_card_grid, section_header
 
 
 def _render_lab_tracks():
@@ -154,7 +154,7 @@ def _render_community():
 
 def _render_cheat_sheet():
     section_header("Cheat Sheet, Key Takeaways und haeufige Fehler")
-    tab1, tab2, tab3 = st.tabs(["Cheat Sheet", "Key Takeaways", "Hauefige Fehler"])
+    tab1, tab2, tab3 = st.tabs(["Cheat Sheet", "Key Takeaways", "Häufige Fehler"])
     with tab1:
         st.markdown(
             """
@@ -190,7 +190,7 @@ def _render_cheat_sheet():
 
 def render():
     hero(
-        eyebrow="Lernsystem · Neues Modul",
+        eyebrow="Praxis · Lernstudio",
         title="Lernstudio: Labs, Uebungen & Community",
         sub=(
             "Hier baust du praxisnahes Lernen strukturiert auf: klare Lab-Progession, "
@@ -200,49 +200,8 @@ def render():
 
     _render_lab_tracks()
     divider()
-    render_learning_block(
-        key_prefix="learning_studio",
-        section_title="Mischformat, Community und Lernzusammenfassung",
-        section_sub="Einheitlicher Lernblock für alle Module.",
-        mcq_question="Welche Metrik ist bei unausgeglichenen Klassen oft aussagekraeftiger als Accuracy?",
-        mcq_options=["Accuracy", "F1-Score", "Top-1 Error", "Mean Pixel Value"],
-        mcq_correct_option="F1-Score",
-        mcq_success_message="Richtig. Der F1-Score balanciert Precision und Recall.",
-        mcq_retry_message="Noch nicht ganz. Schau dir Precision/Recall und F1 an.",
-        open_question="Beschreibe in 3-5 Saetzen, warum Datenaugmentation bei kleinen Datensaetzen hilft.",
-        code_task="""# TODO: val_accuracy aus logits und labels berechnen
-import torch
-
-def compute_val_accuracy(logits: torch.Tensor, labels: torch.Tensor) -> float:
-    preds = logits.argmax(dim=1)
-    correct = (preds == labels).float().mean()
-    return float(correct.item())
-""",
-        community_rows=[
-            {"Format": "Diskussion", "Ziel": "Verstaendnis", "Dauer": "10-20 min"},
-            {"Format": "Peer-Feedback", "Ziel": "Qualitaet", "Dauer": "15-30 min"},
-            {"Format": "Challenge", "Ziel": "Transfer", "Dauer": "1-5 Tage"},
-        ],
-        cheat_sheet=[
-            "Train/Val/Test sauber trennen vor jeder Modellierung.",
-            "Baseline zuerst (einfaches Modell, klare Metrik).",
-            "Ablation dokumentieren (was verbessert wirklich?).",
-            "Reproduzierbarkeit: Seeds, Versionen, Config sichern.",
-        ],
-        key_takeaways=[
-            "Jede Einheit endet mit einem konkreten Artefakt (Notebook, Report oder Demo).",
-            "Lernfortschritt steigt stark durch Wechsel aus Lesen, Anwenden und Erklaeren.",
-            "Debug-Labs trainieren dieselben Faehigkeiten, die im echten Projekt den Unterschied machen.",
-        ],
-        common_errors=[
-            "Zu frueh komplexe Modelle statt erst Baseline.",
-            "Datenleck durch falsches Splitting.",
-            "Metrik passt nicht zur eigentlichen Aufgabe.",
-            "Ergebnisse ohne Fehlanalyse interpretieren.",
-            "Hyperparameter aendern ohne sauberes Logging.",
-        ],
-    )
-    info_box(
-        "Diese Fehlerliste ist als Review-Checkliste gedacht. Nutze sie vor jeder Abgabe.",
-        kind="warn",
-    )
+    _render_exercises()
+    divider()
+    _render_community()
+    divider()
+    _render_cheat_sheet()

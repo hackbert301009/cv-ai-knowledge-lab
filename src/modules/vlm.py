@@ -8,7 +8,7 @@ from src.components import (
 
 def render():
     hero(
-        eyebrow="State-of-the-Art · Modul 16",
+        eyebrow="State-of-the-Art · Vision-Language Models",
         title="Vision-Language Models",
         sub="Modelle, die Bild und Text in einem gemeinsamen Raum verstehen. "
             "CLIP hat alles verändert — und die Modelle danach haben Multimodal-KI definiert."
@@ -136,8 +136,8 @@ Flamingo war historisch wichtig — die Architektur lebt in vielen heutigen Mult
         render_card_grid(cards, cols=3)
 
         info_box(
-            "Heutige Top-VLMs (2026): GPT-4o, Claude 3.7 Sonnet, Gemini 2.0 Flash, LLaVA-NeXT, Qwen2-VL, "
-            "InternVL2, Pixtral — die offene Szene holt rasant auf.",
+            "Heutige Top-VLMs (2026): GPT-5, Claude Opus 4, Gemini 2.5 Pro, Llama 4, Qwen2.5-VL, "
+            "InternVL3, Pixtral, Molmo — die offene Szene holt rasant auf.",
             kind="tip",
         )
 

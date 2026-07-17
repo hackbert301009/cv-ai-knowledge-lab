@@ -5,13 +5,13 @@ import plotly.graph_objects as go
 import plotly.express as px
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list, render_learning_block,
+    video_embed, lab_header, key_concept, step_list, render_learning_block, render_quiz_checkpoint,
 )
 
 
 def render():
     hero(
-        eyebrow="Bildverarbeitung · Modul 5",
+        eyebrow="Bildverarbeitung · Bildgrundlagen",
         title="Bildgrundlagen &amp; Pixel",
         sub="Bevor wir Bilder verarbeiten können, müssen wir verstehen, was sie sind. "
             "Pixel, Farbräume, Sampling, Quantisierung — die Anatomie digitaler Bilder."
@@ -215,7 +215,7 @@ $$\Delta E = \sqrt{(L_1^*-L_2^*)^2 + (a_1^*-a_2^*)^2 + (b_1^*-b_2^*)^2}$$
         c1, c2, c3, c4 = st.columns(4)
         c1.markdown("**RGB**");       c1.image(img, use_container_width=True)
         c2.markdown("**Graustufen**");c2.image(img_gray, use_container_width=True, clamp=True)
-        c3.markdown("**HSV (H-Kanal)**"); c3.image(img_hsv[:, :, 0] * 2, use_container_width=True, clamp=True)
+        c3.markdown("**HSV (H-Kanal)**"); c3.image((img_hsv[:, :, 0].astype(np.uint16) * 2).clip(0, 255).astype(np.uint8), use_container_width=True, clamp=True)
         c4.markdown("**LAB (L-Kanal)**"); c4.image(img_lab[:, :, 0], use_container_width=True, clamp=True)
 
         st.markdown("#### Pixel-Histogramme")
@@ -248,7 +248,7 @@ $$\Delta E = \sqrt{(L_1^*-L_2^*)^2 + (a_1^*-a_2^*)^2 + (b_1^*-b_2^*)^2}$$
                   <div style="font-size:1.1rem;font-weight:700;">{hex_col.upper()}</div>
                   <div style="color:#9CA3AF;font-size:0.85rem;">
                     RGB: ({pix[0]}, {pix[1]}, {pix[2]}) &nbsp;|&nbsp;
-                    HSV: ({pix_hsv[0]}°, {pix_hsv[1]/255*100:.0f}%, {pix_hsv[2]/255*100:.0f}%) &nbsp;|&nbsp;
+                    HSV: ({pix_hsv[0]*2}°, {pix_hsv[1]/255*100:.0f}%, {pix_hsv[2]/255*100:.0f}%) &nbsp;|&nbsp;
                     LAB: L={pix_lab[0]/2.55:.0f}, a={pix_lab[1]-128}, b={pix_lab[2]-128}
                   </div>
                   <div style="color:#9CA3AF;font-size:0.85rem;">Position: ({px_x}, {px_y}) im {size}×{size} Bild</div>
@@ -489,4 +489,17 @@ img_bgr = cv2.imread("input.jpg")
                 "Bit-Tiefe ignoriert.",
                 "Histogramme nicht geprüft.",
             ],
+        )
+
+        render_quiz_checkpoint(
+            key_prefix="image_basics",
+            module_id="image_basics",
+            question="Welche Bedingung verhindert laut Nyquist-Theorem Aliasing beim Abtasten?",
+            options=[
+                "Abtastrate mindestens doppelt so hoch wie die höchste enthaltene Frequenz",
+                "Abtastrate gleich der höchsten Frequenz",
+                "Möglichst hohe Bit-Tiefe",
+                "Nutzung des HSV-Farbraums",
+            ],
+            correct_option="Abtastrate mindestens doppelt so hoch wie die höchste enthaltene Frequenz",
         )

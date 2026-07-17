@@ -7,7 +7,7 @@ from src.components import hero, section_header, divider, info_box
 
 def render():
     hero(
-        eyebrow="Grundlagen · Modul 2",
+        eyebrow="Grundlagen · Lineare Algebra",
         title="Lineare Algebra",
         sub="Vektoren, Matrizen, Tensoren — die DNA von Computer Vision und Deep Learning. "
             "Alles was sich in einem neuronalen Netz bewegt, ist Matrixmultiplikation."

@@ -4,13 +4,13 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    card, render_card_grid, video_embed, lab_header, key_concept, step_list, render_learning_block,
+    card, render_card_grid, video_embed, lab_header, key_concept, step_list, render_learning_block, render_quiz_checkpoint,
 )
 
 
 def render():
     hero(
-        eyebrow="Deep Learning · Modul 12",
+        eyebrow="Deep Learning · CNNs",
         title="Convolutional Neural Networks",
         sub="Die Architektur, die Computer Vision revolutioniert hat. "
             "Von LeNet (1998) bis ConvNeXt (2022) — Geschichte, Intuition und Praxis."
@@ -141,7 +141,7 @@ In der Praxis: folge dem Paper der Architektur, die du benutzt.
 
         timeline = {
             1998: ("LeNet-5", "LeCun et al.", "Erstes CNN für Handschriften (MNIST). 60K Parameter. Conv→Pool→Conv→Pool→FC. Beweis, dass CNNs funktionieren.", "#3B82F6"),
-            2012: ("AlexNet", "Krizhevsky et al.", "ImageNet 2012: 63% → 78% Top-5 Accuracy. ReLU, Dropout, GPU-Training. DER Big Bang von Deep Learning.", "#EC4899"),
+            2012: ("AlexNet", "Krizhevsky et al.", "ImageNet 2012: Top-5-Fehler von ~26% auf 15,3% gedrückt (~85% Top-5-Accuracy). ReLU, Dropout, GPU-Training. DER Big Bang von Deep Learning.", "#EC4899"),
             2014: ("VGG-16/19", "Simonyan et al. (Oxford)", "Sehr tief (16-19 Layer), nur 3×3 Conv. Klar, modular. Noch heute als Backbone genutzt.", "#7C3AED"),
             2014: ("GoogLeNet/Inception", "Szegedy et al.", "Inception-Module: parallele Conv (1×1, 3×3, 5×5). 6,8M Parameter bei 22 Layern. Sehr effizient.", "#F59E0B"),
             2015: ("ResNet-50/101/152", "He et al.", "SKIP CONNECTIONS! Gradient fließt direkt durch. Ermöglicht 50-1000+ Layer. Noch heute Standard-Backbone.", "#10B981"),
@@ -524,4 +524,17 @@ for epoch in range(epochs):
                 "Kein Checkpointing der besten Epoche.",
                 "Keine Fehlanalyse pro Klasse.",
             ],
+        )
+
+        render_quiz_checkpoint(
+            key_prefix="cnn",
+            module_id="cnn",
+            question="Was ist der zentrale Vorteil von Weight-Sharing in Convolutional Layers?",
+            options=[
+                "Drastisch weniger Parameter und Translationsäquivarianz",
+                "Höhere Auflösung der Ausgabe",
+                "Garantiert keine Overfitting",
+                "Ersetzt die Aktivierungsfunktion",
+            ],
+            correct_option="Drastisch weniger Parameter und Translationsäquivarianz",
         )

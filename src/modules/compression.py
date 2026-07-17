@@ -8,7 +8,7 @@ from src.components import hero, section_header, divider, info_box, video_embed,
 
 def render():
     hero(
-        eyebrow="Praxis · Modul Compression",
+        eyebrow="Praxis · Model Compression",
         title="Model Compression & Edge AI",
         sub="Vom Labor zum Produkt: Modelle kleiner, schneller, effizienter machen — "
             "ohne die Genauigkeit zu opfern. Quantisierung, Pruning, Knowledge Distillation, ONNX, TensorRT.",
@@ -161,7 +161,7 @@ Ganze **Filter, Channel, Layer** entfernen → echte Speedups auf jeder Hardware
 - **L1-Filter-Pruning**: Filter mit kleinstem L1-Norm entfernen
 - **Channel Pruning**: Ganze Channels streichen
 
-#### Lottery Ticket Hypothesis (Frankle & Carlin 2019)
+#### Lottery Ticket Hypothesis (Frankle & Carbin 2019)
 > Ein großes Netz enthält ein kleines "Gewinner"-Teilnetz, das alleine genauso gut trainierbar ist.
 
 Iteratives Pruning + Reset findet dieses Teilnetz.
@@ -372,8 +372,8 @@ context = engine.create_execution_context()
 - Modellgröße vs. Accuracy: Pareto-Front kennen
         """)
         info_box(
-            "MobileNet (4.2M params, 569KB INT8) schlägt VGG-16 (138M params, 528MB) "
-            "auf einem Smartphone in Latenz um den Faktor 100 — bei nur 3% weniger Accuracy.",
+            "MobileNet (4,2M params, ~4,2 MB INT8) schlägt VGG-16 (138M params, ~528 MB FP32) "
+            "auf einem Smartphone in der Latenz deutlich — bei vergleichbarer Accuracy.",
             kind="info",
         )
 

@@ -49,6 +49,7 @@ MODULE_FILES = {
     "features":            "src.modules.features",
     "morphology":          "src.modules.morphology",
     "segmentation_classic":"src.modules.segmentation_classic",
+    "optical_flow":        "src.modules.optical_flow",
     "object_tracking":      "src.modules.object_tracking",
     "nn_basics":           "src.modules.nn_basics",
     "cnn":                 "src.modules.cnn",
@@ -61,6 +62,7 @@ MODULE_FILES = {
     "diffusion":           "src.modules.diffusion",
     "gen_ai":              "src.modules.gen_ai",
     "multimodal":          "src.modules.multimodal",
+    "vision_foundation":   "src.modules.vision_foundation",
     "three_d_vision":      "src.modules.three_d_vision",
     "rag_multimodal_agents":"src.modules.rag_multimodal_agents",
     "learning_studio":     "src.modules.learning_studio",
@@ -75,17 +77,36 @@ MODULE_FILES = {
     "glossar":             "src.modules.glossar",
     "tensor_playground":   "src.modules.tensor_playground",
     "compression":         "src.modules.compression",
+    "edge_ai":             "src.modules.edge_ai",
     "pose_estimation":     "src.modules.pose_estimation",
 }
 
 TRACKABLE_MODULES = [m.id for m in MODULES if m.id != "home"]
 CHECKPOINT_MODULES = {
+    # Bildverarbeitung
+    "image_basics",
+    "features",
+    "morphology",
+    "segmentation_classic",
+    "optical_flow",
     "object_tracking",
-    "three_d_vision",
+    # Deep Learning
+    "nn_basics",
+    "cnn",
+    "training",
+    "modern_archs",
     "self_supervised",
     "video_understanding",
-    "evaluation_robustness",
+    # State-of-the-Art
+    "transformers",
+    "diffusion",
+    "gen_ai",
+    "vision_foundation",
+    "three_d_vision",
     "rag_multimodal_agents",
+    # Praxis
+    "evaluation_robustness",
+    "edge_ai",
 }
 
 
