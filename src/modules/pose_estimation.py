@@ -2,7 +2,7 @@
 import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
-from src.components import hero, section_header, divider, info_box, video_embed, lab_header, key_concept, step_list
+from src.components import hero, section_header, divider, info_box, video_embed, video_search, lab_header, key_concept, step_list
 
 
 # COCO 17 Keypoints
@@ -516,14 +516,10 @@ eine **Gaussian-Heatmap** voraus. Der Peak ist die Keypoint-Position.
     # ── Tab 6: Videos ─────────────────────────────────────────────────────────
     with tabs[6]:
         section_header("Lernvideos")
-        video_embed("bEVGMMBhBhU", "OpenPose erklärt",
-                    "CMU OpenPose: Part Affinity Fields und Bottom-Up Multi-Person Pose")
+        video_search("OpenPose human pose estimation explained", "OpenPose erklärt", "")
         divider()
-        video_embed("c6PYHj0IbEg", "Human Pose Estimation — Two Minute Papers",
-                    "Überblick über moderne Pose-Estimation Methoden")
+        video_search("human pose estimation two minute papers", "Human Pose Estimation", "")
         divider()
-        video_embed("5MXMY2b5b0I", "ViTPose — Vision Transformer für Pose",
-                    "Wie ViT CNNs bei Pose Estimation übertrifft")
+        video_search("ViTPose vision transformer pose estimation", "ViTPose", "Vision Transformer für Pose.")
         divider()
-        video_embed("MQp5BMN6N9M", "MediaPipe Pose Tutorial",
-                    "Einstieg in MediaPipe Pose mit Python — Echtzeit-Demo")
+        video_search("MediaPipe pose estimation python tutorial", "MediaPipe Pose Tutorial", "")

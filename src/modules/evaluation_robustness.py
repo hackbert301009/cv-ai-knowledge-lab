@@ -1,4 +1,4 @@
-"""Evaluation und Robustness fuer CV Modelle."""
+"""Evaluation und Robustness für CV Modelle."""
 import numpy as np
 import plotly.express as px
 import streamlit as st
@@ -11,7 +11,7 @@ from src.components import (
     lab_header,
     section_header,
     render_quiz_checkpoint,
-    video_embed,
+    video_embed, video_search,
 )
 
 
@@ -33,7 +33,7 @@ def render():
     hero(
         eyebrow="Praxis · Evaluation",
         title="Evaluation & Robustness",
-        sub="Calibration, OOD, Domain Shift, Error Analysis und Bias/Fairness fuer Vision.",
+        sub="Calibration, OOD, Domain Shift, Error Analysis und Bias/Fairness für Vision.",
     )
 
     tabs = st.tabs(
@@ -59,20 +59,20 @@ def render():
 - Tracking: MOTA, IDF1, HOTA
             """
         )
-        key_concept("🎯", "Calibration", "Wie gut Wahrscheinlichkeiten mit realer Trefferquote uebereinstimmen.")
-        key_concept("🚨", "OOD Detection", "Erkennen, wenn Eingaben ausserhalb des Trainingsbereichs liegen.")
+        key_concept("🎯", "Calibration", "Wie gut Wahrscheinlichkeiten mit realer Trefferquote übereinstimmen.")
+        key_concept("🚨", "OOD Detection", "Erkennen, wenn Eingaben außerhalb des Trainingsbereichs liegen.")
         key_concept("🔍", "Error Taxonomy", "Fehler nach Typen aufteilen statt nur Gesamtmetrik ansehen.")
 
     with tabs[1]:
         section_header("Robustness-Risiken")
         st.markdown(
             """
-| Risiko | Beispiel | Gegenmassnahme |
+| Risiko | Beispiel | Gegenmaßnahme |
 |---|---|---|
 | Domain Shift | Tag -> Nachtkamera | Domain Augmentation, Adaptation |
 | Corruptions | Blur, Noise, Compression | Robust Training, Test-Time Aug |
 | Adversarial | Kleine Perturbation | Defensive Distillation, Detection |
-| Data Drift | Kamera/Objektmix aendert sich | Monitoring + regelmaessige Re-Trainings |
+| Data Drift | Kamera/Objektmix ändert sich | Monitoring + regelmäßige Re-Trainings |
             """
         )
         info_box("Plane immer ein Shadow Deployment vor Full Rollout.", kind="warn")
@@ -82,20 +82,20 @@ def render():
         st.markdown(
             """
 Bias entsteht oft aus unausgewogenen Daten oder Labels.
-Bewerte Metriken gruppenweise (z. B. Licht, Hauttonton, Kamerawinkel, Region).
+Bewerte Metriken gruppenweise (z. B. Licht, Hautton, Kamerawinkel, Region).
             """
         )
         st.markdown(
             """
 **Empfohlene Praxis**
 1. Dataset Cards + klare Datendokumentation
-2. Slice-based Evaluation fuer kritische Subgruppen
+2. Slice-based Evaluation für kritische Subgruppen
 3. Human-in-the-loop bei sicherheitskritischen Entscheidungen
             """
         )
 
     with tabs[3]:
-        lab_header("Calibration Simulation", "Berechne ECE fuer verschiedene Konfidenzprofile.")
+        lab_header("Calibration Simulation", "Berechne ECE für verschiedene Konfidenzprofile.")
         n = st.slider("Samples", 200, 5000, 1200, 100)
         sharpness = st.slider("Confidence Sharpness", 0.4, 3.0, 1.4, 0.1)
         bins = st.slider("ECE Bins", 5, 30, 15, 1)
@@ -141,10 +141,10 @@ for slice_name, mask in slices.items():
         st.markdown(
             """
 - [ ] Hauptmetrik + Nebenmetriken dokumentiert
-- [ ] Calibration auf Val/Test geprueft
+- [ ] Calibration auf Val/Test geprüft
 - [ ] OOD-Strategie definiert
-- [ ] Slice-Evaluation fuer sensible Gruppen vorhanden
-- [ ] Monitoring-Plan fuer Drift und Ausfaelle aktiv
+- [ ] Slice-Evaluation für sensible Gruppen vorhanden
+- [ ] Monitoring-Plan für Drift und Ausfälle aktiv
             """
         )
         info_box("Ohne Monitoring ist kein Modell wirklich produktionsreif.", kind="tip")
@@ -157,17 +157,17 @@ for slice_name, mask in slices.items():
             correct_option="ECE",
             checklist=[
                 "Ich kann Calibration und OOD Detection unterscheiden.",
-                "Ich habe Slice-based Evaluation fuer kritische Gruppen geplant.",
-                "Ich kenne die wichtigsten Monitoring-Signale fuer Drift.",
+                "Ich habe Slice-based Evaluation für kritische Gruppen geplant.",
+                "Ich kenne die wichtigsten Monitoring-Signale für Drift.",
             ],
             capstone_prompt="Beschreibe einen Release-Plan mit Shadow Deployment, "
-            "Slice-Evaluation und Drift-Monitoring fuer ein Visionmodell.",
+            "Slice-Evaluation und Drift-Monitoring für ein Visionmodell.",
         )
 
     with tabs[7]:
         section_header("Lernvideos")
-        video_embed("b7M1rVQ8x6Y", "Model Calibration", "Warum Confidence oft zu optimistisch ist.")
+        video_search("model calibration confidence neural network", "Model Calibration", "Warum Confidence oft zu optimistisch ist.")
         divider()
-        video_embed("16x2bYhQj0Q", "OOD Detection", "Methoden fuer Unknown Inputs in Produktion.")
+        video_search("out of distribution detection deep learning", "OOD Detection", "Methoden für Unknown Inputs in Produktion.")
         divider()
-        video_embed("xY5LqJv4fSE", "Bias in CV", "Fairness-Risiken bei realen Vision Systemen.")
+        video_search("bias fairness computer vision", "Bias in CV", "Fairness-Risiken bei realen Vision-Systemen.")

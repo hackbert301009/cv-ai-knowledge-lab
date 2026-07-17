@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list, render_learning_block, render_quiz_checkpoint,
+    video_embed, video_search, lab_header, key_concept, step_list, render_learning_block, render_quiz_checkpoint,
 )
 
 
@@ -427,9 +427,7 @@ tensor = np.load('tensor.npy')
         section_header("Lernvideos", "Die besten kostenlosen Erklärvideos zum Thema.")
 
         st.markdown("#### Computerphile — Image Basics (University of Nottingham)")
-        video_embed("LZNva7Kf9IM",
-                    "How Images Work — Computerphile",
-                    "Mike Pound (Univ. Nottingham) erklärt, wie digitale Bilder intern aufgebaut sind.")
+        video_search("How Images Work Computerphile", "How Images Work — Computerphile", "Wie digitale Bilder intern aufgebaut sind.")
 
         divider()
 

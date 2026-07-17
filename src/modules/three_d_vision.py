@@ -11,7 +11,7 @@ from src.components import (
     lab_header,
     section_header,
     render_quiz_checkpoint,
-    video_embed,
+    video_embed, video_search,
 )
 
 
@@ -68,7 +68,7 @@ Die Fundamental-Matrix koppelt korrespondierende Punkte zweier Bilder.
 Ein Punkt in Bild A erzeugt in Bild B eine **Epipolarlinie** - die Suche wird 1D statt 2D.
             """
         )
-        info_box("RANSAC ist in der Praxis Pflicht, um Ausreisser bei Korrespondenzen zu filtern.", kind="tip")
+        info_box("RANSAC ist in der Praxis Pflicht, um Ausreißer bei Korrespondenzen zu filtern.", kind="tip")
 
     with tabs[2]:
         section_header("SfM und SLAM")
@@ -95,10 +95,10 @@ Ein Punkt in Bild A erzeugt in Bild B eine **Epipolarlinie** - die Suche wird 1D
         divider()
         st.markdown(
             """
-| System | Typ | Staerke |
+| System | Typ | Stärke |
 |---|---|---|
-| COLMAP | SfM | Sehr robust fuer Offline-Reconstruction |
-| ORB-SLAM3 | SLAM | Starker Klassiker fuer Echtzeit |
+| COLMAP | SfM | Sehr robust für Offline-Reconstruction |
+| ORB-SLAM3 | SLAM | Starker Klassiker für Echtzeit |
 | VINS-Fusion | Visual-Inertial | Nutzt Kamera + IMU |
             """
         )
@@ -109,7 +109,7 @@ Ein Punkt in Bild A erzeugt in Bild B eine **Epipolarlinie** - die Suche wird 1D
             """
 - **NeRF:** MLP approximiert Volumendichte + Farbe entlang Rays.
 - **3D Gaussian Splatting:** Szene als anisotrope Gaussians, sehr schnelle Renderzeiten.
-- **Trade-off:** NeRF oft detailtreu, 3DGS meist schneller fuer interaktive Darstellung.
+- **Trade-off:** NeRF oft detailtreu, 3DGS meist schneller für interaktive Darstellung.
             """
         )
         key_concept("🌫️", "Volume Rendering", "Farbe entsteht durch Integration entlang eines Rays.")
@@ -191,17 +191,17 @@ colmap mapper --database_path db.db --image_path images/ --output_path sparse/
             correct_option="x'^T F x = 0",
             checklist=[
                 "Ich kann Intrinsics und Extrinsics unterscheiden.",
-                "Ich verstehe den Nutzen der Epipolarlinien fuer Matching.",
+                "Ich verstehe den Nutzen der Epipolarlinien für Matching.",
                 "Ich kenne den Unterschied zwischen SfM und SLAM.",
             ],
-            capstone_prompt="Skizziere ein Mini-Projekt fuer 3D-Rekonstruktion mit 2 Handy-Kameras "
+            capstone_prompt="Skizziere ein Mini-Projekt für 3D-Rekonstruktion mit 2 Handy-Kameras "
             "(Datenerfassung, Kalibrierung, Rekonstruktion, Validierung).",
         )
 
     with tabs[7]:
         section_header("Lernvideos")
-        video_embed("3xH8NQfV5LQ", "Epipolar Geometrie", "Anschauliche Erklaerung der Fundamental-Matrix.")
+        video_search("epipolar geometry fundamental matrix explained", "Epipolar-Geometrie", "Anschauliche Erklärung der Fundamentalmatrix.")
         divider()
-        video_embed("Vj6s7qX4xg4", "COLMAP Tutorial", "SfM Pipeline von Bildern zur 3D Punktwolke.")
+        video_search("COLMAP structure from motion tutorial", "COLMAP Tutorial", "SfM-Pipeline von Bildern zur 3D-Punktwolke.")
         divider()
-        video_embed("JuH79E8rdKc", "NeRF Intro", "Warum Neural Radiance Fields die 3D Welt veraendert haben.")
+        video_embed("JuH79E8rdKc", "NeRF Intro", "Warum Neural Radiance Fields die 3D Welt verändert haben.")

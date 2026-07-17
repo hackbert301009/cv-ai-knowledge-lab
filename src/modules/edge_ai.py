@@ -3,7 +3,7 @@ import streamlit as st
 
 from src.components import (
     hero, section_header, divider, info_box, lab_header, key_concept, step_list,
-    video_embed, render_learning_block, render_quiz_checkpoint,
+    video_embed, video_search, render_learning_block, render_quiz_checkpoint,
 )
 
 # (Modell: Parameter in Mio., GMACs)
@@ -146,10 +146,10 @@ Ein trainiertes Modell (PyTorch/TensorFlow) wird für die Ziel-Hardware **export
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("**TinyML & Edge AI — Überblick**")
-            video_embed("BzzKwVEbmzM", "Edge AI overview")
+            video_search("TinyML Edge AI overview", "Edge AI & TinyML — Überblick", "")
         with col2:
             st.markdown("**Modelle für Mobile quantisieren**")
-            video_embed("TWvyv7Nwtsc", "Quantization for mobile")
+            video_search("neural network quantization mobile explained", "Quantisierung für Mobile", "")
 
     divider()
     render_learning_block(

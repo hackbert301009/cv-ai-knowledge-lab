@@ -12,7 +12,7 @@ from src.components import (
     section_header,
     step_list,
     render_quiz_checkpoint,
-    video_embed,
+    video_embed, video_search,
 )
 
 
@@ -37,7 +37,7 @@ def render():
             "📏 Benchmarks",
             "🧪 Temporal Lab",
             "💻 Code",
-            "🎓 Uebung",
+            "🎓 Übung",
             "✅ Checkpoint",
             "🎬 Videos",
         ]
@@ -53,7 +53,7 @@ Im Unterschied zu Bildklassifikation muss ein Modell **Zeitinformation** versteh
 - Kontext vor und nach dem Event
             """
         )
-        key_concept("⏱️", "Temporal Context", "Nicht nur was im Frame ist, sondern wie es sich ueber Zeit aendert.")
+        key_concept("⏱️", "Temporal Context", "Nicht nur was im Frame ist, sondern wie es sich über Zeit ändert.")
         key_concept("📦", "Clip Sampling", "Frames werden als kurze Clips (z. B. 16/32 Frames) verarbeitet.")
         key_concept("🧭", "Long-Term Dependencies", "Wichtige Hinweise liegen oft viele Frames auseinander.")
 
@@ -64,21 +64,21 @@ Im Unterschied zu Bildklassifikation muss ein Modell **Zeitinformation** versteh
 | Familie | Beispiel | Pluspunkt | Minuspunkt |
 |---|---|---|---|
 | 2D CNN + Temporal Head | TSN, TSM | Effizient | Begrenzte Zeitmodellierung |
-| 3D CNN | I3D, SlowFast | Starke lokale Dynamik | Hoeherer Compute |
-| Transformer | TimeSformer, VideoMAE | Flexible Kontextlaenge | Speicherbedarf |
+| 3D CNN | I3D, SlowFast | Starke lokale Dynamik | Höherer Compute |
+| Transformer | TimeSformer, VideoMAE | Flexible Kontextlänge | Speicherbedarf |
             """
         )
         step_list(
             [
-                ("Frames sampeln", "Clip-Laenge und stride bestimmen."),
-                ("Backbone waehlen", "2D+Temporal, 3D oder Transformer."),
+                ("Frames sampeln", "Clip-Länge und stride bestimmen."),
+                ("Backbone wählen", "2D+Temporal, 3D oder Transformer."),
                 ("Aggregation", "Clip-Logits mitteln oder Attention pooling."),
                 ("Evaluation", "Top-1/Top-5, mAP je Datensatz."),
             ]
         )
 
     with tabs[2]:
-        section_header("Typische Datensaetze")
+        section_header("Typische Datensätze")
         st.markdown(
             """
 | Datensatz | Fokus | Metrik |
@@ -92,7 +92,7 @@ Im Unterschied zu Bildklassifikation muss ein Modell **Zeitinformation** versteh
         info_box("Something-Something bestraft Modelle, die nur statische Appearance lernen.", kind="warn")
 
     with tabs[3]:
-        lab_header("Temporal Smoothing", "Beobachte logits vor und nach zeitlicher Glaettung.")
+        lab_header("Temporal Smoothing", "Beobachte logits vor und nach zeitlicher Glättung.")
         n = st.slider("Frames", 32, 256, 96, 8)
         noise = st.slider("Noise-Level", 0.0, 1.0, 0.3, 0.05)
         win = st.slider("Smoothing Window", 1, 25, 7, 2)
@@ -133,10 +133,10 @@ logits = model(video_clip)
         )
 
     with tabs[5]:
-        section_header("Mini-Uebung: Clip Benchmark")
+        section_header("Mini-Übung: Clip Benchmark")
         st.markdown(
             """
-1. Waehle einen Datensatz (Kinetics mini split oder HMDB51).
+1. Wähle einen Datensatz (Kinetics mini split oder HMDB51).
 2. Trainiere zwei Baselines:
    - 2D CNN + Temporal Average
    - Video Transformer (klein)
@@ -150,27 +150,27 @@ logits = model(video_clip)
     with tabs[6]:
         render_quiz_checkpoint(
             key_prefix="video_understanding",
-            question="Welcher Faktor ist fuer Video-Modelle zentral, aber bei Bildern weniger kritisch?",
+            question="Welcher Faktor ist für Video-Modelle zentral, aber bei Bildern weniger kritisch?",
             options=[
                 "Temporaler Kontext",
-                "RGB-Kanaele",
+                "RGB-Kanäle",
                 "Batch Normalization",
                 "Top-1 Accuracy",
             ],
             correct_option="Temporaler Kontext",
             checklist=[
                 "Ich kann 2D+Temporal, 3D CNN und Video-Transformer vergleichen.",
-                "Ich weiss, warum Clip-Sampling das Ergebnis beeinflusst.",
-                "Ich kann ein einfaches Benchmark-Setup fuer zwei Modelle definieren.",
+                "Ich weiß, warum Clip-Sampling das Ergebnis beeinflusst.",
+                "Ich kann ein einfaches Benchmark-Setup für zwei Modelle definieren.",
             ],
-            capstone_prompt="Entwerfe einen Benchmark fuer Action Recognition mit mindestens zwei "
+            capstone_prompt="Entwerfe einen Benchmark für Action Recognition mit mindestens zwei "
             "Architekturen und klaren Compute/Latency Grenzen.",
         )
 
     with tabs[7]:
         section_header("Lernvideos")
-        video_embed("QjB6l8YwM2o", "SlowFast", "Wie zwei zeitliche Aufloesungen kombiniert werden.")
+        video_search("SlowFast networks video recognition explained", "SlowFast", "Zwei zeitliche Auflösungen kombiniert.")
         divider()
-        video_embed("H5e4gWf7gY8", "TimeSformer", "Attention direkt ueber Raum und Zeit.")
+        video_search("TimeSformer video transformer explained", "TimeSformer", "Attention über Raum und Zeit.")
         divider()
-        video_embed("AhR8H0i6NWo", "VideoMAE", "Masked pretraining fuer Video Transformer.")
+        video_search("VideoMAE masked video pretraining explained", "VideoMAE", "Masked Pretraining für Video-Transformer.")

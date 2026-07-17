@@ -12,7 +12,7 @@ from src.components import (
     info_box,
     lab_header,
     key_concept,
-    video_embed,
+    video_embed, video_search,
     render_learning_block,
 )
 
@@ -34,7 +34,7 @@ def _demo_scene(size: int = 320) -> np.ndarray:
     cv2.line(base, (0, 260), (size, 260), (1.0, 1.0, 1.0), 3)
     cv2.putText(base, "CAM", (155, 250), cv2.FONT_HERSHEY_SIMPLEX, 1.1, (0.95, 0.95, 0.2), 2, cv2.LINE_AA)
 
-    # Feinmuster fuer Aliasing/Noise-Effekt
+    # Feinmuster für Aliasing/Noise-Effekt
     pattern = (np.sin(xx * 90) * np.sin(yy * 90) > 0.0).astype(np.float32)
     base[..., 1] = np.clip(base[..., 1] + 0.14 * pattern, 0.0, 1.0)
 
@@ -338,7 +338,7 @@ def _render_pipeline_animation(*, stage_index: int, autoplay: bool, speed: float
 
 def _render_camera_3d_lab(*, stage_index: int, autoplay: bool, speed: float, shot_preset: int):
     """Interaktive 3D-Laborszene mit professioneller Animation."""
-    # Robust fallback renderer ohne externe JS-Abhaengigkeiten (kein CDN noetig).
+    # Robust fallback renderer ohne externe JS-Abhängigkeiten (kein CDN nötig).
     safe_html = """
     <div id="cam3d-safe" style="font-family: Inter, system-ui, sans-serif; color:#E5E7EB;">
       <style>
@@ -386,7 +386,7 @@ def _render_camera_3d_lab(*, stage_index: int, autoplay: bool, speed: float, sho
         const steps = [
           ["1) Szene & Licht", "Licht aus der Szene trifft auf die Frontlinse."],
           ["2) Optik fokussiert", "Die Linsengruppe fokussiert auf die Sensorebene (PSF/Defokus entsteht hier)."],
-          ["3) Belichtung", "Shutter oeffnet, Sensor integriert Photonen waehrend der Belichtungszeit."],
+          ["3) Belichtung", "Shutter öffnet, Sensor integriert Photonen während der Belichtungszeit."],
           ["4) Bayer + ADC", "RGGB-Mosaik misst Farbanteile, ADC quantisiert sie in digitale Werte."],
           ["5) ISP Output", "Demosaicing, White-Balance und Tonkurve erzeugen das finale Bild."]
         ];
@@ -868,7 +868,7 @@ def render():
         "🧪 Kamera-Lab",
         "📈 Analyse & Messung",
         "🎥 Lernvideos",
-        "🧭 Lernpfad & Uebungen",
+        "🧭 Lernpfad & Übungen",
     ])
 
     with tabs[0]:
@@ -888,7 +888,7 @@ def render():
 
         _render_pipeline_animation(stage_index=stage_index - 1, autoplay=autoplay, speed=speed, cinematic=cinematic)
         if cinematic:
-            st.caption("Cinematic Mode aktiv: groesseres Visual, staerkerer Glow und langsamere Lehr-Transitions.")
+            st.caption("Cinematic Mode aktiv: größeres Visual, stärkerer Glow und langsamere Lehr-Transitions.")
 
         stage_cards = [
             ("🌞 Szene", "Die reale Welt liefert ein kontinuierliches Strahlungsfeld mit spektraler Verteilung."),
@@ -909,13 +909,13 @@ def render():
             """
         )
         key_concept("💡", "Photonenstatistik", "Licht kommt diskret an. Shot Noise ist daher Poisson-verteilt und unvermeidbar.")
-        key_concept("📉", "Signal-Rausch-Verhaeltnis", "Bei wenig Licht dominiert Rauschen. Hoeheres ISO verstaerkt Signal und Rauschen gleichzeitig.")
-        key_concept("🎛️", "ISP", "Der Image Signal Processor macht aus rohen Sensordaten ein fuer Menschen ansehnliches Bild.")
+        key_concept("📉", "Signal-Rausch-Verhältnis", "Bei wenig Licht dominiert Rauschen. Höheres ISO verstärkt Signal und Rauschen gleichzeitig.")
+        key_concept("🎛️", "ISP", "Der Image Signal Processor macht aus rohen Sensordaten ein für Menschen ansehnliches Bild.")
 
     with tabs[1]:
         section_header(
             "3D Kamera im Labor",
-            "Eine echte 3D-Ansicht mit Schritt-fuer-Schritt-Erklaerung des Aufnahmeprozesses.",
+            "Eine echte 3D-Ansicht mit Schritt-für-Schritt-Erklärung des Aufnahmeprozesses.",
         )
         l1, l2, l3 = st.columns([1.2, 1.5, 1.3])
         lab_autoplay = l1.toggle("▶️ Auto-Demo", value=True, key="cam3d_auto")
@@ -946,12 +946,12 @@ def render():
         st.caption(f"Aktiver Stage-Fokus: {step_titles[lab_stage - 1]}")
 
     with tabs[2]:
-        section_header("Physik + Signalverarbeitung", "Was exakt passiert, Schritt fuer Schritt.")
+        section_header("Physik + Signalverarbeitung", "Was exakt passiert, Schritt für Schritt.")
         st.markdown(
             r"""
             ### 1) Optik und Abbildung
             Die Linse bildet die Szene auf den Sensor ab. Reale Optiken sind nicht perfekt:  
-            Fokusfehler, Beugung und Aberrationen fuehren zu einer **Punktspreizfunktion (PSF)**.
+            Fokusfehler, Beugung und Aberrationen führen zu einer **Punktspreizfunktion (PSF)**.
             Im Modell ist das oft eine Faltung:
 
             $$
@@ -965,12 +965,12 @@ def render():
             \mu_e \approx E \cdot t_{\mathrm{exp}} \cdot \eta
             $$
 
-            mit Bestrahlungsstaerke $E$, Belichtungszeit $t_{\mathrm{exp}}$ und Quanteneffizienz $\eta$.
+            mit Bestrahlungsstärke $E$, Belichtungszeit $t_{\mathrm{exp}}$ und Quanteneffizienz $\eta$.
 
             ### 3) Rauschen
             - **Shot Noise:** $\sigma_{\mathrm{shot}}^2 \approx \mu_e$ (Poisson)
             - **Read Noise:** additiver Elektronikanteil (nahezu Gauß)
-            - **Dark Noise:** temperaturabhaengiger Leckstrom
+            - **Dark Noise:** temperaturabhängiger Leckstrom
 
             Gesamtmodell (vereinfacht):
             $$
@@ -979,12 +979,12 @@ def render():
 
             ### 4) CFA, ADC, ISP
             Ein Bayer-Pattern (RGGB) misst je Pixel nur einen Farbkanal. Danach:
-            Demosaicing -> White Balance -> Tonkurve/Gamma -> Schaerfung/Entrauschen -> sRGB.
+            Demosaicing -> White Balance -> Tonkurve/Gamma -> Schärfung/Entrauschen -> sRGB.
             """
         )
         info_box(
-            "Wissenschaftlich wichtig: ISO erzeugt nicht mehr Photonen. ISO ist primaer Verstaerkung. "
-            "Bei wenig Licht muss Signal und Rauschen gemeinsam verstaerkt werden.",
+            "Wissenschaftlich wichtig: ISO erzeugt nicht mehr Photonen. ISO ist primär Verstärkung. "
+            "Bei wenig Licht muss Signal und Rauschen gemeinsam verstärkt werden.",
             kind="warn",
         )
 
@@ -1051,7 +1051,7 @@ def render():
         p5.image(sim["output_rgb"], use_container_width=True)
 
         info_box(
-            "Experiment: Erhoehe ISO und Read Noise gleichzeitig. Du siehst, dass nicht nur Helligkeit steigt, "
+            "Experiment: Erhöhe ISO und Read Noise gleichzeitig. Du siehst, dass nicht nur Helligkeit steigt, "
             "sondern auch das wahrgenommene Korn/Rauschen.",
             kind="tip",
         )
@@ -1090,7 +1090,7 @@ def render():
         divider()
         st.code(
             """
-# Minimalmodell fuer Sensor-Noise
+# Minimalmodell für Sensor-Noise
 mu_e = irradiance * exposure_time * quantum_eff
 electrons = Poisson(mu_e) + Normal(0, sigma_read)
 digital = round(clip(electrons * gain, 0, full_well) / full_well * (2**bit_depth - 1))
@@ -1101,11 +1101,7 @@ digital = round(clip(electrons * gain, 0, full_well) / full_well * (2**bit_depth
     with tabs[5]:
         section_header("Kuratiertes Video-Material", "Fundament + Kamera-nahe Verarbeitung.")
         st.markdown("**How Images Work (Computerphile)**")
-        video_embed(
-            "LZNva7Kf9IM",
-            "How Images Work — Computerphile",
-            "Guter Einstieg in Pixel, Rasterung und digitale Bilddarstellung.",
-        )
+        video_search("How Images Work Computerphile", "How Images Work — Computerphile", "Wie digitale Bilder intern aufgebaut sind.")
         divider()
         st.markdown("**Gaussian Blur (Computerphile)**")
         video_embed(
@@ -1129,31 +1125,31 @@ digital = round(clip(electrons * gain, 0, full_well) / full_well * (2**bit_depth
             progression=[
                 ("🟢", "Guided Lab", "Pipeline mit vorgegebenen Parametern nachvollziehen.", "Beginner", "green"),
                 ("🟠", "Challenge", "SNR bei wenig Licht durch Parameterwahl verbessern.", "Intermediate", "amber"),
-                ("🔴", "Debug Task", "Banding, Rauschen, Farbstich auf Ursache zurueckfuehren.", "Advanced", "pink"),
+                ("🔴", "Debug Task", "Banding, Rauschen, Farbstich auf Ursache zurückführen.", "Advanced", "pink"),
                 ("🏁", "Mini-Projekt", "Eigenes Kamera-Sim-Lab mit 2 weiteren ISP-Schritten erweitern.", "Abschluss", "blue"),
             ],
             mcq_question="Welche Aussage ist korrekt?",
             mcq_options=[
-                "Hoeheres ISO erzeugt mehr Photonen am Sensor.",
-                "Shot Noise ist in erster Naeherung Poisson-basiert.",
+                "Höheres ISO erzeugt mehr Photonen am Sensor.",
+                "Shot Noise ist in erster Näherung Poisson-basiert.",
                 "Bayer misst pro Pixel direkt RGB gleichzeitig.",
-                "ADC-Bittiefe beeinflusst nur Dateigroesse, nicht Bildqualitaet.",
+                "ADC-Bittiefe beeinflusst nur Dateigröße, nicht Bildqualität.",
             ],
-            mcq_correct_option="Shot Noise ist in erster Naeherung Poisson-basiert.",
+            mcq_correct_option="Shot Noise ist in erster Näherung Poisson-basiert.",
             mcq_success_message="Korrekt. Genau deshalb steigt das Rauschen typischerweise mit sqrt(Signal).",
-            mcq_retry_message="Noch nicht. Pruefe Photonenmodell, Bayer und ISO-Rolle nochmals.",
-            open_question="Welche zwei Pipeline-Stufen sind fuer dein Projekt am kritischsten und warum?",
+            mcq_retry_message="Noch nicht. Prüfe Photonenmodell, Bayer und ISO-Rolle nochmals.",
+            open_question="Welche zwei Pipeline-Stufen sind für dein Projekt am kritischsten und warum?",
             code_task="""# Erweiterungsidee:
-# 1) Fuege ein Entrauschungsmodul vor dem Demosaicing ein.
-# 2) Vergleiche PSNR/SSIM fuer ISO 100 vs 1600.
+# 1) Füge ein Entrauschungsmodul vor dem Demosaicing ein.
+# 2) Vergleiche PSNR/SSIM für ISO 100 vs 1600.
 """,
             community_rows=[
                 {"Format": "Peer Review", "Thema": "Ist die SNR-Interpretation korrekt?", "Output": "Kurzfeedback"},
-                {"Format": "Lab Battle", "Thema": "Bestes Low-Light-Setting mit natuerlicher Farbe", "Output": "Parameter-Set"},
-                {"Format": "Explain Like I am 12", "Thema": "Shot vs Read Noise", "Output": "1-min Erklaerung"},
+                {"Format": "Lab Battle", "Thema": "Bestes Low-Light-Setting mit natürlicher Farbe", "Output": "Parameter-Set"},
+                {"Format": "Explain Like I am 12", "Thema": "Shot vs Read Noise", "Output": "1-min Erklärung"},
             ],
             cheat_sheet=[
-                "ISO ist Verstaerkung, kein Lichtgenerator.",
+                "ISO ist Verstärkung, kein Lichtgenerator.",
                 "Bayer misst pro Pixel nur einen Farbkanal.",
                 "Read Noise dominiert oft in sehr dunklen Bereichen.",
                 "Mehr Bit-Tiefe reduziert Quantisierungsfehler/Banding.",
@@ -1166,6 +1162,6 @@ digital = round(clip(electrons * gain, 0, full_well) / full_well * (2**bit_depth
                 "ISO mit Belichtung verwechseln.",
                 "Gamma-kodierte und lineare Daten mischen.",
                 "Bayer-Mosaik als echtes RGB interpretieren.",
-                "Quantisierungseffekte bei 8 bit unterschaetzen.",
+                "Quantisierungseffekte bei 8 bit unterschätzen.",
             ],
         )

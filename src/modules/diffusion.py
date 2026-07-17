@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 from src.components import (
     hero, section_header, divider, info_box,
-    video_embed, lab_header, key_concept, step_list, card, render_card_grid, render_learning_block, render_quiz_checkpoint,
+    video_embed, video_search, lab_header, key_concept, step_list, card, render_card_grid, render_learning_block, render_quiz_checkpoint,
 )
 
 
@@ -400,9 +400,7 @@ Das schafft neue Herausforderungen:
         section_header("Lernvideos", "Die besten Erklärungen zu Diffusion Models.")
 
         st.markdown("#### Diffusion Models (Explained) — Ari Seff (DeepMind)")
-        video_embed("fbLgFrlYC3g",
-                    "Denoising Diffusion Probabilistic Models — Ari Seff",
-                    "Mathematisch korrekte, trotzdem verständliche Erklärung von DDPM. ~20 Minuten.")
+        video_search("Denoising Diffusion Probabilistic Models Ari Seff", "DDPM — Ari Seff", "Verständliche DDPM-Erklärung.")
 
         divider()
 
@@ -414,9 +412,7 @@ Das schafft neue Herausforderungen:
         divider()
 
         st.markdown("#### The Math Behind Stable Diffusion (fast.ai)")
-        video_embed("ISHKqgel_bw",
-                    "Practical Deep Learning — Diffusion Math",
-                    "Jeremy Howard und Jonathan Whitaker erklären die Mathematik tief und anwendungsorientiert.")
+        video_search("fast.ai stable diffusion math practical deep learning", "Diffusion-Mathematik — fast.ai", "Die Mathematik hinter Diffusion.")
 
         info_box(
             "Nach diesen drei Videos hast du ein solides Verständnis von DDPM, "

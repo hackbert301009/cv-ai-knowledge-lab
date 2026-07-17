@@ -73,6 +73,28 @@ def video_embed(youtube_id: str, title: str = "Lernvideo", caption: str = ""):
     )
 
 
+def video_search(query: str, label: str = "", caption: str = ""):
+    """Fallback statt Embed: verlinkt auf eine YouTube-Suche — immer erreichbar,
+    thematisch passend (nützlich, wenn kein stabiler Embed-Link verfügbar ist)."""
+    from urllib.parse import quote_plus
+    url = "https://www.youtube.com/results?search_query=" + quote_plus(query)
+    label = label or query
+    cap = f'<span class="vs-caption">{caption}</span>' if caption else ""
+    st.markdown(
+        f"""
+        <a href="{url}" target="_blank" rel="noopener" class="video-search-card">
+          <span class="vs-play">&#9654;</span>
+          <span class="vs-text">
+            <span class="vs-label">{label}</span>
+            <span class="vs-sub">Auf YouTube ansehen &rarr;</span>
+            {cap}
+          </span>
+        </a>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def key_concept(emoji: str, term: str, explanation: str):
     """Hervorgehobener Schlüsselbegriff mit Erklärung."""
     st.markdown(
@@ -280,7 +302,7 @@ def render_quiz_checkpoint(
             if tracked_module_id not in completed:
                 completed.append(tracked_module_id)
             st.session_state.quiz_completed_modules = completed
-            st.success("Richtig. Du kannst zum naechsten Modul weitergehen.")
+            st.success("Richtig. Du kannst zum nächsten Modul weitergehen.")
         else:
             st.warning("Noch nicht korrekt. Wiederhole die Kerngedanken und probiere es erneut.")
 
@@ -292,7 +314,7 @@ def render_quiz_checkpoint(
     if capstone_prompt:
         st.markdown("### Mini-Transfer")
         st.text_area(
-            "Formuliere kurz deinen Loesungsansatz",
+            "Formuliere kurz deinen Lösungsansatz",
             value=capstone_prompt,
             height=120,
             key=f"{key_prefix}_transfer",

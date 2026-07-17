@@ -11,12 +11,12 @@ def render():
             "Egal ob du 4 Wochen oder 6 Monate Zeit hast: hier findest du deinen Pfad."
     )
 
-    # ----- Zeitplaene -----
-    section_header("Waehle dein Tempo")
+    # ----- Zeitpläne -----
+    section_header("Wähle dein Tempo")
     pcols = st.columns(3)
     plans = [
         ("⚡", "Sprint (6 Wochen)", "Fokus auf Kernmodule + 2 Spezialisierungen. Ca. 2h/Tag.", ["intensiv"]),
-        ("🎯", "Standard (16 Wochen)", "Empfohlen: vollstaendige Lernstrecke mit Projekten. Ca. 1h/Tag.", ["balanced"]),
+        ("🎯", "Standard (16 Wochen)", "Empfohlen: vollständige Lernstrecke mit Projekten. Ca. 1h/Tag.", ["balanced"]),
         ("🌳", "Tiefgang (6+ Monate)", "Mit Paper-Reproduktionen, Evaluation und Deployment in Tiefe.", ["mastery"]),
     ]
     for col, (icon, title, desc, tags) in zip(pcols, plans):
@@ -38,7 +38,7 @@ def render():
 
     section_header("Phase 2 — Klassische Computer Vision", "Wochen 4-6 · Bildverarbeitung verstehen")
     render_card_grid([
-        card("🖼️", "Bildgrundlagen", "Pixel, Farbraeume, Sampling.", ["2 Tage"], ["blue"]),
+        card("🖼️", "Bildgrundlagen", "Pixel, Farbräume, Sampling.", ["2 Tage"], ["blue"]),
         card("📷", "Kamera-Pipeline", "Sensor, Bayer, ISP, Noise.", ["3 Tage"], ["blue"]),
         card("🌫️", "Filter & Faltung", "Klassische Operatoren.", ["3 Tage"], ["blue"]),
         card("📏", "Kantendetektion", "Sobel, Canny, Laplace.", ["2 Tage"], ["blue"]),
@@ -63,7 +63,7 @@ def render():
 
     section_header("Phase 4 — Frontier Themen", "Wochen 11-14 · State of the Art")
     render_card_grid([
-        card("⚡", "Transformer & ViT", "Attention fuer Vision.", ["4 Tage"], ["pink"]),
+        card("⚡", "Transformer & ViT", "Attention für Vision.", ["4 Tage"], ["pink"]),
         card("👁️‍🗨️", "VLM", "CLIP, BLIP-2, LLaVA.", ["3 Tage"], ["pink"]),
         card("🌊", "Diffusion", "DDPM, Stable Diffusion.", ["4 Tage"], ["pink"]),
         card("🌐", "Multimodal & LLMs", "Bild-Text-Video Systeme.", ["3 Tage"], ["pink"]),

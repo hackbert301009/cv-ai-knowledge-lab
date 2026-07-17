@@ -95,7 +95,7 @@ MODULES: List[Module] = [
     Module("rag_multimodal_agents", "🛰️", "RAG + Multimodal Agents", "Vision-RAG, Tool-Use, Prompting, Guardrails",  "State-of-the-Art", "Experte", "50 min", ["sota", "rag", "agents"]),
 
     # --- Praxis ---
-    Module("learning_studio", "🧪", "Lernstudio: Labs & Uebungen", "Progressive Labs, Mischformat und Community", "Praxis", "Anfänger", "35 min", ["praxis", "labs", "community"]),
+    Module("learning_studio", "🧪", "Lernstudio: Labs & Übungen", "Progressive Labs, Mischformat und Community", "Praxis", "Anfänger", "35 min", ["praxis", "labs", "community"]),
     Module("projects",   "💻", "Praxisprojekte",          "10+ Hands-on Projekte mit Code",          "Praxis", "Fortgeschritten", "varies", ["praxis"]),
     Module("datasets",   "📦", "Datasets & Tools",        "ImageNet, COCO, HuggingFace, Roboflow",   "Praxis", "Anfänger",        "20 min", ["praxis"]),
     Module("evaluation_robustness", "🛡️", "Evaluation & Robustness", "Calibration, OOD, Domain Shift, Bias/Fairness", "Praxis", "Fortgeschritten", "45 min", ["praxis", "evaluation", "robustness"]),
